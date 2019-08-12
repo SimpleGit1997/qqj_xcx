@@ -1,0 +1,52 @@
+
+  <view class="body">
+    <view class="map-content-view">
+      <map id="myMap" enable-scroll="{{false}}" markers="{{markers}}" longitude="{{pointLng}}" latitude="{{pointLat}}" show-location="{{true}}" style="width: 100%; height: 100%;"> </map>
+    </view>
+    <view class="default-label-view">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"/>
+        <view class="default-title-text-view">酒店介绍</view>
+        <view class="abs-tel-img-view" bindtap="handleTel">
+          <image src="../images/tel-color-icon.png" style="width:100%;height:100%;"/>
+        </view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;"  wx:if="{{hotelInfo.establishmentDate||hotelInfo.renovationDate}}">
+          <view style="width:50%;">开业时间: {{hotelInfo.establishmentDate?hotelInfo.establishmentDate:'暂无介绍'}}</view>
+          <view style="width:50%;">装修: {{hotelInfo.renovationDate?hotelInfo.renovationDate:'暂无介绍'}}</view>
+        </view>
+        <view class="flex-label-text-view">
+          <text>客房总数: {{hotelInfo.roomCount?hotelInfo.roomCount+'间':'暂无介绍'}}</text>
+        </view>
+        <view class="more-label-text-view">
+          {{hotelInfo.introduceCn?hotelInfo.introduceCn:'暂无介绍'}}
+        </view>
+      </view>
+    </view>
+    <view class="default-label-view"  wx:if="{{hotelInfo.facilityNameList.length>0}}">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"/>
+        <view class="default-title-text-view">酒店实施</view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;">
+          <block wx:for="{{hotelInfo.facilityNameList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+            <view style="width:33%;">{{item.name}}</view>
+          </block>
+        </view>
+      </view>
+    </view>
+    <view class="default-label-view" wx:if="{{hotelInfo.childrenPolicy||hotelInfo.petPolicy}}">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"/>
+        <view class="default-title-text-view">特别提醒</view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;">
+          <view wx:if="{{hotelInfo.childrenPolicy}}" style="width:100%;">{{hotelInfo.childrenPolicy}} </view>
+          <view wx:if="{{hotelInfo.petPolicy}}" style="width:100%;">{{hotelInfo.petPolicy}}</view>
+        </view>
+      </view>
+    </view>
+  </view>

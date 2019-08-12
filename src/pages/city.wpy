@@ -1,0 +1,455 @@
+<style lang="less">
+  .top-search-view {
+    display: flex;
+    height: 88rpx;
+    border-bottom: 2rpx solid #E5E5E5;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  .top-inner-search-view {
+    width: 600rpx;
+    height: 60rpx;
+    background-color: #F0F0F0;
+    margin: 9rpx 0px 9rpx 20rpx;
+    border-radius: 30rpx;
+    display: flex;
+  }
+  .top-cancel-view {
+    width: 90rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    margin: 9rpx 0px 9rpx 14rpx;
+    background-color: #efefef;
+    text-align: center;
+    border: 2rpx solid #efefef;
+    color: #333333;
+    font-size: 24rpx;
+    box-sizing: border-box;
+    border-radius: 20rpx;
+  }
+  .search-icon-image {
+    width: 40rpx;
+    height: 40rpx;
+    margin: 10rpx 20rpx;
+  }
+  .delete-icon-image {
+    width: 36rpx;
+    height: 36rpx;
+    margin: 12rpx 10rpx;
+  }
+  .search-input {
+    width: 450rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 28rpx;
+  }
+  .city-letter {
+    background-color: #ffffff;
+    color: #999999;
+    font-size: 24rpx;
+    padding: 30rpx 50rpx 0px 50rpx;
+    box-sizing: border-box;
+  }
+  .city-item {
+    height: 100rpx;
+    line-height: 100rpx;
+    background-color: #ffffff;
+    text-indent: 47rpx;
+    font-size: 28rpx;
+    position: relative;
+    &::after {
+      content: ' ';
+      display: block;
+      height: 1px;
+      width: 90%;
+      position: absolute;
+      left: 5%;
+      bottom: 0;
+      background-color: #DDD;
+      transform: scaleY(.5)
+    }
+    &:active {
+      opacity: .6;
+    }
+  }
+  .placeholder-search-input {
+    color: #999999;
+  }
+  .fixed-right-letter-view {
+    position: fixed;
+    right: 0px;
+    width: 50rpx;
+  }
+  .item-letter-view {
+    width: 50rpx;
+    height: 36rpx;
+    font-size: 24rpx;
+    text-align: center;
+  }
+  .letter-text {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 36rpx;
+    border-radius: 50%;
+    color: #496888;
+  }
+  .letter-actived {
+    background-color: #ccc;
+  }
+  .fixed-label-letter-view {
+    position: fixed;
+    right: 150rpx;
+    top: 46%;
+    width: 50rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    border-radius: 30rpx;
+    text-align: center;
+    color: #ffffff;
+    background-color: #fa8c1d;
+  }
+  .hot-city-label-view {
+    background-color: #ffffff;
+  }
+  .city-title-label-view {
+    padding: 20rpx 0px;
+    text {
+      margin-left: 28rpx;
+      font-size: 28rpx;
+      color: #999999;
+    }
+  }
+  .flex-city-label-view {
+    display: flex;
+    flex-flow: wrap;
+  }
+  .item-city-label-view {
+    width: 200rpx;
+    height: 70rpx;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 70rpx;
+    border: 2rpx solid #DDDDDD;
+    font-size: 28rpx;
+    color: #333333;
+    margin: 0px 0px 20rpx 30rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:active {
+      opacity: .6;
+    }
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-search-view">
+      <view class="top-inner-search-view">
+        <image class="search-icon-image" src="../images/search-icon.png" />
+        <input class="search-input" placeholder-class="placeholder-search-input" placeholder="输入城市名或拼音查询" @focus="searchFocus" @input="searchInput" value="{{keyword}}" />
+        <image wx:if="{{keyword.length>0}}" @tap="handleDeleteKeyword" class="delete-icon-image" src="../images/round-delete-icon.png" />
+      </view>
+      <view wx:if="{{searchFocus}}" @tap="handleCancel" class="top-cancel-view">取消</view>
+    </view>
+    <scroll-view wx:if="{{loading}}" style="height:{{scrollHeight}}rpx;width:100%;" scroll-y scroll-into-view="{{scrollIntoView}}">
+      <view class="hot-city-label-view" wx:if="{{historyList.length>0 && !searchFocus}}">
+        <view class="city-title-label-view">
+          <text>历史访问城市</text>
+        </view>
+        <view class="flex-city-label-view">
+          <repeat for="{{historyList}}" key="index" item="item" index="index">
+            <view @tap="handleCity({{item}})" class="item-city-label-view">{{item.name}}</view>
+          </repeat>
+        </view>
+      </view>
+      <view wx:if="{{!searchFocus}}" class="hot-city-label-view">
+        <view class="city-title-label-view">
+          <text>热门城市</text>
+        </view>
+        <view class="flex-city-label-view">
+          <repeat for="{{hotCityList}}" key="index" item="item" index="index">
+            <view @tap="handleCity({{item}})" class="item-city-label-view">{{item.name}}</view>
+          </repeat>
+        </view>
+      </view>
+      <repeat wx:if="{{!searchFocus}}" for="{{cityList}}" key="index" item="item">
+        <view>
+          <view class="city-letter" id="{{item[0]}}">{{ item[0] }}</view>
+          <repeat for="{{item[1]}}" key="_index" item="_item" index="_index">
+            <view class="city-item" @tap="handleCity({{_item}})">{{ _item.name }}</view>
+          </repeat>
+        </view>
+      </repeat>
+      <repeat for="{{searchList}}" key="_index" item="_item" index="_index">
+        <view class="city-item" @tap="handleCity({{_item}})">{{ _item.name }}</view>
+      </repeat>
+    </scroll-view>
+    <view wx:if="{{!searchFocus}}" class="fixed-right-letter-view" style="top:{{comTop}}rpx;" catchtouchmove="preventTouchMove">
+      <view data-index="{{item}}" wx:key="{{index}}" wx:for="{{cityList}}" class="item-letter-view" @touchmove="touchmove" @touchend="touchend">
+        <text class="letter-text {{scrollIntoView == item[0] ? 'letter-actived' : ''}}" @tap="selectedItem({{item}})">{{item[0]}}</text>
+      </view>
+    </view>
+    <view class="fixed-label-letter-view" wx:if="{{scrollIntoView!==''}}">{{scrollIntoView}}</view>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import {
+    findRegions
+  } from "../server/index.js";
+  import {
+    getSysWidth,
+    getSysHeight,
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
+  var qqmapsdk;
+  export default class City extends wepy.page {
+    config = {
+      navigationBarTitleText: "首页"
+    };
+    components = {};
+    data = {
+      searchFocus: false,
+      scrollHeight: 0,
+      eachLetterHeight: 0,
+      comTop: 120,
+      lettersPosition: [],
+      scrollIntoView: '',
+      cityList: [],
+      searchList: [],
+      historyList: [],
+      hotCityList: [{
+        id: 2,
+        name: '北京',
+        pinyin: 'beijing',
+        acronym: 'bj',
+        rank: 'S',
+        firstChar: 'B',
+        lat: '39.904030',
+        lng: '116.407526'
+      }, {
+        id: 164132,
+        name: '上海',
+        pinyin: 'shanghai',
+        acronym: 'sh',
+        rank: 'S',
+        firstChar: 'S',
+        lat: '31.230416',
+        lng: '121.473701'
+      }, {
+        id: 490588,
+        name: '广州',
+        pinyin: 'guangzhou',
+        acronym: 'gz',
+        rank: 'A',
+        firstChar: 'G',
+        lat: '23.129162',
+        lng: '113.264434'
+      }, {
+        id: 495090,
+        name: '深圳',
+        pinyin: 'shenzhen',
+        acronym: 'sz',
+        rank: 'A',
+        firstChar: 'S',
+        lat: '22.543099',
+        lng: '114.057868'
+      }, {
+        id: 194237,
+        name: '杭州',
+        pinyin: 'hangzhou',
+        acronym: 'hz',
+        rank: 'A',
+        firstChar: 'H',
+        lat: '30.274084',
+        lng: '120.155070'
+      }, {
+        id: null,
+        name: '全部',
+        pinyin: null,
+        acronym: null
+      }],
+      keyword: '',
+      loading:false
+    };
+    computed = {};
+    watch = {};
+    onLoad() {
+      this.scrollHeight = changePXToRPX(getSysHeight()) - 88;
+      wepy.showLoading({
+        title: '加载中...'
+      })
+      this.loading = false
+      findRegions().then(data => {
+        let formatCityList = []
+        if (Array.isArray(data) && data.length > 0) {
+          let tempObj = {};
+          for (let item of data) {
+            let firstLetter = (typeof item.pinyin === 'string' && item.pinyin.length > 0) ? item.pinyin.slice(0, 1).toUpperCase() : ''
+            if (firstLetter !== '') {
+              if (tempObj[firstLetter] !== undefined) {
+                tempObj[firstLetter].push(item)
+              } else {
+                tempObj[firstLetter] = [item]
+              }
+            }
+          }
+          for (let i of Object.keys(tempObj)) {
+            formatCityList.push([i, tempObj[i]])
+          }
+          formatCityList.sort((pre, next) => {
+            return pre[0].charCodeAt() - next[0].charCodeAt()
+          })
+          this.cityList = formatCityList
+          // 每一小格的高度
+          this.eachLetterHeight = changeRPXToPX(36)
+          let fullHeight = this.cityList.length * this.eachLetterHeight
+          this.comTop = changePXToRPX((getSysHeight() - fullHeight) / 2)
+          // 顶部距离
+          let comTop = changeRPXToPX(this.comTop)
+          this.lettersPosition = [];
+          // 求各字母距离设备左上角所处位置
+          for (let i = 0, len = this.cityList.length; i < len; i++) {
+            const x = getSysWidth() - changeRPXToPX(50)
+            const y = comTop + (i * this.eachLetterHeight);
+            this.lettersPosition.push([x, y]);
+          }
+        }
+        this.loading = true
+        this.$apply()
+        wepy.hideLoading()
+      })
+    }
+    onShow() {
+      this.historyList = wepy.getStorageSync('historyCityList') || []
+      this.$apply()
+    }
+    methods = {
+      searchFocus() {
+        this.searchFocus = true
+        this.$apply()
+      },
+      handleCancel() {
+        this.searchFocus = false
+        this.keyword = ''
+        this.searchList = []
+        this.$apply()
+      },
+      searchInput(e) {
+        this.keyword = e.detail.value
+        this.searchList = this.getSearchList(this.keyword, this.cityList, true)
+        this.$apply()
+      },
+      handleDeleteKeyword() {
+        this.keyword = ''
+        this.searchList = []
+        this.$apply()
+      },
+      handleCity(item) {
+        let historyList = wepy.getStorageSync('historyCityList') || []
+        if (historyList.length === 0 && !!item.id) {
+          historyList.push(item)
+        } else if (historyList.length > 0 && historyList.length < 6) {
+          let isContain = false
+          historyList.forEach(_item => {
+            if (item.id === _item.id || !item.id) {
+              isContain = true
+            }
+          });
+          if (!isContain) {
+            historyList.unshift(item)
+          }
+        } else if (historyList.length === 6) {
+          let isContain = false
+          historyList.forEach(_item => {
+            if (item.id === _item.id || !item.id) {
+              isContain = true
+            }
+          });
+          if (!isContain) {
+            historyList.pop()
+            historyList.unshift(item)
+          }
+        }
+        wepy.setStorageSync('historyCityList', historyList)
+        wepy.setStorageSync('cityInfo', item)
+        wx.navigateBack({
+          delta: 1
+        })
+      },
+      preventTouchMove() {
+        console.warn('此方法阻止其他事件。')
+      },
+      touchmove(e) {
+        // this.scrollIntoView = ''
+        const x = e.touches[0].clientX
+        const y = e.touches[0].clientY
+        // 判断触摸点是否在x轴上
+        if (x >= this.lettersPosition[0][0]) {
+          for (let i = 0, len = this.lettersPosition.length; i < len; i++) {
+            const _y = this.lettersPosition[i][1], //每一格y轴的值
+              __y = _y + this.eachLetterHeight; // 当前最大y轴高度
+            if (y >= _y && y <= __y) {
+              this.scrollIntoView = this.cityList[i][0]
+              break;
+            }
+          }
+        } else {
+          this.scrollIntoView = ''
+        }
+      },
+      selectedItem(item) {
+        this.scrollIntoView = item[0]
+        this.$apply()
+      },
+      touchend(e) {
+        setTimeout(() => {
+          this.scrollIntoView = ''
+          this.$apply()
+        }, 50);
+      },
+    };
+    onHide() {}
+    onUnload() {}
+    // 下拉刷新事件
+    onPullDownRefresh() {
+      wepy.showNavigationBarLoading();
+      wepy.stopPullDownRefresh();
+      wepy.hideNavigationBarLoading();
+    }
+    getSearchList(text, list, canSearchSpell) {
+      const reg1 = /^\w+$/g;
+      const reg2 = new RegExp(`^${text}`, 'g');
+      const reg3 = new RegExp('^[\\u4E00-\\u9FFF]{1,}$', 'g');
+      const reg4 = new RegExp(`^${text}`, 'g');
+      let resList = [];
+      if (text.match(reg1) && canSearchSpell) {
+        for (let i = 0, len1 = list.length; i < len1; i++) {
+          for (let j = 0, len2 = list[i][1].length; j < len2; j++) {
+            if (list[i][1][j].pinyin.toLowerCase().match(reg2)) {
+              resList.push(list[i][1][j]);
+            }
+          }
+        }
+      } else {
+        if (reg3.test(text)) {
+          for (let i = 0, len1 = list.length; i < len1; i++) {
+            for (let j = 0, len2 = list[i][1].length; j < len2; j++) {
+              if (list[i][1][j].name.match(reg4)) {
+                resList.push(list[i][1][j]);
+              }
+            }
+          }
+        }
+      }
+      return resList;
+    }
+  }
+</script>

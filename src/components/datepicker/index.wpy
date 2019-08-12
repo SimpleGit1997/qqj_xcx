@@ -1,0 +1,393 @@
+<style lang="less">
+  .date-picker-view {
+    background-color: #fff;
+  }
+  .top-title-label-view {
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    font-size: 34rpx;
+    color: #333;
+    font-weight: 400;
+  }
+  .top-weeks-label-view {
+    display: grid;
+    grid-template-columns: repeat(7, 14.28%);
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    background-color: #fbfbfb;
+    font-size: 30rpx;
+  }
+  .date-label-view {
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    font-weight: 400;
+    text-align: center;
+  }
+  .date-grid-view {
+    display: grid;
+    grid-template-columns: repeat(7, 14.28%);
+    font-size: 28rpx;
+    color: #666;
+  }
+  .grid-item-view {
+    height: 100rpx;
+    line-height: 100rpx;
+    text-align: center;
+    position: relative;
+  }
+  .disable-color {
+    color: #ccc !important;
+  }
+  .default-checked {
+    border-radius: 10rpx;
+    color: #fff !important;
+  }
+  .double-checked-first {
+    border-top-left-radius: 10rpx;
+    border-bottom-left-radius: 10rpx;
+    color: #fff !important;
+  }
+  .double-checked-second {
+    border-top-right-radius: 10rpx;
+    border-bottom-right-radius: 10rpx;
+    color: #fff !important;
+  }
+  .double-checked-mid {
+    background-color: #f5f5f5 !important;
+  }
+  .inner-item-abs-tag-view {
+    position: absolute;
+    height: 60rpx;
+    width: 100%;
+    top: -60rpx;
+    left: 0;
+  }
+  .item-tag-view {
+    position: relative;
+    width: 90rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size: 24rpx;
+    margin: 0px auto;
+    background-color: #000000;
+    border-radius: 10rpx;
+    opacity: 0.8;
+    color: #fff;
+  }
+  .item-tag-triangle-view {
+    position: absolute;
+    bottom: -10rpx;
+    left: 32rpx;
+    width: 0;
+    height: 0;
+    border-left: 18rpx solid transparent;
+    border-right: 18rpx solid transparent;
+    border-top: 18rpx solid #000000;
+  }
+</style>
+
+<template lang="wxml">
+  <view class="body">
+    <view class="date-picker-view">
+      <view class="top-title-label-view">
+        <text>选择日期</text>
+      </view>
+      <view class="top-weeks-label-view">
+        <view style="color:{{color}}">日</view>
+        <view>一</view>
+        <view>二</view>
+        <view>三</view>
+        <view>四</view>
+        <view>五</view>
+        <view style="color:{{color}}">六</view>
+      </view>
+      <block wx:for="{{dateList}}" wx:key="{{index}}" wx:for-item="item" wx:for-index="index">
+        <view class="date-label-view">{{item.dateLabel}}</view>
+        <view class="date-grid-view">
+          <block wx:for="{{item.dateList}}" wx:key="{{_index}}" wx:for-item="_item" wx:for-index="_index">
+            <!-- 禁用日期 -->
+            <view wx:if="{{_item.disabled&&_item.show}}" class="grid-item-view disable-color" style="{{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}">
+              {{_item.describe?_item.describe:_item.date}}
+            </view>
+            <!-- 显示日期 -->
+            <view wx:elif="{{!_item.disabled&&_item.show}}" bindtap='handleDate' data-index='{{index}}' data-_index='{{_index}}' class="grid-item-view {{_item._class}}" style="{{_item.day==0||_item.day==6?'color:'+ color+';':''}} {{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}  {{_item._style}} ">
+              <text> {{_item.describe?_item.describe:_item.date}}</text>
+              <view wx:if="{{_item._class=='double-checked-second'}}" class="inner-item-abs-tag-view">
+                <view class="item-tag-view">
+                  <text>共{{getDays-1}}晚</text>
+                  <view class="item-tag-triangle-view"></view>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import {
+    getSysWidth
+  } from '../../lib/wx-system.js';
+  import {
+    getMonth
+  } from '../../lib/utils.js';
+  export default class date extends wepy.component {
+    components = {};
+    data = {
+      dateList: []
+    };
+    watch = {
+      value(newValue, oldValue) {
+        if (this.value) {
+          this.changeDateOBj();
+        }
+      }
+    };
+    props = {
+      color: {
+        type: String,
+        default: '#FF6600'
+      },
+      months: {
+        type: String,
+        default: '2'
+      },
+      type: {
+        type: String,
+        default: 'daterange'
+      },
+      value: {
+        type: Array,
+        default: [],
+        twoWay: true
+      },
+      disabled: {
+        type: Boolean,
+        default: false
+      }
+    };
+    computed = {
+      getDays() {
+        let days = 0;
+        if (this.type == 'daterange' && this.value.length === 2) {
+          this.dateList.forEach((item, index) => {
+            item.dateList.forEach((_item, _index) => {
+              if (!!_item._class) {
+                days++;
+              }
+            });
+          });
+        }
+        return days;
+      }
+    };
+    methods = {
+      handleDate(e) {
+        let index = e.currentTarget.dataset.index;
+        let _index = e.currentTarget.dataset._index;
+        let value = this.dateList[index].dateList[_index].formatDate;
+        this._setValue(value);
+      }
+    };
+    onLoad() {
+      let dateList = this._getDateList();
+      this.dateList = dateList;
+      this.$apply();
+      this.setDescribe();
+      this.setDisabled();
+      if (this.value) {
+        this.changeDateOBj();
+      }
+    }
+    events = {};
+    /**
+     * 设置描述 今天 明天 后天
+     */
+    setDescribe() {
+      let currentDate = new Date();
+      let currentStamp = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate()
+      ).valueOf();
+      this.dateList.forEach(item => {
+        item.dateList.forEach(_item => {
+          let timeStamp = _item.dateObj.valueOf();
+          if (currentStamp == timeStamp) {
+            _item.describe = '今天';
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == timeStamp) {
+            _item.describe = '明天';
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == timeStamp) {
+            _item.describe = '后天';
+          }
+        });
+      });
+      this.$apply();
+    }
+    /**
+     * 禁用日期
+     */
+    setDisabled() {
+      // 获取当前日期的周日
+      let currentWeek = new Date().getDay();
+      let currentDate = new Date();
+      let currentStamp = new Date(
+        currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate()
+      ).valueOf();
+      let smallTimeStamp = new Date(
+        currentStamp - 24 * 60 * 60 * 1000 * currentWeek
+      ).valueOf();
+      this.dateList.forEach(item => {
+        item.dateList.forEach(_item => {
+          let timeStamp = _item.dateObj.valueOf();
+          // 是否显示区域日期
+          if (this.disabled) {
+            if (timeStamp < smallTimeStamp) {
+              _item.disabled = true;
+              _item.show = false;
+            } else {
+              _item.disabled = false;
+              _item.show = true;
+            }
+          } else {
+            if (timeStamp < currentStamp) {
+              _item.disabled = true;
+            } else {
+              _item.disabled = false;
+            }
+            _item.show = true;
+          }
+        });
+      });
+      this.$apply();
+    }
+    /**
+     * 更新对象
+     */
+    changeDateOBj() {
+      let value = this.value;
+      this.dateList.forEach((item, index) => {
+        item.dateList.forEach((_item, _index) => {
+          _item._class = null;
+          _item._style = null;
+          let timeStamp = _item.dateObj.valueOf();
+          let firstValue = '';
+          let secondValue = '';
+          if (this.type == 'daterange') {
+            if (value[0]) {
+              firstValue = new Date(value[0].replace(/-/gi, '/')).valueOf();
+            }
+            if (value[1]) {
+              secondValue = new Date(value[1].replace(/-/gi, '/')).valueOf();
+            }
+            if (firstValue == timeStamp) {
+              _item._class = 'double-checked-first';
+              _item._style = 'background:' + this.color + ';';
+            } else if (secondValue == timeStamp) {
+              _item._class = 'double-checked-second';
+              _item._style = 'background:' + this.color + ';';
+            }
+            if (firstValue < timeStamp && timeStamp < secondValue) {
+              _item._class = 'double-checked-mid';
+            }
+          } else if (this.type == 'date') {
+            let firstValue = new Date(value.replace(/-/gi, '/')).valueOf();
+            if (firstValue == timeStamp) {
+              _item._class = 'default-checked';
+              _item._style = 'background:' + this.color + ';';
+            }
+          }
+        });
+      });
+      this.$apply();
+    }
+    /**
+     * 获取日期列表
+     * dateLabel:年月
+     * day:本月的第一天是周几
+     * dateList:{年:year,月:month,日:date ,周:day(0~6),formatDate:格式化日期,是否当前天:isCurrentDate}
+     */
+    _getDateList() {
+      let dateList = [];
+      let months = Number(this.months);
+      console.log(months)
+      if (months && months > 0) {
+        let currentDateObj = new Date(
+          new Date().getFullYear(),
+          new Date().getMonth(),
+          new Date().getDate()
+        );
+        let currentYear = currentDateObj.getFullYear();
+        let currentMonth = currentDateObj.getMonth() + 1;
+        let currentDate = currentDateObj.getDate();
+        for (let i = 0; i < months; i++) {
+          if (currentMonth > 12) {
+            currentYear += 1;
+            currentMonth = 1;
+          }
+          // 获取当月天数
+          let dates = new Date(currentYear, currentMonth, 0).getDate();
+          let _dateList = [];
+          for (let date = 1; date <= dates; date++) {
+            let _dateObj = new Date(
+              currentYear + '/' + currentMonth + '/' + date
+            );
+            // 创建日期对象
+            let obj = {
+              year: currentYear,
+              month: currentMonth,
+              date: date,
+              day: new Date(currentYear, currentMonth - 1, date).getDay(),
+              dateObj: _dateObj,
+              formatDate: currentYear + '/' + currentMonth + '/' + date
+            };
+            _dateList.push(obj);
+          }
+          // 创建列表对象
+          let dateObj = {
+            dateLabel: currentYear + '年' + currentMonth + '月',
+            dateList: _dateList
+          };
+          dateList.push(dateObj);
+          currentMonth++;
+        }
+      } else {
+        console.error(`“month”属性传值不对，请传入正确的数值`);
+        return;
+      }
+      console.log(dateList);
+      return dateList;
+    }
+    _setValue(value) {
+      if (this.type == 'daterange') {
+        if (this.value.length == 0) {
+          this.value.push(value);
+        } else if (this.value.length == 1) {
+          let firstStamp = new Date(this.value[0].replace(/-/gi, '/'));
+          let secondStamp = new Date(value.replace(/-/gi, '/'));
+          if (firstStamp < secondStamp) {
+            this.value.push(value);
+          } else {
+            this.value.unshift(value);
+          }
+        } else if (this.value.length == 2) {
+          this.value = [];
+          this.value.push(value);
+        }
+        this.$emit('closeDialog', this.value)
+        this.changeDateOBj();
+      } else if (this.type == 'date') {
+        this.value = value;
+        this.changeDateOBj();
+      }
+    }
+  }
+</script>

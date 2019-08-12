@@ -1,0 +1,99 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.8.0",
+	"appid": "wx664cd134b4cfc7e9",
+	"projectname": "miniprogram-test-1",
+	"cloudfunctionTemplateRoot": "",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"scripts": {},
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 6,
+			"list": [
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "测试",
+					"pathName": "pages/city",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "选择城市",
+					"pathName": "pages/city",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "搜索酒店",
+					"pathName": "pages/searchList",
+					"query": "cityInfo={\"id\": 164132,\"name\":\"上海市\",\"pinyin\":\"beijing\",\"acronym\":\"bj\",\"rank\":\"S\",\"firstChar\":\"B\",\"lat\":31.22114,\"lng\":121.54409}&dateValue=2019-08-08,2019-08-09&keyword=上海&price=300,500&priceLabel=300-500&star=4&starLabel=舒适/高档 ",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "酒店详情",
+					"pathName": "pages/hotelDetail",
+					"query": "hotelId= 56563&dateValue=2019-08-09,2019-08-12",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "酒店信息",
+					"pathName": "pages/hotelInfo",
+					"query": "hotelId= 56563",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "填写订单",
+					"pathName": "pages/writeOrder",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

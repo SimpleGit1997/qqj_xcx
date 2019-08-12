@@ -1,0 +1,153 @@
+
+  <view class="body">
+    <!-- 轮播图 -->
+    <view class="top-swiper-view">
+      <swiper class="top-swiper" circular="{{true}}" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}">
+        <swiper-item>
+          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;"/>
+        </swiper-item>
+        <swiper-item>
+          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;"/>
+        </swiper-item>
+        <swiper-item>
+          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;"/>
+        </swiper-item>
+        <swiper-item>
+          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;"/>
+        </swiper-item>
+      </swiper>
+    </view>
+    <!-- 我的位置 -->
+    <view class="default-label-view">
+      <view class="flex-label-view">
+        <view class="flex-item-left-view">{{cityInfo.name}}</view>
+        <view class="flex-item-right-view" bindtap="handleCity">
+          <view class="item-right-img-view">
+            <image src="../images/position-icon.png" style="width:100%;height:100%;"/>
+          </view>
+          <view class="item-right-label-view">我的位置</view>
+        </view>
+      </view>
+    </view>
+    <!-- 入住离店日期 -->
+    <view class="default-label-view" bindtap="changeDate">
+      <view class="flex-date-info-view">
+        <view class="flex-date-item-left-view">
+          <view class="item-left-top-label-view">入住日期</view>
+          <view class="item-left-bottom-label-view">
+            <text>{{formatDate[0]}}</text>
+            <text style="font-size:24rpx;margin-left:10rpx;">{{getDescribe[0]}}</text>
+          </view>
+        </view>
+        <view class="flex-date-item-right-view">
+          <view class="item-left-top-label-view">离店日期</view>
+          <view class="item-left-bottom-label-view">
+            <text>{{formatDate[1]}}</text>
+            <text style="font-size:24rpx;margin-left:10rpx;">{{getDescribe[1]}}</text>
+          </view>
+        </view>
+        <view class="abs-mid-label-view">共{{getDays}}晚</view>
+      </view>
+    </view>
+    <!-- 关键字/地址/酒店 -->
+    <view class="default-label-view">
+      <view class="flex-label-view">
+        <input style="width:100%;" bindinput="keywordInput" value="{{keyword}}" class="flex-address-left-view" placeholder="关键字/地址/酒店" placeholder-class="flex-address-left-views"/>
+      </view>
+    </view>
+    <!-- 价格/星级 -->
+    <view class="default-label-view" bindtap="showModal">
+      <view class="flex-label-view">
+        <input disabled value="{{priceAndStarlabel}}" class="flex-address-left-view" placeholder="价格/星级" placeholder-class="flex-address-left-views"/>
+        <view class="flex-address-right-view">
+          <view class="item-right-img-view">
+            <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;"/>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="submit-button-view" bindtap="handleToSearch">查找全球家</view>
+    <!-- 日期探出框 -->
+    
+  <view  wx:if="{{$datepopup$showModal}}" class="modal-mask" bindtap="$datepopup$hideModal" catchtouchmove="$datepopup$preventTouchMove">
+  </view>
+  <view animation="{{$datepopup$animationData}}" class="modal-dialog" catchtouchmove="$datepopup$preventTouchMove" style="{{$datepopup$popupStyle}}">
+    
+      <scroll-view style="height:750rpx;width:100%;overflow:hidden;" scroll-y>
+        
+  <view class="body">
+    <view class="date-picker-view">
+      <view class="top-title-label-view">
+        <text>选择日期</text>
+      </view>
+      <view class="top-weeks-label-view">
+        <view style="color:{{$datepicker$color}}">日</view>
+        <view>一</view>
+        <view>二</view>
+        <view>三</view>
+        <view>四</view>
+        <view>五</view>
+        <view style="color:{{$datepicker$color}}">六</view>
+      </view>
+      <block  wx:for="{{$datepicker$dateList}}" wx:key="{{index}}" wx:for-item="item" wx:for-index="index">
+        <view class="date-label-view">{{item.dateLabel}}</view>
+        <view class="date-grid-view">
+          <block wx:for="{{item.dateList}}" wx:key="{{_index}}" wx:for-item="_item" wx:for-index="_index">
+            <!-- 禁用日期 -->
+            <view wx:if="{{_item.disabled&&_item.show}}" class="grid-item-view disable-color" style="{{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}">
+              {{_item.describe?_item.describe:_item.date}}
+            </view>
+            <!-- 显示日期 -->
+            <view wx:elif="{{!_item.disabled&&_item.show}}" bindtap="$datepicker$handleDate" data-index="{{index}}" data-_index="{{_index}}" class="grid-item-view {{_item._class}}" style="{{_item.day==0||_item.day==6?'color:'+ $datepicker$color+';':''}} {{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}  {{_item._style}} ">
+              <text> {{_item.describe?_item.describe:_item.date}}</text>
+              <view wx:if="{{_item._class=='double-checked-second'}}" class="inner-item-abs-tag-view">
+                <view class="item-tag-view">
+                  <text>共{{$datepicker$getDays-1}}晚</text>
+                  <view class="item-tag-triangle-view"/>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+    </view>
+  </view>
+
+      </scroll-view>
+    
+  </view>
+
+    <!-- 价格星级 -->
+    
+  <view  wx:if="{{$priceandstarpopup$showModal}}" class="modal-mask" bindtap="$priceandstarpopup$hideModal" catchtouchmove="$priceandstarpopup$preventTouchMove">
+  </view>
+  <view animation="{{$priceandstarpopup$animationData}}" class="modal-dialog" catchtouchmove="$priceandstarpopup$preventTouchMove" style="{{$priceandstarpopup$popupStyle}}">
+    
+      <view class="pop-label-view">
+        <view class="pop-label-view-peice">
+          <text class="pop-label-view-title">价格</text>
+          <view>
+            <view class="pop-label-view-star-menus">
+              <block wx:for="{{priceList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+                <view class="pop-label-view-star-menu {{item.checked?'checked-menu':''}}" bindtap="handlePrice" data-wpyhandleprice-a="{{index}}">￥{{item.label}}</view>
+              </block>
+            </view>
+          </view>
+        </view>
+        <view class="pop-label-view-star">
+          <text class="pop-label-view-title">星级</text>
+          <view class="pop-label-view-star-menus">
+            <block wx:for="{{starList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+              <view class="pop-label-view-star-menu {{item.checked?'checked-menu':''}}" bindtap="handleStar" data-wpyhandlestar-a="{{index}}">{{item.label}}</view>
+            </block>
+          </view>
+        </view>
+      </view>
+      <view class="popup-bottom-label-view">
+        <button class="pop-label-view-button" style="background:#404040" bindtap="handleReset">重置</button>
+        <button class="pop-label-view-button" style="background:#FCAD3E" bindtap="handleConfirms">确定</button>
+      </view>
+    
+  </view>
+
+  </view>

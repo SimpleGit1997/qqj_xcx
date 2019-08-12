@@ -1,0 +1,1030 @@
+<style lang="less">
+  .search-input-view {
+    height: 88rpx;
+    width: 100%;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  .search-inner-input-view {
+    width: 680rpx;
+    height: 60rpx;
+    margin: 10rpx auto;
+    background-color: #f5f5f5;
+    border-radius: 30rpx;
+    display: flex;
+  }
+  .inner-city-label-view {
+    width: 130rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 28rpx;
+    color: #333333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+  .inner-tag-view {
+    height: 26rpx;
+    width: 2rpx;
+    background-color: #dddddd;
+    margin: 18rpx 0px;
+  }
+  .inner-date-label-view {
+    width: 120rpx;
+    height: 60rpx;
+    font-size: 20rpx;
+    color: #666666;
+    margin-left: 20rpx;
+  }
+  .search-icon-image {
+    width: 40rpx;
+    height: 40rpx;
+    margin: 10rpx 14rpx;
+  }
+  .search-input {
+    width: 290rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    font-size: 28rpx;
+  }
+  .search-query-label-view {
+    background-color: #ffffff;
+    display: flex;
+    width: 100%;
+    height: 90rpx;
+    border-bottom: 2rpx solid #e5e5e5;
+    box-sizing: border-box;
+  }
+  .item-label-view {
+    width: 25%;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    color: #333333;
+    text-align: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  .checked-type {
+    color: #ff6600;
+  }
+  .item-arrow-icon-img {
+    width: 14rpx;
+    height: 10rpx;
+    margin: 40rpx 0px 0px 10rpx;
+  }
+  .modal-mask {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 178rpx;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    overflow: hidden;
+    z-index: 900;
+    color: #fff;
+  }
+  .modal-dialog {
+    top: 178rpx;
+    left: 0;
+    position: fixed;
+    z-index: 998;
+    background: #ffffff;
+    width: 100%;
+  }
+  .pop-label-view {
+    margin: 0 30rpx 0 30rpx;
+    width: 690rpx;
+  }
+  .pop-label-view-title {
+    color: #333333;
+    font-size: 28rpx;
+    width: 56rpx;
+    height: 40rpx;
+  }
+  .pop-label-view-peice {
+    width: 100%;
+    height: 345rpx;
+    margin: 30rpx 0 0 0;
+  }
+  .pop-label-view-star {
+    width: 100%;
+    height: 278rpx;
+  }
+  .pop-label-view-star-menus {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20rpx 0 0 0;
+  }
+  .pop-label-view-star-menu {
+    width: 216rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    font-size: 28rpx;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 20rpx;
+    border: 2rpx solid #dddddd;
+  }
+  .popup-bottom-label-view {
+    display: flex;
+  }
+  .pop-label-view-button {
+    width: 376rpx;
+    height: 100rpx;
+    border: 0;
+    border-radius: 0;
+    color: #ffffff;
+    font-size: 30rpx;
+    line-height: 100rpx;
+  }
+  .checked-menu {
+    background: #ffffff;
+    color: #ff6600;
+    border: 1rpx solid #ff6600;
+  }
+  .popup-scroll-view {
+    display: flex;
+    width: 100%;
+    background-color: #f6f6f6;
+  }
+  .scroll-left-row-view {
+    width: 100%;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    text-align: center;
+    &:active {
+      opacity: 0.7;
+    }
+  }
+  .scroll-right-row-view {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    text-align: left;
+    padding: 0px 30rpx;
+    box-sizing: border-box;
+    border-bottom: 2rpx solid #EEEEEE;
+    box-sizing: border-box;
+    &:active {
+      opacity: 0.7;
+    }
+  }
+  .checked-label {
+    background-color: #ffffff;
+    color: #333333;
+  }
+  .checked-region-label {
+    color: #ff6600;
+  }
+  .hook-icon-img {
+    width: 30rpx;
+    height: 30rpx;
+    margin: 30rpx 0rpx;
+  }
+  .reset-hover-class {
+    background-color: #333333 !important;
+  }
+  .submit-hover-class {
+    &:active {
+      opacity: 0.7;
+    }
+  }
+  .default-label-row-view {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .default-inner-label-row-view {
+    width: 690rpx;
+    height: 240rpx;
+    margin: 0px auto;
+    display: flex;
+    position: relative;
+    &:active {
+      opacity: 0.7;
+    }
+  }
+  .border-bottom {
+    border-bottom: 2rpx solid #efefef;
+  }
+  .hotel-img {
+    margin: 20rpx 20rpx 20rpx 0px;
+    width: 200rpx;
+    height: 200rpx;
+  }
+  .hotel-info-label-view {
+    width: 470rpx;
+    height: 200rpx;
+    margin: 20rpx 0px;
+  }
+  .hotel-name-label-view {
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #333333;
+  }
+  .hotel-comment-label-view {
+    margin-top: 10rpx;
+    width: 100%;
+    height: 30rpx;
+    font-size: 24rpx;
+    line-height: 30rpx;
+    color: #333333;
+    font-weight: 400;
+    display: flex;
+  }
+  .hotel-type-label-view {
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    margin-top: 14rpx;
+    font-size: 24rpx;
+    color: #333333;
+    font-weight: 400;
+    display: flex;
+  }
+  .type-tag-view {
+    width: 2rpx;
+    height: 20rpx;
+    margin: 5rpx 20rpx;
+    background-color: #DDDDDD;
+  }
+  .hotel-position-label-view {
+    width: 100%;
+    margin-top: 8rpx;
+    font-size: 24rpx;
+    color: #333333;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .abs-hotel-price-label-view {
+    position: absolute;
+    right: 0rpx;
+    top: 70rpx;
+    height: 56rpx;
+    display: flex;
+    color: #FF6600;
+    font-size: 40rpx;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="search-input-view">
+      <view class="search-inner-input-view">
+        <view class="inner-city-label-view">{{cityInfo.name}}</view>
+        <view class="inner-tag-view"></view>
+        <view class="inner-date-label-view">
+          <view style="height:30rpx;line-height:35rpx;">
+            <text>住</text>
+            <text>{{formatDate[0]}}</text>
+          </view>
+          <view style="height:30rpx;line-height:25rpx;">
+            <text>离</text>
+            <text>{{formatDate[1]}}</text>
+          </view>
+        </view>
+        <view class="inner-tag-view"></view>
+        <image class="search-icon-image" src="../images/search-icon.png" />
+        <input class="search-input" placeholder-class="placeholder-search-input" placeholder="搜索酒店关键字" @confirm="searchSubmit" confirm-type="search" @input="searchInput" value="{{keyword}}" />
+      </view>
+    </view>
+    <view class="search-query-label-view">
+      <view class="item-label-view {{tempObj.index==0?'checked-type':''}}" @tap="handleType(0)">
+        <text>价格星级</text>
+        <image wx:if="{{tempObj.index==0&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+      </view>
+      <view class="item-label-view {{tempObj.index==1?'checked-type':''}}" @tap="handleType(1)">
+        <text>位置</text>
+        <image wx:if="{{tempObj.index==1&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+      </view>
+      <view class="item-label-view {{tempObj.index==2?'checked-type':''}}" @tap="handleType(2)">
+        <text>筛选</text>
+        <image wx:if="{{tempObj.index==2&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+      </view>
+      <view class="item-label-view {{tempObj.index==3?'checked-type':''}}" @tap="handleType(3)">
+        <text>排序</text>
+        <image wx:if="{{tempObj.index==3&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+      </view>
+    </view>
+    <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolower">
+      <repeat for="{{hotelList}}" key="index" index="index" item="item">
+        <view class="default-label-row-view">
+          <view class="default-inner-label-row-view {{index+1===hotelList.length?'':'border-bottom'}}" @tap="handleHotel({{index}})">
+            <image lazy-load @error="imgError" data-errorIndex="{{index}}" class="hotel-img" src="{{item.imageUrl?item.imageUrl:'../images/default-hotel-img.png'}}" />
+            <view class="hotel-info-label-view">
+              <view class="hotel-name-label-view">{{item.hotelName}}</view>
+              <view class="hotel-comment-label-view">
+                <view wx:if="{{!item.commentNum&&!item.commentScore}}">暂无点评数据</view>
+                <view wx:else>
+                  <text style="color:#FF6600;">{{item.commentScore}}分</text> 来自 <text style="color:#FF6600;">{{item.commentNum}}</text>条点评
+                </view>
+              </view>
+              <view class="hotel-type-label-view" wx:if="{{item.starName||item.renovationDate}}">
+                <view>{{item.starName}}</view>
+                <view wx:if="{{item.renovationDate}}" class="type-tag-view"></view>
+                <view wx:if="{{item.renovationDate}}">{{item.renovationDate}}装修</view>
+              </view>
+              <view class="hotel-position-label-view">{{item.address}}</view>
+            </view>
+            <view class="abs-hotel-price-label-view">
+              <text style="font-size:20rpx;line-height:66rpx;">¥</text>
+              <text style="font-weight:600;line-height:56rpx;">{{item.price}}</text>
+              <text style="font-size:20rpx;color:#333333;line-height:66rpx;">起</text>
+            </view>
+          </view>
+        </view>
+      </repeat>
+    </scroll-view>
+    <view wx:if="{{showModal}}" class="modal-mask" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
+    <view class="modal-dialog" catchtouchmove="preventTouchMove">
+      <view wx:if="{{tempObj.index==0&&tempObj.checked}}">
+        <view class="pop-label-view">
+          <view class="pop-label-view-peice">
+            <text class="pop-label-view-title">价格</text>
+            <view>
+              <view class="pop-label-view-star-menus">
+                <repeat for="{{priceList}}" key="index" index="index" item="item">
+                  <view class="pop-label-view-star-menu {{item.checked?'checked-menu':''}}" @tap="handlePrice({{index}})">￥{{item.label}}</view>
+                </repeat>
+              </view>
+            </view>
+          </view>
+          <view class="pop-label-view-star">
+            <text class="pop-label-view-title">星级</text>
+            <view class="pop-label-view-star-menus">
+              <repeat for="{{starList}}" key="index" index="index" item="item">
+                <view class="pop-label-view-star-menu {{item.checked?'checked-menu':''}}" @tap="handleStar({{index}})">{{item.label}}</view>
+              </repeat>
+            </view>
+          </view>
+        </view>
+        <view class="popup-bottom-label-view">
+          <button class="pop-label-view-button" hover-class="reset-hover-class" style="background:#404040" @tap="handleResetStarAndPrice">重置</button>
+          <button class="pop-label-view-button" hover-class="submit-hover-class" style="background:#FCAD3E" @tap="handleConfirmsStarAndPrice">确定</button>
+        </view>
+      </view>
+      <view wx:if="{{tempObj.index==1&&tempObj.checked}}">
+        <view class="popup-scroll-view">
+          <scroll-view style="height:{{600}}rpx;width:250rpx;border-right:1rpx solid #eeeeee;box-sizzing:border-box;" scroll-y>
+            <repeat for="{{positionOption}}" key="index" index="index" item="item">
+              <view @tap="handleOptionIndex({{index}})" class="scroll-left-row-view {{optionIndex==index?'checked-label':''}}">{{item}}</view>
+            </repeat>
+          </scroll-view>
+          <scroll-view style="height:{{600}}rpx;width:500rpx;background-color:#fff;" scroll-y>
+            <!-- 距离 -->
+            <repeat wx:if="{{optionIndex==0}}" for="{{distanceList}}" key="index" index="index" item="item">
+              <view class="scroll-right-row-view {{distance==item.value?'checked-region-label':''}}" @tap="handleDistance({{index}})">
+                <view>{{item.label}}</view>
+                <image wx:if="{{distance==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+              </view>
+            </repeat>
+            <!-- 行政区域 -->
+            <repeat wx:if="{{optionIndex==1}}" for="{{regionList}}" key="index" index="index" item="item">
+              <view class="scroll-right-row-view {{regionId==item.id?'checked-region-label':''}}" @tap="handleRegion({{index}})">
+                <view>{{item.name}}</view>
+                <image wx:if="{{regionId==item.id}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+              </view>
+            </repeat>
+          </scroll-view>
+        </view>
+        <view class="popup-bottom-label-view">
+          <button class="pop-label-view-button" hover-class="reset-hover-class" style="background:#404040" @tap="handleResetPosition">重置</button>
+          <button class="pop-label-view-button" hover-class="submit-hover-class" style="background:#FCAD3E" @tap="handleConfirmsPosition">确定</button>
+        </view>
+      </view>
+      <view wx:if="{{tempObj.index==2&&tempObj.checked}}">
+        <view class="popup-scroll-view">
+          <scroll-view style="height:{{600}}rpx;width:250rpx;border-right:1rpx solid #eeeeee;box-sizzing:border-box;" scroll-y>
+            <repeat for="{{typeOption}}" key="index" index="index" item="item">
+              <view @tap="handleTypeIndex({{index}})" class="scroll-left-row-view {{typeIndex==index?'checked-label':''}}">{{item}}</view>
+            </repeat>
+          </scroll-view>
+          <scroll-view style="height:{{600}}rpx;width:500rpx;background-color:#fff;" scroll-y>
+            <!-- 床型 -->
+            <repeat wx:if="{{typeIndex==0}}" for="{{bedTypeList}}" key="index" index="index" item="item">
+              <view class="scroll-right-row-view {{bedType==item.value?'checked-region-label':''}}" @tap="handleBedType({{index}})">
+                <view>{{item.label}}</view>
+                <image wx:if="{{bedType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+              </view>
+            </repeat>
+            <!-- 早餐 -->
+            <repeat wx:if="{{typeIndex==1}}" for="{{breakfastTypeList}}" key="index" index="index" item="item">
+              <view class="scroll-right-row-view {{breakfastType==item.value?'checked-region-label':''}}" @tap="handleBreakfast({{index}})">
+                <view>{{item.label}}</view>
+                <image wx:if="{{breakfastType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+              </view>
+            </repeat>
+          </scroll-view>
+        </view>
+        <view class="popup-bottom-label-view">
+          <button class="pop-label-view-button" hover-class="reset-hover-class" style="background:#404040" @tap="handleResetType">重置</button>
+          <button class="pop-label-view-button" hover-class="submit-hover-class" style="background:#FCAD3E" @tap="handleConfirmsType">确定</button>
+        </view>
+      </view>
+      <view wx:if="{{tempObj.index==3&&tempObj.checked}}">
+        <view class="popup-scroll-view">
+          <scroll-view style="height:{{360}}rpx;width:100%;background-color:#fff;" scroll-y>
+            <repeat for="{{orderByTypeList}}" key="index" index="index" item="item">
+              <view class="scroll-right-row-view {{orderByType==item.value?'checked-region-label':''}}" @tap="handleOrder({{index}})">
+                <view>{{item.label}}</view>
+                <image wx:if="{{orderByType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+              </view>
+            </repeat>
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import {
+    getSysWidth,
+    getSysHeight,
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
+  import {
+    queryRegionsByParentId,
+    getHotelList
+  } from "../server/index.js"; //接口
+  export default class SearchList extends wepy.page {
+    config = {
+      navigationBarTitleText: "搜索酒店",
+       disableScroll:true
+    };
+    components = {};
+    data = {
+      scrollHeight: 0,
+      pageNo: 1,
+      tempObj: {
+        index: null,
+        checked: false
+      },
+      cityInfo: {},
+      keyword: '',
+      dateValue: [],
+      price: [],
+      priceLabel: "",
+      star: "",
+      starLabel: "",
+      regionId: 0,
+      distance: 0,
+      bedType: 0,
+      breakfastType: 0,
+      orderByType: 1,
+      showModal: false,
+      starList: [{
+          value: 0,
+          label: "不限"
+        },
+        {
+          value: 1,
+          label: "经济/连锁"
+        },
+        {
+          value: 2,
+          label: "二星/其他"
+        },
+        {
+          value: 3,
+          label: "三星/舒适"
+        },
+        {
+          value: 4,
+          label: "四星/高档"
+        },
+        {
+          value: 5,
+          label: "五星/豪华"
+        }
+      ],
+      priceList: [{
+          value: ["", ""],
+          label: "不限"
+        },
+        {
+          value: ["0", "100"],
+          label: "0-100"
+        },
+        {
+          value: ["100", "150"],
+          label: "100-150"
+        },
+        {
+          value: ["150", "300"],
+          label: "150-300"
+        },
+        {
+          value: ["300", "500"],
+          label: "300-500"
+        },
+        {
+          value: ["500", "800"],
+          label: "500-800"
+        },
+        {
+          value: ["900", ""],
+          label: "900以上"
+        }
+      ],
+      positionOption: ["距离", "行政区"],
+      optionIndex: 0,
+      typeOption: ["床型", "早餐"],
+      typeIndex: 0,
+      distanceList: [{
+          label: "不限",
+          value: "0"
+        },
+        {
+          label: "500米",
+          value: "500"
+        },
+        {
+          label: "1公里",
+          value: "1000"
+        },
+        {
+          label: "2公里",
+          value: "2000"
+        },
+        {
+          label: "3公里",
+          value: "3000"
+        },
+        {
+          label: "5公里",
+          value: "5000"
+        },
+        {
+          label: "7公里",
+          value: "7000"
+        },
+        {
+          label: "10公里",
+          value: "10000"
+        }
+      ],
+      regionList: [],
+      bedTypeList: [{
+        label: "不限",
+        value: "0"
+      }, {
+        label: "大床",
+        value: "1"
+      }, {
+        label: "双床",
+        value: "2"
+      }, {
+        label: "单人床",
+        value: "3"
+      }, {
+        label: "多张床",
+        value: "4"
+      }],
+      breakfastTypeList: [{
+        label: "不限",
+        value: "0"
+      }, {
+        label: "含早",
+        value: "1"
+      }, {
+        label: "单早",
+        value: "2"
+      }, {
+        label: "双早",
+        value: "3"
+      }],
+      orderByTypeList: [{
+        label: "距离优先",
+        value: "1"
+      }, {
+        label: "好评优先",
+        value: "2"
+      }, {
+        label: "低价优先",
+        value: "3"
+      }, {
+        label: "高价优先",
+        value: "4"
+      }],
+      hotelList: [],
+      hasMore: true
+    };
+    computed = {
+      formatDate() {
+        let value = [];
+        if (this.dateValue.length > 0) {
+          this.dateValue.forEach(item => {
+            value.push(new Date(item).toString("MM月dd日"));
+          });
+        }
+        return value;
+      }
+    };
+    methods = {
+      /**
+       * 搜索
+       */
+      searchSubmit(e) {
+        this.getHotelInfo()
+      },
+      /**
+       * 下啦
+       */
+      scrolltolower(e) {
+        if (this.hasMore) {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          let query = {
+            pageNo: ++this.pageNo,
+            keyword: this.keyword,
+            bookStart: this.dateValue[0] ? this.dateValue[0] : '',
+            bookEnd: this.dateValue[1] ? this.dateValue[1] : '',
+            localPointLng: this.cityInfo.lng || '',
+            localPointLat: this.cityInfo.lat || '',
+            minPrice: this.price[0] ? this.price[0] : '',
+            maxPrice: this.price[1] ? this.price[1] : '',
+            star: this.star,
+            distance: this.distance,
+            cityId: this.cityInfo.id,
+            regionId: this.regionId,
+            bedType: this.bedType,
+            breakfastType: this.breakfastType,
+            orderByType: this.orderByType
+          }
+          console.log(query)
+          getHotelList(query).then(data => {
+            if (data.length == 0) {
+              wx.showToast({
+                title: '暂无更多数据哦～',
+                icon: 'none',
+                duration: 1200
+              })
+              this.hasMore = false
+            } else if (data.length > 0) {
+              data.forEach(item => {
+                this.hotelList.push(item)
+              });
+            }
+            this.$apply()
+            wepy.hideLoading()
+          })
+        } else {
+          wepy.showToast({
+            title: '暂无更多数据哦～',
+            icon: 'none',
+            duration: 1200
+          });
+        }
+      },
+      handleHotel(index) {
+        let hotelId = this.hotelList[index].id
+        wepy.navigateTo({
+          url: './hotelDetail?hotelId=' + hotelId + '&dateValue='+ this.dateValue
+        })
+      },
+      /**
+       * 选择距离
+       */
+      handleDistance(index) {
+        this.distance = this.distanceList[index].value
+        this.$apply()
+      },
+      /**
+       * 选择距离/行政区
+       */
+      handleOptionIndex(index) {
+        this.optionIndex = index
+        this.$apply()
+      },
+      /**
+       * 选择早餐/床型
+       */
+      handleTypeIndex(index) {
+        this.typeIndex = index
+        this.$apply()
+      },
+      /**
+       * 选择床型
+       */
+      handleBedType(index) {
+        this.bedType = this.bedTypeList[index].value
+        this.$apply()
+      },
+      /**
+       * 选择早餐
+       */
+      handleBreakfast(index) {
+        this.breakfastType = this.breakfastTypeList[index].value
+        this.$apply()
+      },
+      /**
+       * 选择行政区
+       */
+      handleRegion(index) {
+        this.regionId = this.regionList[index].id
+        this.$apply();
+      },
+      /**
+       * 选择排序
+       */
+      handleOrder(index) {
+        this.orderByType = this.orderByTypeList[index].value
+        console.log(this.orderByType)
+        this.tempObj = {};
+        this.showModal = false;
+        this.getHotelInfo()
+        this.$apply();
+      },
+      /**
+       * 选择类型
+       */
+      handleType(index) {
+        if (this.tempObj.index == index) {
+          this.tempObj.checked = false
+          this.tempObj.index = undefined
+          this.showModal = false
+        } else {
+          this.tempObj.index = index
+          this.tempObj.checked = true
+          this.showModal = true
+        }
+        this.$apply();
+      },
+      /**
+       * 关闭探出框
+       */
+      hideModal() {
+        this.tempObj = {};
+        this.showModal = false;
+        this.$apply();
+      },
+      preventTouchMove() {
+        console.warn("preventTouchMove方法已阻止其他事件。");
+      },
+      /**
+       * 搜索
+       */
+      searchInput(e) {
+        let value = e.detail.value;
+        this.keyword = value
+        this.$apply()
+      },
+      /**
+       * 选择星级
+       */
+      handleStar(index) {
+        if (index == 0) {
+          this.starList.forEach((item, _index) => {
+            if (index == _index) {
+              item.checked = true;
+            } else {
+              item.checked = false;
+            }
+          });
+        } else {
+          this.starList[0].checked = false;
+          this.starList[index].checked = !this.starList[index].checked;
+          let full = true;
+          this.starList.forEach((item, _index) => {
+            if (_index > 0 && !item.checked) {
+              full = false;
+            }
+          });
+          if (full) {
+            this.starList.forEach((item, _index) => {
+              if (_index == 0) {
+                item.checked = true;
+              } else {
+                item.checked = false;
+              }
+            });
+          }
+        }
+        this.$apply();
+      },
+      /**
+       * 重置星级和价格
+       */
+      handleResetStarAndPrice() {
+        this.starList.forEach(item => {
+          item.checked = false;
+        });
+        this.priceList.forEach(item => {
+          item.checked = false;
+        });
+        this.starList[0].checked = true
+        this.priceList[0].checked = true
+        this.$apply();
+      },
+      /**
+       * 重置距离行政区
+       */
+      handleResetPosition() {
+        this.regionId = 0
+        this.distance = 0
+        this.$apply()
+      },
+      /**
+       * 重置早餐床型
+       */
+      handleResetType() {
+        this.bedType = 0
+        this.breakfastType = 0
+        this.$apply()
+      },
+      /**
+       * 选择价格
+       */
+      handlePrice(index) {
+        this.priceList.forEach((item, _index) => {
+          if (index == _index) {
+            item.checked = true;
+          } else {
+            item.checked = false;
+          }
+        });
+        this.$apply();
+      },
+      /**
+       * 确定位置
+       */
+      handleConfirmsPosition() {
+        this.tempObj = {};
+        this.showModal = false;
+        this.getHotelInfo()
+        this.$apply();
+      },
+      /**
+       * 确定床型和早餐
+       */
+      handleConfirmsType() {
+        this.tempObj = {};
+        this.showModal = false;
+        this.getHotelInfo()
+        this.$apply();
+      },
+      /**
+       * 确定价格和星级
+       */
+      handleConfirmsStarAndPrice() {
+        let price = "";
+        let priceLabel = "";
+        let star = "";
+        let starLabel = "";
+        this.priceList.forEach(item => {
+          if (item.checked) {
+            price = item.value;
+            priceLabel = item.label;
+          }
+        });
+        this.starList.forEach(item => {
+          if (item.checked) {
+            star += item.value + ",";
+            starLabel += item.label + " ";
+          }
+        });
+        this.price = price;
+        this.priceLabel = priceLabel;
+        this.star = star;
+        this.starLabel = starLabel;
+        if (price || star) {
+          this.priceAndStarlabel = priceLabel + " " + starLabel;
+        } else {
+          this.priceAndStarlabel = "";
+        }
+        this.tempObj = {};
+        this.showModal = false;
+        this.getHotelInfo()
+        this.$apply();
+      },
+      imgError(e) {
+        let errorImgIndex = e.target.dataset.errorindex
+        this.hotelList[errorImgIndex].imageUrl = '../images/default-hotel-img.png'
+        this.$apply()
+      }
+    };
+    onLoad(option) {
+      this.scrollHeight = changePXToRPX(getSysHeight()) - 178;
+      if (option.dateValue) {
+        this.dateValue = option.dateValue.split(",");
+      }
+      if (option.price && option.priceLabel) {
+        this.price = option.price.split(",") || [];
+        this.priceLabel = option.priceLabel;
+      }
+      if (option.star && option.starLabel) {
+        this.star = option.star;
+        this.starLabel = option.starLabel;
+      }
+      if (option.keyword) {
+        this.keyword = option.keyword
+      }
+      if (option.cityInfo) {
+        this.cityInfo = JSON.parse(option.cityInfo);
+        queryRegionsByParentId({
+          parentId: this.cityInfo.id
+        }).then(data => {
+          this.regionList = data;
+          this.regionList.unshift({
+            name: "不限",
+            id: 0
+          });
+          this.$apply();
+        });
+      }
+      this.setPriceAndStar();
+      this.$apply();
+    }
+    onShow() {}
+    // 设置星级和价格初始化
+    setPriceAndStar() {
+      this.priceList.forEach(item => {
+        if (JSON.stringify(this.price) == JSON.stringify(item.value)) {
+          item.checked = true;
+        } else {
+          item.checked = false;
+        }
+      });
+      let starArr = [];
+      if (this.starLabel) {
+        starArr = this.starLabel.split(" ");
+      }
+      this.starList.forEach(item => {
+        let checked = false;
+        if (starArr.length > 0) {
+          starArr.forEach(_item => {
+            if (_item == item.label) {
+              checked = true;
+            }
+            item.checked = checked;
+          });
+        } else {
+          item.checked = checked;
+        }
+      });
+      this.getHotelInfo()
+      this.$apply();
+    }
+    getHotelInfo() {
+      wepy.showLoading({
+        title: '加载中...'
+      })
+      this.hasMore = true
+      this.pageNo = 1
+      let query = {
+        pageNo: this.pageNo,
+        keyword: this.keyword,
+        bookStart: this.dateValue[0] ? this.dateValue[0] : '',
+        bookEnd: this.dateValue[1] ? this.dateValue[1] : '',
+        localPointLng: this.cityInfo.lng || '',
+        localPointLat: this.cityInfo.lat || '',
+        minPrice: this.price[0] ? this.price[0] : '',
+        maxPrice: this.price[1] ? this.price[1] : '',
+        star: this.star,
+        distance: this.distance,
+        cityId: this.cityInfo.id,
+        regionId: this.regionId,
+        bedType: this.bedType,
+        breakfastType: this.breakfastType,
+        orderByType: this.orderByType
+      }
+      getHotelList(query).then(data => {
+        this.hotelList = data
+        this.$apply()
+        wepy.hideLoading()
+        if (this.hotelList.length === 0) {
+          wx.showToast({
+            title: '暂无更多数据哦～',
+            icon: 'none',
+            duration: 1200
+          })
+        }
+      })
+    }
+  }
+</script>

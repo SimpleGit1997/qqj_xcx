@@ -1,0 +1,90 @@
+
+  <view class="body">
+    <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y>
+      <view class="top-hotel-info-label-view">
+        <view class="top-inner-info-label-view">
+          <view class="info-item-left-img-view">
+            <image lazy-load="lazy-load" src="../images/default-hotel-img.png" style="width:100%;height:100%;"/>
+          </view>
+          <view class="info-item-right-label-view">
+            <view class="right-label-title-view">花园景观双床房-无早餐</view>
+            <view class="right-label-describe-view">
+              <view>豪华双床房</view>
+              <view class="tag-label-view"/>
+              <view>不含早</view>
+              <view class="tag-label-view"/>
+              <view style="color:#FF6600;">随时取消</view>
+            </view>
+            <view class="warn-label-view">8月24日 12点前可以免费取消</view>
+          </view>
+        </view>
+      </view>
+      <view class="select-label-view" bindtap="handleDate">
+        <view class="selected-left-item-view">
+          <view class="selected-text-label-view">入住</view>
+          <view class="selected-date-label-view">
+            <text>{{formatDate[0]}}</text>
+            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[0]}}</text>
+          </view>
+        </view>
+        <view class="selected-right-item-view">
+          <view class="selected-text-label-view">离店</view>
+          <view class="selected-date-label-view">
+            <text>{{formatDate[1]}}</text>
+            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[1]}}</text>
+          </view>
+        </view>
+        <view class="abs-selected-label-view">共{{getDays}}晚</view>
+      </view>
+      <view class="bottom-background-iamge-label-view">
+        <image src="../images/bottom-background-image.png" style="width:100%;height:100%;"/>
+      </view>
+      <view class="default-label-text-view" style="margin-top:20rpx;">
+        <view class="default-inner-label-text-view border-bottom">
+          <text style="font-weight:600;">入住信息</text>
+        </view>
+      </view>
+      <view class="default-label-text-view">
+        <view class="default-inner-label-text-view border-bottom">
+          <view class="item-left-text-view">房间数</view>
+          <view class="item-right-input-view">
+            <input style="width:100%;" disabled value="{{rooms}}" placeholder="每间需填1人姓名" placeholder-class="placeholder-class"/>
+          </view>
+          <view class="item-arrow-right-img-view">
+            <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;"/>
+          </view>
+        </view>
+      </view>
+      <view class="default-label-more-view">
+        <view class="default-inner-label-more-view">
+          <view class="item-label-more-left-view">入住人</view>
+          <view class="item-right-more-input-view">
+            <view class="item-right-more-inner-view border-bottom">
+              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class"/>
+            </view>
+            <view class="item-right-more-inner-view border-bottom">
+              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="default-label-text-view">
+        <view class="default-inner-label-text-view border-bottom">
+          <view class="item-left-text-view">手机号</view>
+          <view class="item-right-input-view">
+             <view class="item-right-text-view">+86</view>
+            <input value="{{phone}}" placeholder="用于接收通知" placeholder-class="placeholder-class"/>
+          </view>
+        </view>
+      </view>
+      <view class="bottom-warn-label-view">
+        <view class="warn-title-label-view">取消规则</view>
+        <view class="warin-info-label-view">【YYYY-MM-DD HH:MM】前取消修改将收取首晚房费作为您的违约费用。否则将收取全额房费。</view>
+      </view>
+  
+  </scroll-view>
+  <view class="bottom-button-label-view">
+    <view class="button-left-view"/>
+    <view class="button-right-view"/>
+  </view>
+  </view>

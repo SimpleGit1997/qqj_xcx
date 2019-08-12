@@ -1,0 +1,171 @@
+<style lang="less">
+  .map-content-view {
+    width: 100%;
+    height: 400rpx;
+  }
+  .default-label-view {
+    margin: 0px 0px 20rpx 0rpx;
+    background-color: #ffffff;
+    padding: 30rpx 20rpx 20rpx 20rpx;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .defualt-inner-title-view {
+    display: flex;
+    height: 40rpx;
+    line-height: 40rpx;
+    width: 100%;
+  }
+  .abs-tel-img-view {
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+    right: 26rpx;
+    top: 20rpx;
+  }
+  .default-tag-color-view {
+    width: 6rpx;
+    height: 30rpx;
+    background-color: #FF6600;
+    margin: 5rpx 20rpx 0px 0px;
+  }
+  .default-title-text-view {
+    font-size: 28rpx;
+    color: #333333;
+    font-weight: 600;
+  }
+  .default-inner-info-label-view {
+    width: 100%;
+    font-size: 24rpx;
+    color: #666666;
+  }
+  .flex-label-text-view {
+    display: flex;
+    flex-flow: wrap;
+    line-height: 40rpx;
+    width: 100%;
+  }
+  .more-label-text-view {
+    width: 100%;
+    line-height: 35rpx;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="map-content-view">
+      <map id="myMap" enable-scroll="{{false}}" markers="{{markers}}" longitude="{{pointLng}}" latitude="{{pointLat}}" show-location="{{true}}" style="width: 100%; height: 100%;"> </map>
+    </view>
+    <view class="default-label-view">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"></view>
+        <view class="default-title-text-view">酒店介绍</view>
+        <view class="abs-tel-img-view" @tap="handleTel">
+          <image src="../images/tel-color-icon.png" style="width:100%;height:100%;" />
+        </view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;" wx:if="{{hotelInfo.establishmentDate||hotelInfo.renovationDate}}">
+          <view style="width:50%;">开业时间: {{hotelInfo.establishmentDate?hotelInfo.establishmentDate:'暂无介绍'}}</view>
+          <view style="width:50%;">装修: {{hotelInfo.renovationDate?hotelInfo.renovationDate:'暂无介绍'}}</view>
+        </view>
+        <view class="flex-label-text-view">
+          <text>客房总数: {{hotelInfo.roomCount?hotelInfo.roomCount+'间':'暂无介绍'}}</text>
+        </view>
+        <view class="more-label-text-view">
+          {{hotelInfo.introduceCn?hotelInfo.introduceCn:'暂无介绍'}}
+        </view>
+      </view>
+    </view>
+    <view class="default-label-view" wx:if="{{hotelInfo.facilityNameList.length>0}}">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"></view>
+        <view class="default-title-text-view">酒店实施</view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;">
+          <repeat for="{{hotelInfo.facilityNameList}}" key="index" item="item" index="index">
+            <view style="width:33%;">{{item.name}}</view>
+          </repeat>
+        </view>
+      </view>
+    </view>
+    <view class="default-label-view" wx:if="{{hotelInfo.childrenPolicy||hotelInfo.petPolicy}}">
+      <view class="defualt-inner-title-view">
+        <view class="default-tag-color-view"></view>
+        <view class="default-title-text-view">特别提醒</view>
+      </view>
+      <view class="default-inner-info-label-view">
+        <view class="flex-label-text-view" style="margin-top:10rpx;">
+          <view wx:if="{{hotelInfo.childrenPolicy}}" style="width:100%;">{{hotelInfo.childrenPolicy}} </view>
+          <view wx:if="{{hotelInfo.petPolicy}}" style="width:100%;">{{hotelInfo.petPolicy}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {
+    hotelDetailInfo
+  } from '../server/index.js'
+  export default class HotelInfo extends wepy.page {
+    config = {
+      navigationBarTitleText: '酒店信息'
+    }
+    data = {
+      mapCtx: null,
+      hotelInfo: {},
+      markers: [],
+      pointLng: '',
+      pointLat: ''
+    }
+    methods = {
+      handleTel() {
+        if (this.hotelInfo.contactTel) {
+          wx.makePhoneCall({
+            phoneNumber: this.hotelInfo.contactTel,
+          })
+        } else {
+          wepy.showToast({
+            title: '当前酒店没有预留电话哦!',
+            icon: 'none',
+            duration: 1500
+          })
+        }
+      }
+    }
+    onShow() {}
+    onLoad(option) {
+      this.mapCtx = wx.createMapContext('myMap')
+      hotelDetailInfo({
+        hotelId: option.hotelId,
+        sid: ''
+      }).then(res => {
+        console.log(res.hotelInfo)
+        this.hotelInfo = res.hotelInfo
+        this.pointLng = this.hotelInfo.pointLng
+        this.pointLat = this.hotelInfo.pointLat
+        this.markers.push({
+          id: 0,
+          latitude: this.hotelInfo.pointLat,
+          longitude: this.hotelInfo.pointLng,
+          width: 25,
+          height: 30,
+          iconPath: '../images/map-position-icon.png',
+          callout: {
+            content: this.hotelInfo.title,
+            color: "#666666",
+            fontSize: "14",
+            borderRadius: "10",
+            bgColor: "#ffffff",
+            padding: "10",
+            display: "ALWAYS",
+          }
+        })
+        this.$apply()
+      })
+    }
+  }
+</script>

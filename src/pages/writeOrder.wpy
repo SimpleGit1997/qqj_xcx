@@ -1,0 +1,402 @@
+<style lang="less">
+  .top-hotel-info-label-view {
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1rpx solid #E5E5E5;
+  }
+  .top-inner-info-label-view {
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 30rpx 30rpx 20rpx 30rpx;
+    box-sizing: border-box;
+    border-bottom: 2rpx solid #efefef;
+  }
+  .info-item-left-img-view {
+    width: 120rpx;
+    height: 120rpx;
+    margin-right: 30rpx;
+  }
+  .info-item-right-label-view {
+    width: 540rpx;
+  }
+  .right-label-title-view {
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 30rpx;
+    font-weight: 600;
+    color: #333333;
+  }
+  .right-label-describe-view {
+    display: flex;
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: #333333;
+  }
+  .tag-label-view {
+    width: 2rpx;
+    height: 20rpx;
+    margin: 10rpx 20rpx;
+    background-color: #DDDDDD;
+  }
+  .warn-label-view {
+    width: 100%;
+    height: 56rpx;
+    line-height: 56rpx;
+    border-radius: 16rpx;
+    background-color: #F5F5F5;
+    margin-top: 16rpx;
+    font-size: 24rpx;
+    color: #333333;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+  } // 
+  .select-label-view {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 90rpx;
+    background-color: #ffffff;
+  }
+  .selected-left-item-view {
+    margin-left: 80rpx;
+    height: 90rpx;
+  }
+  .selected-right-item-view {
+    margin-right: 80rpx;
+    height: 90rpx;
+  }
+  .selected-text-label-view {
+    color: #999999;
+    font-size: 24rpx;
+    text-align: center;
+    height: 30rpx;
+    line-height: 60rpx;
+    margin-top: 10rpx;
+  }
+  .selected-date-label-view {
+    font-size: 28rpx;
+    color: #333333;
+    font-weight: 560;
+    height: 40rpx;
+    line-height: 70rpx;
+  }
+  .abs-selected-label-view {
+    position: absolute;
+    top: 48rpx;
+    right: 320rpx;
+    border: 2rpx solid #FF6600;
+    margin: 0px auto;
+    color: #FF6600;
+    font-size: 22rpx;
+    border-radius: 22rpx;
+    padding: 6rpx 18rpx;
+  }
+  .bottom-background-iamge-label-view {
+    width: 100%;
+    height: 48rpx;
+  }
+  .default-label-text-view {
+    width: 100%;
+    height: 90rpx;
+    background-color: #ffffff;
+  }
+  .default-inner-label-text-view {
+    position: relative;
+    width: 690rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    margin: 0px auto;
+    display: flex;
+    font-size: 28rpx;
+  }
+  .border-bottom {
+    border-bottom: 2rpx solid #efefef;
+  }
+  .item-left-text-view {
+    width: 200rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    color: #999999;
+  }
+  .item-right-input-view {
+    width: 450rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    display: flex;
+    .item-right-text-view{
+      width: 70rpx;
+    }
+    input {
+      font-size: 28rpx;
+      width: 380rpx;
+      height: 90rpx;
+      line-height: 90rpx;
+    }
+  }
+  .placeholder-class {
+    color: #CCCCCC;
+    font-size: 28rpx;
+  }
+  .item-arrow-right-img-view {
+    width: 30rpx;
+    height: 30rpx;
+    position: absolute;
+    top: 30rpx;
+    right: 0px;
+  }
+  .default-label-more-view {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .item-label-more-left-view {
+    width: 200rpx;
+    display: flex;
+    align-items: center;
+  }
+  .default-inner-label-more-view {
+    width: 690rpx;
+    margin: 0px auto;
+    display: flex;
+    font-size: 28rpx;
+    color: #999999;
+  }
+  .item-right-more-input-view {
+    width: 490rpx;
+    .item-right-more-inner-view {
+      width: 490rpx;
+      input {
+        font-size: 28rpx;
+        width: 100%;
+        height: 90rpx;
+        line-height: 90rpx;
+      }
+    }
+  }
+  .bottom-warn-label-view {
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 20rpx;
+    padding: 20rpx 30rpx;
+    box-sizing: border-box;
+  }
+  .warn-title-label-view {
+    font-size: 28rpx;
+    color: #333333;
+    font-weight: 600;
+    height: 40rpx;
+    line-height: 40rpx;
+  }
+  .warin-info-label-view {
+    width: 100%;
+    font-size: 24rpx;
+    color: #666666;
+    line-height: 40rpx;
+  }
+  .bottom-button-label-view {
+    width: 100%;
+    display: flex;
+    height: 98rpx;
+    border-top: 2rpx solid #E4E4E4;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  .button-left-view {
+    display: flex;
+    position: relative;
+    width: 440rpx;
+    height: 100rpx;
+    background-color: #ffffff;
+  }
+  .button-right-view {
+    display: flex;
+    position: relative;
+    width: 310rpx;
+    height: 100rpx;
+    background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+  }
+</style>
+
+<template>
+  <view class="body">
+    <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y>
+      <view class="top-hotel-info-label-view">
+        <view class="top-inner-info-label-view">
+          <view class="info-item-left-img-view">
+            <image lazy-load src="../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
+          </view>
+          <view class="info-item-right-label-view">
+            <view class="right-label-title-view">花园景观双床房-无早餐</view>
+            <view class="right-label-describe-view">
+              <view>豪华双床房</view>
+              <view class="tag-label-view"></view>
+              <view>不含早</view>
+              <view class="tag-label-view"></view>
+              <view style="color:#FF6600;">随时取消</view>
+            </view>
+            <view class="warn-label-view">8月24日 12点前可以免费取消</view>
+          </view>
+        </view>
+      </view>
+      <view class="select-label-view" @tap="handleDate">
+        <view class="selected-left-item-view">
+          <view class="selected-text-label-view">入住</view>
+          <view class="selected-date-label-view">
+            <text>{{formatDate[0]}}</text>
+            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[0]}}</text>
+          </view>
+        </view>
+        <view class="selected-right-item-view">
+          <view class="selected-text-label-view">离店</view>
+          <view class="selected-date-label-view">
+            <text>{{formatDate[1]}}</text>
+            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[1]}}</text>
+          </view>
+        </view>
+        <view class="abs-selected-label-view">共{{getDays}}晚</view>
+      </view>
+      <view class="bottom-background-iamge-label-view">
+        <image src="../images/bottom-background-image.png" style="width:100%;height:100%;"></image>
+      </view>
+      <view class="default-label-text-view" style="margin-top:20rpx;">
+        <view class="default-inner-label-text-view border-bottom">
+          <text style="font-weight:600;">入住信息</text>
+        </view>
+      </view>
+      <view class="default-label-text-view">
+        <view class="default-inner-label-text-view border-bottom">
+          <view class="item-left-text-view">房间数</view>
+          <view class="item-right-input-view">
+            <input style="width:100%;" disabled value="{{rooms}}" placeholder="每间需填1人姓名" placeholder-class="placeholder-class" />
+          </view>
+          <view class="item-arrow-right-img-view">
+            <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;" />
+          </view>
+        </view>
+      </view>
+      <view class="default-label-more-view">
+        <view class="default-inner-label-more-view">
+          <view class="item-label-more-left-view">入住人</view>
+          <view class="item-right-more-input-view">
+            <view class="item-right-more-inner-view border-bottom">
+              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class" />
+            </view>
+            <view class="item-right-more-inner-view border-bottom">
+              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="default-label-text-view">
+        <view class="default-inner-label-text-view border-bottom">
+          <view class="item-left-text-view">手机号</view>
+          <view class="item-right-input-view">
+             <view class="item-right-text-view">+86</view>
+            <input value="{{phone}}" placeholder="用于接收通知" placeholder-class="placeholder-class" />
+          </view>
+        </view>
+      </view>
+      <view class="bottom-warn-label-view">
+        <view class="warn-title-label-view">取消规则</view>
+        <view class="warin-info-label-view">【YYYY-MM-DD HH:MM】前取消修改将收取首晚房费作为您的违约费用。否则将收取全额房费。</view>
+      </view>
+  </view>
+  </scroll-view>
+  <view class="bottom-button-label-view">
+    <view class="button-left-view"></view>
+    <view class="button-right-view"></view>
+  </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import popup from '../components/popup/index';
+  import {
+    getSysWidth,
+    getSysHeight,
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
+  import {
+    calculateDiffTime
+  } from "../lib/utils.js";
+  // import { getOrder } from '../server/index.js'
+  export default class WriteOrder extends wepy.page {
+    config = {
+      navigationBarTitleText: '填写订单',
+      disableScroll:true
+    }
+    components = {
+      popup: popup //弹窗
+    };
+    computed = {
+      formatDate() {
+        let value = [];
+        if (this.dateValue.length > 0) {
+          this.dateValue.forEach(item => {
+            value.push(new Date(item).toString("MM月dd日"));
+          });
+        }
+        return value;
+      },
+      getDays() {
+        let days = 0;
+        if (this.dateValue.length === 2) {
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          let time = calculateDiffTime(first, second);
+          days = time[0] / 24;
+          return days;
+        }
+      },
+      getDescribe() {
+        let describe = ["", ""];
+        if (this.dateValue.length === 2) {
+          let currentDate = new Date();
+          let currentStamp = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate()
+          ).valueOf();
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          if (currentStamp == first) {
+            describe[0] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == first) {
+            describe[0] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == first) {
+            describe[0] = "后天";
+          } else {
+            describe[0] = "";
+          }
+          if (currentStamp == second) {
+            describe[1] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == second) {
+            describe[1] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == second) {
+            describe[1] = "后天";
+          } else {
+            describe[1] = "";
+          }
+        }
+        return describe;
+      }
+    }
+    data = {
+      scrollHeight: 0,
+      dateValue: ['2019-08-09', '2019-08-10']
+    }
+    methods = {}
+    onShow() {}
+    onLoad() {
+      this.scrollHeight = changePXToRPX(getSysHeight()) - 100;
+      this.$apply()
+    }
+  }
+</script>

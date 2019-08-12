@@ -1,0 +1,258 @@
+
+  <view class="body">
+    <!-- 顶部区域 -->
+    <view class="top-banner-view" bindtap="handleImg">
+      <image lazy-load="lazy-load" src="{{hotelImageList.length>0?hotelImageList[0].imageUrl:''}}" style="width:100%;height:100%;"/>
+      <view class="abs-banner-label-view">
+        <view class="banner-label-left-view">
+          <view class="banner-label-text-name-view">{{hotelInfo.addressCn}}</view>
+          <view class="banner-label-text-describe-view">{{hotelInfo.starName}}</view>
+        </view>
+        <view class="banner-label-right-view">{{hotelImageList.length}}张</view>
+      </view>
+    </view>
+    <view class="default-options-view">
+      <view class="default-row-view bottom-border" bindtap="handleComment">
+        <view class="default-row-left-view"  wx:if="{{commentNum>0}}">
+          <view class="row-left-item-label-view">
+            <text style="font-size:40rpx;font-weight:580;">{{avgCommentScore}}</text>
+            <text style="font-size:20rpx;">分</text>
+          </view>
+          <view class="row-left-item-img-view">
+            <block wx:for="{{starLength}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view class="item-star-img-view">
+                <image lazy-load="lazy-load" src="{{index<avgCommentScore? item.selectedIcon:item.icon}}" style="width:100%;height:100%;"/>
+              </view>
+            </block>
+          </view>
+        </view>
+        <view class="default-row-left-view"  wx:else>
+          暂无点评信息
+        </view>
+        <view class="default-row-right-view">
+          <view wx:if="{{commentNum>0}}">{{commentNum}}条评论</view>
+          <view class="row-right-item-img-view" wx:if="{{commentNum>0}}">
+            <image lazy-load="lazy-load" src="../images/arrow-right-icon.png" style="width:100%;height:100%;"/>
+          </view>
+        </view>
+      </view>
+      <view class="default-row-view bottom-border" bindtap="seeMap">
+        <view class="default-row-left-view">
+          {{hotelInfo.addressCn}}
+        </view>
+        <view class="default-row-right-view">
+          <view class="">地图</view>
+          <view class="row-right-item-img-view">
+            <image lazy-load="lazy-load" src="../images/arrow-right-icon.png" style="width:100%;height:100%;"/>
+          </view>
+        </view>
+      </view>
+      <view class="default-row-view">
+        <view class="default-row-left-view">
+          <block wx:for="{{hotelInfo.facilityNameList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+            <view class="row-left-img-label-view" wx:if="{{index<4}}">
+              <view class="row-left-top-img-view">
+                <image lazy-load="lazy-load" src="{{imgUrl+item.imagePath+'!PD450'}}" style="width:100%;height:100%;"/>
+              </view>
+              <view class="row-left-top-label-view">{{item.name}}</view>
+            </view>
+          </block>
+        </view>
+        <view class="default-row-right-view" bindtap="handleInfo">
+          <view class="">详情</view>
+          <view class="row-right-item-img-view">
+            <image lazy-load="lazy-load" src="../images/arrow-right-icon.png" style="width:100%;height:100%;"/>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="select-label-view bottom-border" bindtap="handleDate">
+      <view class="selected-left-item-view">
+        <view class="selected-text-label-view">入住</view>
+        <view class="selected-date-label-view">
+          <text>{{formatDate[0]}}</text>
+          <text style="margin-left:10rpx;color:#999999;">{{getDescribe[0]}}</text>
+        </view>
+      </view>
+      <view class="selected-right-item-view">
+        <view class="selected-text-label-view">离店</view>
+        <view class="selected-date-label-view">
+          <text>{{formatDate[1]}}</text>
+          <text style="margin-left:10rpx;color:#999999;">{{getDescribe[1]}}</text>
+        </view>
+      </view>
+      <view class="abs-selected-label-view">共{{getDays}}晚</view>
+    </view>
+    <view class="flex-row-label-view bottom-border">
+      <view class="flex-row-item-label-view {{reserve?'checked':''}}" bindtap="handlereserve">可定</view>
+      <view class="flex-row-item-label-view {{breakfast?'checked':''}}" bindtap="handleBreakfast">含早</view>
+      <view class="flex-row-item-label-view {{freeCancel?'checked':''}}" bindtap="handleFreeCancel">免费取消</view>
+      <view class="flex-row-item-label-view {{bedType==1?'checked':''}}" bindtap="handleBedType" data-wpyhandlebedtype-a="{{1}}">大床</view>
+      <view class="flex-row-item-label-view {{bedType==2?'checked':''}}" bindtap="handleBedType" data-wpyhandlebedtype-a="{{2}}">双床</view>
+    </view>
+    <block wx:for="{{roomRateList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+      <view class="default-row-info-label-view" bindtap="handleRoomRate" data-wpyhandleroomrate-a="{{index}}">
+        <view class="default-row-inner-info-label-view bottom-border">
+          <view class="default-info-left-item-view">
+            <view class="default-info-left-img-view">
+              <image lazy-load="lazy-load" src="../images/default-hotel-img.png" style="width:100%;height:100%;"/>
+            </view>
+            <view class="default-info-left-label-view">
+              <view class="default-info-title-label-view"><text>{{item.title}}</text><text style="color:#999999;margin-left:10rpx;font-size:26rpx;"/></view>
+              <view class="default-info-sub-title-label-view"/>
+              <view class="default-info-tag-flex-view">
+                <view class="info-tag-item-view">{{item.bedType}}</view>
+                <view class="info-tag-item-view">{{item.breakfastName}}</view>
+              </view>
+            </view>
+          </view>
+          <view class="default-info-right-item-view">
+            <view style="font-size:24rpx;line-height:64rpx;">￥</view>
+            <view style="font-size:40rpx;">{{item.minPrice}}</view>
+            <view style="font-size:24rpx;color:#999999;line-height:64rpx;">起</view>
+            <view class="default-info-right-item-img-view">
+              <image lazy-load="lazy-load" src="{{item.selected?'../images/round-arrow-bottom-icon.png':'../images/round-arrow-top-icon.png'}}" style="width:100%;height:100%;"/>
+            </view>
+          </view>
+        </view>
+      </view>
+      <block wx:for="{{item.roomRatePlanList}}" wx:for-index="_index" wx:for-item="_item" wx:key="key">
+        <view class="default-row-check-label-view" wx:if="{{item.selected}}">
+          <view class="default-inner-row-check-label-view bottom-border-weight">
+            <view class="default-info-left-item-view">
+              <view class="default-info-left-label-view">
+                <view class="default-info-title-label-view" style="width:420rpx;"><text>{{_item.rateTypeCn}}</text></view>
+                <view class="default-info-sub-title-label-view" style="color:#999999;"/>
+                <view class="default-info-tag-flex-view">
+                  <view class="info-tag-item-view">{{_item.bedName}}</view>
+                  <view class="info-tag-item-view">{{_item.breakfastName}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="default-check-info-right-item-view">
+              <view class="default-check-right-label-view">
+                <text style="font-size:24rpx;">￥</text>
+                <text>{{_item.cose}}</text>
+              </view>
+              <view wx:if="{{_item.status!==3}}" class="default-check-info-right-submit-view">
+                <view class="default-info-right-submit-view" bindtap="submitOrder" data-wpysubmitorder-a="{{index}}" data-wpysubmitorder-b="{{_index}}">
+                  <view class="right-submit-top-label-view">订</view>
+                  <view class="right-submit-bottom-label-view">在线付</view>
+                </view>
+                <view wx:if="{{_item.currentAlloment>0&&_item.currentAlloment<=5}}" class="default-info-right-submit-label-view">
+                  仅余{{_item.currentAlloment}}间
+                </view>
+              </view>
+              <view wx:if="{{_item.status===3||(_item.status===1&&_item.currentAlloment===0)}}" class="default-check-info-right-disable-view">
+                <view class="default-info-right-disable-view">
+                  订完
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
+    
+  <view  wx:if="{{$datepopup$showModal}}" class="modal-mask" bindtap="$datepopup$hideModal" catchtouchmove="$datepopup$preventTouchMove">
+  </view>
+  <view animation="{{$datepopup$animationData}}" class="modal-dialog" catchtouchmove="$datepopup$preventTouchMove" style="{{$datepopup$popupStyle}}">
+    
+      <scroll-view style="height:750rpx;width:100%;overflow:hidden;" scroll-y>
+        
+  <view class="body">
+    <view class="date-picker-view">
+      <view class="top-title-label-view">
+        <text>选择日期</text>
+      </view>
+      <view class="top-weeks-label-view">
+        <view style="color:{{$datepicker$color}}">日</view>
+        <view>一</view>
+        <view>二</view>
+        <view>三</view>
+        <view>四</view>
+        <view>五</view>
+        <view style="color:{{$datepicker$color}}">六</view>
+      </view>
+      <block  wx:for="{{$datepicker$dateList}}" wx:key="{{index}}" wx:for-item="item" wx:for-index="index">
+        <view class="date-label-view">{{item.dateLabel}}</view>
+        <view class="date-grid-view">
+          <block wx:for="{{item.dateList}}" wx:key="{{_index}}" wx:for-item="_item" wx:for-index="_index">
+            <!-- 禁用日期 -->
+            <view wx:if="{{_item.disabled&&_item.show}}" class="grid-item-view disable-color" style="{{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}">
+              {{_item.describe?_item.describe:_item.date}}
+            </view>
+            <!-- 显示日期 -->
+            <view wx:elif="{{!_item.disabled&&_item.show}}" bindtap="$datepicker$handleDate" data-index="{{index}}" data-_index="{{_index}}" class="grid-item-view {{_item._class}}" style="{{_item.day==0||_item.day==6?'color:'+ $datepicker$color+';':''}} {{_index==0?'grid-column-start:'+(_item.day+1)+';':''}}  {{_item._style}} ">
+              <text> {{_item.describe?_item.describe:_item.date}}</text>
+              <view wx:if="{{_item._class=='double-checked-second'}}" class="inner-item-abs-tag-view">
+                <view class="item-tag-view">
+                  <text>共{{$datepicker$getDays-1}}晚</text>
+                  <view class="item-tag-triangle-view"/>
+                </view>
+              </view>
+            </view>
+          </block>
+        </view>
+      </block>
+    </view>
+  </view>
+
+      </scroll-view>
+    
+  </view>
+
+    <!-- 立即预定 -->
+    
+  <view  wx:if="{{$popups$showModal}}" class="modal-mask" bindtap="$popups$hideModal" catchtouchmove="$popups$preventTouchMove">
+  </view>
+  <view animation="{{$popups$animationData}}" class="modal-dialog" catchtouchmove="$popups$preventTouchMove" style="{{$popups$popupStyle}}">
+    
+      <view class="view-reserve-title">
+        <view>{{tempObj.chirdren.title}}</view>
+        <view class="view-reserve-title-icon" bindtap="closeModal">
+          <image src="../images/delete-icon.png" style="width:100%;height:100%;"/>
+        </view>
+      </view>
+      <view class="reserve-conter-label-view">
+        <view class="reserve-conter-item-view">早餐：{{tempObj.chirdren.breakfastName}}</view>
+        <view class="reserve-conter-item-view">楼层：{{tempObj.floorDistribute?tempObj.floorDistribute+'层':'无介绍'}}</view>
+        <view class="reserve-conter-item-view">面积：{{tempObj.chirdren.acreage}}㎡</view>
+        <view class="reserve-conter-item-view">可住：{{tempObj.chirdren.maxOccupancy}}人</view>
+        <view class="reserve-conter-item-view">窗户：有窗</view>
+        <view class="reserve-conter-item-view">宽带：免费宽带</view>
+        <view class="reserve-conter-item-view">床型：{{tempObj.chirdren.bedName}}</view>
+        <view class="reserve-conter-item-view">无烟：有无烟楼层</view>
+        <view class="reserve-conter-item-view">加床：{{tempObj.extraBedtState?'可加床':'不可加床'}}</view>
+      </view>
+      <view class="view-reserve-news">
+        <view class="view-reserve-news-title">不可取消</view>
+        <view class="view-reserve-news-titleCon">您预订的酒店不支持退改房间，当您未在预订时间内入住，酒店将扣除您所有的房费。</view>
+      </view>
+      <view class="view-reserve-button">
+        <view class="view-reserve-button-top">
+          <view class="view-data-times">
+            <view class="view-data-times-star">{{formatDate[0]}}</view>
+            <view class="view-data-times-now">{{getDescribe[0]}}</view>
+          </view>
+          <view class="view-data-times">
+            <view class="one-night">共{{getDays}}晚</view>
+          </view>
+          <view class="view-data-times">
+            <view class="view-data-times-star">{{formatDate[1]}}</view>
+            <view class="view-data-times-now">{{getDescribe[1]}}</view>
+          </view>
+        </view>
+        <!-- 立即预定 -->
+        <view class="reserve-button-view">
+          <view class="reserve-button-view-left">
+            <view class="reserve-button-view-left-icon">￥</view>
+            <view class="reserve-button-view-left-text">{{price}}</view>
+          </view>
+          <view class="submit-button-view" bindtap="handleWriteOrder">立即预定</view>
+        </view>
+      </view>
+    
+  </view>
+
+  </view>
