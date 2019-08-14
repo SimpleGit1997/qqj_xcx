@@ -22,6 +22,7 @@
     $touches = new Touches();
     config = {
       pages: [
+        // "pages/onload",
         "pages/index", //首页
         "pages/city", //选择城市
         "pages/searchList", //选择城市
@@ -29,6 +30,8 @@
         "pages/map", //酒店地图
         "pages/hotelInfo", //酒店信息
         "pages/writeOrder", //填写订单
+        "pages/pay", //支付
+        "pages/orderList", //订单中心
       ],
       window: {
         backgroundTextStyle: "light",

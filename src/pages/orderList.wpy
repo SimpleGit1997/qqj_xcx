@@ -1,0 +1,469 @@
+<style lang="less">
+  .top-state-label-view {
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+  }
+  .item-state-label-view {
+    width: 100rpx;
+    height: 84rpx;
+    line-height: 84rpx;
+    text-align: center;
+    color: #333333;
+    font-size: 28rpx;
+  }
+  .checked {
+    border-bottom: 4rpx solid #FA8C1D;
+    font-weight: 500;
+  }
+  .swiper-view {
+    width: 100%;
+  }
+  .item-label-view {
+    width: 710rpx;
+    background-color: #ffffff;
+    margin: 20rpx auto 0px auto;
+  }
+  .item-title-view {
+    width: 100%;
+    height: 72rpx;
+    line-height: 72rpx;
+    display: flex;
+    justify-content: space-between;
+  }
+  .item-title-view {
+    display: flex;
+  }
+  .item-hotel-img-view {
+    width: 26rpx;
+    height: 26rpx;
+    margin: 22rpx 10rpx 24rpx 20rpx;
+  }
+  .item-hotel-text-view {
+    font-size: 24rpx;
+    color: #333333;
+    line-height: 72rpx;
+  }
+  .item-left-view {
+    display: flex;
+  }
+  .item-tag-view {
+    width: 2rpx;
+    height: 20rpx;
+    background-color: #DDDDDD;
+    margin: 26rpx 20rpx;
+  }
+  .item-totel-name-view {
+    font-size: 24rpx;
+    color: #333333;
+    font-weight: 600;
+    line-height: 72rpx;
+  }
+  .item-arrow-icon-view {
+    width: 30rpx;
+    height: 30rpx;
+    margin: 20rpx 0px 20rpx 0px;
+  }
+  .item-right-view {
+    margin-right: 20rpx;
+    font-size: 24rpx;
+    color: #FF6600;
+    line-height: 72rpx;
+  }
+  .item-hotel-info-view {
+    width: 670rpx;
+    height: 170rpx;
+    display: flex;
+    margin: 0px auto;
+    box-sizing: border-box;
+    border-bottom: 2rpx dashed #D3D3D3;
+    display: flex;
+  }
+  .item-hotel-info-title-text-view {
+    width: 540rpx;
+    padding-left: 20rpx;
+    box-sizing: border-box;
+    height: 150rpx;
+    position: relative;
+  }
+  .item-hotel-info-text-view {
+    width: 100%;
+    height: 32rpx;
+    font-size: 26rpx;
+    color: #333333;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-hotel-info-date-view {
+    width: 100%;
+    height: 32rpx;
+    font-size: 26rpx;
+    color: #666666;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-abs-price-view {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 30rpx;
+  }
+  .item-bottom-button-view {
+    width: 100%;
+    height: 92rpx;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #ffffff;
+  }
+  .bottom-default-button {
+    width: 160rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background-color: #ffffff;
+    border-radius: 26rpx;
+    border: 2rpx solid #DDDDDD;
+    text-align: center;
+    font-size: 28rpx;
+    color: #333333;
+    margin: 22rpx 20rpx 0px 0px;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .bottom-checked-button {
+    width: 160rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+    border-radius: 26rpx;
+    border: 2rpx solid #FA8C1D;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ffffff;
+    margin: 22rpx 20rpx 0px 0px;
+    &:active {
+      opacity: .7;
+    }
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-state-label-view">
+      <view @tap="handleState(-2)" class="item-state-label-view {{query.orderState==-2?'checked':''}}" style="margin-right:50rpx;">进行中</view>
+      <view @tap="handleState(-3)" class="item-state-label-view {{query.orderState==-3?'checked':''}}">已结束</view>
+    </view>
+    <swiper duration="{{300}}" @change="changeSwiper" current="{{swiperIndex}}" class="swiper-view" style="height:{{scrollHeight}}rpx;">
+      <swiper-item>
+        <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolower">
+          <view style="overflow:hidden;"></view>
+          <repeat for="{{orderList}}" key="index" item="item" index="index">
+            <view class="item-label-view">
+              <view class='item-title-view'>
+                <view class="item-left-view">
+                  <view class="item-hotel-img-view">
+                    <image style="width:100%;height:100%;" src="../images/hotel-icon-img.png" />
+                  </view>
+                  <view class="item-hotel-text-view">全球家</view>
+                  <view class="item-tag-view"></view>
+                  <view class="item-totel-name-view">{{item.hotelTitle}}</view>
+                  <view class="item-arrow-icon-view">
+                    <image style="width:100%;height:100%;" src="../images/arrow-right-icon.png" />
+                  </view>
+                </view>
+                <view class="item-right-view">
+                  {{item.orderStateLabel}}
+                </view>
+              </view>
+              <view class="item-hotel-info-view">
+                <image style="width:150rpx;height:150rpx;" src="../images/default-hotel-img.png" />
+                <view class="item-hotel-info-title-text-view">
+                  <view class="item-hotel-info-text-view">
+                    {{item.title}}
+                  </view>
+                  <view class="item-hotel-info-date-view" data-item="{{item}}">
+                    {{item.formatFirstTime}} - {{item.formatSecondTime}} 共{{item.days}}晚
+                  </view>
+                  <view class="item-abs-price-view">
+                    <text style="font-size:24rpx;color:#333333;">合计：</text>
+                    <text style="font-size:20rpx;color:#FF6600;line-height:46rpx;">￥</text>
+                    <text style="font-size:34rpx;color:#FF6600;">{{item.orderPrice}}</text>
+                  </view>
+                </view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==0}}">
+                <view class="bottom-default-button">取消订单</view>
+                <view class="bottom-checked-button">付款</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==1}}">
+                <view class="bottom-default-button">再次预定</view>
+                <view class="bottom-default-button">退订</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==9}}">
+                <view class="bottom-default-button">再次预定</view>
+                <view class="bottom-default-button">退订</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==3 && !item.commentInfo}}">
+                <view class="bottom-default-button">再次预定</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==4 || item.orderState==6 || item.orderState==7 || item.orderState==8}}">
+                <view class="bottom-default-button">再次预定</view>
+              </view>
+            </view>
+          </repeat>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolower">
+          <view style="overflow:hidden;"></view>
+          <repeat for="{{orderList}}" key="index" item="item" index="index">
+            <view class="item-label-view">
+              <view class='item-title-view'>
+                <view class="item-left-view">
+                  <view class="item-hotel-img-view">
+                    <image style="width:100%;height:100%;" src="../images/hotel-icon-img.png" />
+                  </view>
+                  <view class="item-hotel-text-view">全球家</view>
+                  <view class="item-tag-view"></view>
+                  <view class="item-totel-name-view">{{item.hotelTitle}}</view>
+                  <view class="item-arrow-icon-view">
+                    <image style="width:100%;height:100%;" src="../images/arrow-right-icon.png" />
+                  </view>
+                </view>
+                <view class="item-right-view">
+                  {{item.orderStateLabel}}
+                </view>
+              </view>
+              <view class="item-hotel-info-view">
+                <image style="width:150rpx;height:150rpx;" src="../images/default-hotel-img.png" />
+                <view class="item-hotel-info-title-text-view">
+                  <view class="item-hotel-info-text-view">
+                    {{item.title}}
+                  </view>
+                  <view class="item-hotel-info-date-view" data-item="{{item}}">
+                    {{item.formatFirstTime}} - {{item.formatSecondTime}} 共{{item.days}}晚
+                  </view>
+                  <view class="item-abs-price-view">
+                    <text style="font-size:24rpx;color:#333333;">合计：</text>
+                    <text style="font-size:20rpx;color:#FF6600;line-height:46rpx;">￥</text>
+                    <text style="font-size:34rpx;color:#FF6600;">{{item.orderPrice}}</text>
+                  </view>
+                </view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==0}}">
+                <view class="bottom-default-button">取消订单</view>
+                <view class="bottom-checked-button">付款</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==1}}">
+                <view class="bottom-default-button">再次预定</view>
+                <view class="bottom-default-button">退订</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==9}}">
+                <view class="bottom-default-button">再次预定</view>
+                <view class="bottom-default-button">退订</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==3 && !item.commentInfo}}">
+                <view class="bottom-default-button">再次预定</view>
+              </view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==4 || item.orderState==6 || item.orderState==7 || item.orderState==8}}">
+                <view class="bottom-default-button">再次预定</view>
+              </view>
+            </view>
+          </repeat>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import {
+    findAllOrders
+  } from '../server/index.js';
+  import {
+    getSysWidth,
+    getSysHeight,
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
+  import {
+    calculateDiffTime,
+  } from "../lib/utils.js";
+  export default class OrderList extends wepy.page {
+    config = {
+      navigationBarTitleText: '订单中心'
+    };
+    components = {};
+    data = {
+      swiperIndex: 0,
+      scrollHeight: 0,
+      orderState: -2,
+      showModal: false,
+      query: {
+        pageNo: 1,
+        pageSize: 10,
+        orderState: -2,
+        orderBizCategory: 'P_BIZ_CATEGORY_DD',
+      },
+      hasMore: true,
+      orderList: []
+    };
+    computed = {
+      formatDate(date) {
+        let formatLabel = ''
+        if (date) {
+          formatLabel = new Date((date + '').replace(/-/gi, "/")).toString("MM月dd日")
+        }
+        return formatLabel;
+      },
+      getDays(date1, date2) {
+        let days = 0;
+        let first = new Date((date1 + '').replace(/-/gi, "/")).valueOf();
+        let second = new Date((date2 + '').replace(/-/gi, "/")).valueOf();
+        let time = calculateDiffTime(first, second);
+        days = time[0] / 24;
+        return days;
+      },
+    };
+    watch = {};
+    onLoad() {
+      this.scrollHeight = changePXToRPX(getSysHeight()) - 88;
+      this.getOrderList()
+      this.$apply()
+    }
+    onShow() {}
+    methods = {
+      handleState(value) {
+        this.query.orderState = value
+        if (this.query.orderState == -2) {
+          this.swiperIndex = 0
+        } else if (this.query.orderState == -3) {
+          this.swiperIndex = 1
+        }
+        this.query.pageNo = 1
+        this.$apply()
+      },
+      changeSwiper(e) {
+        let value = e.detail.current
+        this.swiperIndex = value
+        if (this.swiperIndex == 0) {
+          this.query.orderState = -2
+        } else if (this.swiperIndex == 1) {
+          this.query.orderState = -3
+        }
+        this.query.pageNo = 1
+        this.getOrderList()
+        this.$apply()
+      },
+      /**
+       * 下啦
+       */
+      scrolltolower(e) {
+        if (this.hasMore) {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          this.query.pageNo++
+            findAllOrders(this.query).then(res => {
+              if (res.orderInfoList.length == 0) {
+                wx.showToast({
+                  title: '暂无更多数据哦～',
+                  icon: 'none',
+                  duration: 1200
+                })
+                this.hasMore = false
+              } else if (res.orderInfoList.length > 0) {
+                res.orderInfoList.forEach(item => {
+                  // 计算页面Label
+                  item.formatFirstTime = this.computed.formatDate(item.bookCheckinTime)
+                  item.formatSecondTime = this.computed.formatDate(item.checkoutTime)
+                  item.days = this.computed.getDays(item.bookCheckinTime, item.checkoutTime)
+                  if (item.orderState == 0) {
+                    item.orderStateLabel = '待支付'
+                  } else if (item.orderState == 1) {
+                    item.orderStateLabel = '待入住'
+                  } else if (item.orderState == 2) {
+                    item.orderStateLabel = '待评价'
+                  } else if (item.orderState == 3) {
+                    item.orderStateLabel = '已完成'
+                  } else if (item.orderState == 4) {
+                    item.orderStateLabel = '已取消'
+                  } else if (item.orderState == 5) {
+                    item.orderStateLabel = '退订中'
+                  } else if (item.orderState == 6) {
+                    item.orderStateLabel = '已退订'
+                  } else if (item.orderState == 7) {
+                    item.orderStateLabel = '已失效'
+                  } else if (item.orderState == 8) {
+                    item.orderStateLabel = '已完成'
+                  } else if (item.orderState == 9) {
+                    item.orderStateLabel = '待确认'
+                  }
+                  this.orderList.push(item)
+                });
+              }
+              this.$apply()
+              wepy.hideLoading()
+            })
+        } else {
+          wepy.showToast({
+            title: '暂无更多数据哦～',
+            icon: 'none',
+            duration: 1200
+          });
+        }
+      },
+    };
+    onHide() {}
+    onUnload() {}
+    getOrderList() {
+      wepy.showLoading({
+        title: '加载中...'
+      })
+      this.orderList = []
+      findAllOrders(this.query).then(res => {
+        if (res && res.orderInfoList) {
+          res.orderInfoList.forEach(item => {
+            // 计算页面Label
+            item.formatFirstTime = this.computed.formatDate(item.bookCheckinTime)
+            item.formatSecondTime = this.computed.formatDate(item.checkoutTime)
+            item.days = this.computed.getDays(item.bookCheckinTime, item.checkoutTime)
+            if (item.orderState == 0) {
+              item.orderStateLabel = '待支付'
+            } else if (item.orderState == 1) {
+              item.orderStateLabel = '待入住'
+            } else if (item.orderState == 2) {
+              item.orderStateLabel = '待评价'
+            } else if (item.orderState == 3) {
+              item.orderStateLabel = '已完成'
+            } else if (item.orderState == 4) {
+              item.orderStateLabel = '已取消'
+            } else if (item.orderState == 5) {
+              item.orderStateLabel = '退订中'
+            } else if (item.orderState == 6) {
+              item.orderStateLabel = '已退订'
+            } else if (item.orderState == 7) {
+              item.orderStateLabel = '已失效'
+            } else if (item.orderState == 8) {
+              item.orderStateLabel = '已完成'
+            } else if (item.orderState == 9) {
+              item.orderStateLabel = '待确认'
+            }
+            this.orderList.push(item)
+          });
+          wepy.hideLoading()
+          this.$apply()
+        }
+      })
+    }
+  }
+</script>

@@ -684,6 +684,7 @@
         }
       ],
       tempObj: {},
+      roomInfo: {},
       price: 0
     };
     components = {
@@ -729,7 +730,8 @@
           } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == first) {
             describe[0] = "后天";
           } else {
-            describe[0] = "";
+            var str = '星期' + '日一二三四五六'.charAt(new Date(first).getDay());
+            describe[0] = str;
           }
           if (currentStamp == second) {
             describe[1] = "今天";
@@ -738,7 +740,8 @@
           } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == second) {
             describe[1] = "后天";
           } else {
-            describe[1] = "";
+            var str = '星期' + '日一二三四五六'.charAt(new Date(second).getDay());
+            describe[1] = str;
           }
         }
         return describe;
@@ -871,6 +874,7 @@
         roomRatePlanInfo(query).then(res => {
           this.price = res.data.houseInfo.price
           this.showModal = true
+          this.roomInfo = res.data
           wepy.hideLoading()
           this.$apply();
         })
@@ -878,7 +882,7 @@
       // 立即预定
       handleWriteOrder() {
         wepy.navigateTo({
-          url: './writeOrder'
+          url: './writeOrder?roomInfo=' + JSON.stringify(this.roomInfo.houseInfo) + '&date=' + this.dateValue + '&houseId=' + this.tempObj.chirdren.houseId
         })
       }
     };
@@ -903,8 +907,7 @@
     onUnload() {}
     getHotelDetailInfo(option) {
       hotelDetailInfo({
-        hotelId: this.hotelId,
-        sid: ''
+        hotelId: this.hotelId
       }).then(res => {
         console.log(res)
         this.commentNum = res.commentNum

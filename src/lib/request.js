@@ -12,12 +12,12 @@ import wepy from 'wepy'
 function request( method = 'POST',fullUrl, param, token = true, type = 'JSON', isReturn = false) {
   return new Promise(function (resolve, reject) {
     if (token) {
-      param = Object.assign({ sid: '' }, param)
+      param = Object.assign({ sid: '02690799-5dbd-4e66-b8ea-4084f8614939' ,terminal:'P_TERMINAL_WECHAT_MINIPRO'}, param)
     }
     if (type == 'JSON') {
       type = 'application/json'
     } else if (type == 'FORM') {
-      type = 'application/x-www-form-urlencodedn'
+      type = 'application/x-www-form-urlencoded'
     }
     wx.request({
       header: { 'Content-Type': type },

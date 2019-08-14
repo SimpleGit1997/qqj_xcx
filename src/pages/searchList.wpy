@@ -473,7 +473,7 @@
   export default class SearchList extends wepy.page {
     config = {
       navigationBarTitleText: "搜索酒店",
-       disableScroll:true
+      disableScroll: true
     };
     components = {};
     data = {
@@ -704,7 +704,7 @@
       handleHotel(index) {
         let hotelId = this.hotelList[index].id
         wepy.navigateTo({
-          url: './hotelDetail?hotelId=' + hotelId + '&dateValue='+ this.dateValue
+          url: './hotelDetail?hotelId=' + hotelId + '&dateValue=' + this.dateValue
         })
       },
       /**
@@ -946,16 +946,18 @@
       }
       if (option.cityInfo) {
         this.cityInfo = JSON.parse(option.cityInfo);
-        queryRegionsByParentId({
-          parentId: this.cityInfo.id
-        }).then(data => {
-          this.regionList = data;
-          this.regionList.unshift({
-            name: "不限",
-            id: 0
+        if (this.cityInfo.id) {
+          queryRegionsByParentId({
+            parentId: this.cityInfo.id
+          }).then(data => {
+            this.regionList = data;
+            this.regionList.unshift({
+              name: "不限",
+              id: 0
+            });
+            this.$apply();
           });
-          this.$apply();
-        });
+        }
       }
       this.setPriceAndStar();
       this.$apply();

@@ -1,0 +1,512 @@
+<style lang="less">
+  .warnning-laebel-view {
+    width: 100%;
+    height: 72rpx;
+    line-height: 72rpx;
+    background-color: #FFFBD3;
+    padding: 0px 30rpx;
+    color: #EF8636;
+    font-size: 28rpx;
+    box-sizing: border-box;
+  }
+  .pay-label-info-view {
+    width: 100%;
+    height: 180rpx;
+    background-color: #ffffff;
+    padding: 30rpx;
+    box-sizing: border-box;
+  }
+  .pay-item-label-view {
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    display: flex;
+    font-size: 28rpx;
+    color: #333333;
+  }
+  .item-left-title-label-view {
+    width: 140rpx;
+    height: 30rpx;
+  }
+  .item-left-text-label-view {
+    width: 440rpx;
+    height: 30rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 20rpx;
+  }
+  .pay-methods-label-view {
+    height: 80rpx;
+    line-height: 80rpx;
+    color: #333333;
+    font-size: 28rpx;
+    padding: 0px 30rpx;
+    box-sizing: border-box;
+    font-weight: 600;
+    background-color: #ffffff;
+    margin-top: 20rpx;
+  }
+  .pay-methods-item-label-view {
+    width: 100%;
+    height: 120rpx;
+    line-height: 120rpx;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0px 30rpx;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 28rpx;
+    border-top: 2rpx solid #efefef;
+  }
+  .pay-methods-left-label-view {
+    height: 120rpx;
+    display: flex;
+  }
+  .methods-left-img {
+    width: 60rpx;
+    height: 60rpx;
+    margin: 30rpx 0px;
+  }
+  .methods-left-text-view {
+    margin-left: 30rpx;
+  }
+  .methods-left-price-text-view {
+    margin-left: 10rpx;
+    font-weight: 600;
+  }
+  .pay-methods-right-label-view {
+    color: #999999;
+    display: flex;
+  }
+  .fixed-botoom-label-view {
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #FFFFFF;
+    font-weight: 600;
+    background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .methods-img-view {
+    width: 120rpx;
+    height: 120rpx;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .methods-right-img {
+    width: 40rpx;
+    height: 40rpx;
+    margin: 40rpx 0px;
+  }
+  .modal-mask-dialog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    overflow: hidden;
+    z-index: 300;
+    color: #fff;
+  }
+  .fixed-view-dialog {
+    position: fixed;
+    width: 558rpx;
+    left: 96rpx;
+    top: 314rpx;
+    background-color: #ffffff;
+    z-index: 400;
+    overflow: hidden;
+    border-radius: 20rpx;
+  }
+  .dialog-inner-input-view {
+    width: 480rpx;
+    margin: 40rpx auto;
+    border-radius: 20rpx;
+    border: 2rpx solid #eeeeee;
+    height: 90rpx;
+    display: flex;
+    line-height: 90rpx;
+    font-size: 28rpx;
+  }
+  .dialog-bottom-button-label-view {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    border-top: 2rpx solid #eeeeee;
+  }
+  .dialog-button-left-view {
+    width: 50%;
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #333333;
+    background-color: #fff;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .dialog-button-right-view {
+    width: 50%;
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ffffff;
+    background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+    &:active {
+      opacity: .7;
+    }
+  }
+  .dialog-input {
+    width: 270rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    padding-left: 20rpx;
+  }
+  .input-label-text-view {
+    width: 200rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    color: #f3344a;
+    text-align: center;
+  }
+</style>
+  
+<template>
+  <view class="body">
+    <view class="warnning-laebel-view">
+      <text wx:if="{{orderInfo.orderState===0}}">请在{{timeLabel[1]}}分{{timeLabel[2]}}秒内完成支付,以免订单失败。</text>
+      <text wx:elif="{{orderInfo.orderState!==0}}">订单已失效</text>
+    </view>
+    <view class="pay-label-info-view">
+      <view class="pay-item-label-view">
+        <view class="item-left-title-label-view">支付内容：</view>
+        <view class="item-left-text-label-view">{{orderInfo.hotelTitle}}</view>
+      </view>
+      <view class="pay-item-label-view" style="margin-top:10rpx;">
+        <view class="item-left-title-label-view"></view>
+        <view class="item-left-text-label-view" style="color:#999999;font-size:24rpx;">{{formatDate[0]}}({{getDescribe[0]}}) -- {{formatDate[1]}}({{getDescribe[1]}}) 共{{getDays}}晚</view>
+      </view>
+      <view class="pay-item-label-view" style="margin-top:20rpx;">
+        <view class="item-left-title-label-view">应付总额</view>
+        <view class="item-left-text-label-view" style="color:#FF6600;">¥{{orderInfo.payPrice}}</view>
+      </view>
+    </view>
+    <view class="pay-methods-label-view">请选择支付方式</view>
+    <repeat for="{{payMethodList}}" item="item" index="index" key="index">
+      <view class="pay-methods-item-label-view" wx:if="{{item.payChannelCode=='WXA_API'}}">
+        <view class="pay-methods-left-label-view">
+          <image class="methods-left-img" src="../images/wx-icon-logo.png" />
+          <view class="methods-left-text-view">微信</view>
+          <view class="methods-left-price-text-view"></view>
+        </view>
+        <view class="pay-methods-right-label-view">
+          <view class="methods-img-view" @tap="handleMethods({{index}})">
+            <image wx:if="{{!item.checked}}" class="methods-right-img" src="../images/round-icon.png" />
+            <image wx:elif class="methods-right-img" src="../images/round-color-checked-icon.png" />
+          </view>
+        </view>
+      </view>
+      <view class="pay-methods-item-label-view" wx:if="{{item.payChannelCode=='BALANCE'}}">
+        <view class="pay-methods-left-label-view">
+          <image class="methods-left-img" src="../images/red-balance-icon.png" />
+          <view class="methods-left-text-view">余额</view>
+          <view class="methods-left-price-text-view">
+            <text style="line-height:130rpx;font-size:20rpx;">¥</text>
+            <text>{{getBalance}}</text>
+          </view>
+        </view>
+        <view class="pay-methods-right-label-view">
+          <text wx:if="{{orderInfo.payPrice>available}}">余额不足</text>
+          <view wx:else>
+            <view class="methods-img-view" @tap="handleMethods({{index}})">
+              <image wx:if="{{!item.checked}}" class="methods-right-img" src="../images/round-icon.png" />
+              <image wx:elif class="methods-right-img" src="../images/round-color-checked-icon.png" />
+            </view>
+          </view>
+        </view>
+      </view>
+    </repeat>
+    <view class="fixed-botoom-label-view" @tap="handlePay">立即付款</view>
+    <view wx:if="{{showModal}}" class="modal-mask-dialog" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
+    <view wx:if="{{showModal}}" class="fixed-view-dialog" catchtouchmove="preventTouchMove">
+      <view class="dialog-inner-input-view">
+        <input @input="smsCodeInput" value="{{smsCode}}" class="dialog-input" placeholder="请输入验证码" placeholder-style="color:#cccccc;" />
+        <view class="input-label-text-view" wx:if="{{!isOption}}" @tap="handleGetCode">获取验证码</view>
+        <view class="input-label-text-view" style="color:#cccccc;" wx:if="{{isOption}}">{{second}}秒后重试</view>
+      </view>
+      <view class="dialog-bottom-button-label-view">
+        <view class="dialog-button-left-view" @tap="handleCloseDialog">取消</view>
+        <view class="dialog-button-right-view" @tap="submitCode">确认</view>
+      </view>
+    </view>
+  </view>
+</template>
+  
+<script>
+  import wepy from 'wepy'
+  import {
+    calculateDiffTime,
+    formatNumber
+  } from '../lib/utils.js'
+  import {
+    payOrderInfo,
+    payMode,
+    sendVialidate,
+    payApply,
+    submitValidate,
+    balancePay
+  } from '../server/index.js'
+  export default class Pay extends wepy.page {
+    config = {
+      navigationBarTitleText: '支付订单'
+    }
+    components = {};
+    data = {
+      orderNo: '',
+      endTimeValue: 0,
+      currentTime: 0,
+      orderInfo: {},
+      timer: null,
+      timeLabel: [],
+      dateValue: [],
+      payMethodList: [],
+      available: 0,
+      smsCode: '',
+      second: 0,
+      sendPhoneNo: '',
+      payApplyNo: '',
+      isOption: false,
+      codeTimer: null,
+      showModal: false
+    }
+    watch = {
+      currentTime(o, n) {
+        this.timeLabel = calculateDiffTime(this.currentTime, this.endTimeValue);
+        if (Number(this.timeLabel[1]) === 0 && Number(this.timeLabel[2]) === 0) {
+          this.orderInfo.orderState = 4
+          clearInterval(this.timer);
+          this.$apply();
+        }
+        this.$apply();
+      }
+    };
+    computed = {
+      formatDate() {
+        let value = [];
+        if (this.dateValue.length > 0) {
+          this.dateValue.forEach(item => {
+            value.push(new Date(item).toString("MM月dd日"));
+          });
+        }
+        return value;
+      },
+      getDays() {
+        let days = 0;
+        if (this.dateValue.length === 2) {
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          let time = calculateDiffTime(first, second);
+          days = time[0] / 24;
+          return days;
+        }
+      },
+      getDescribe() {
+        let describe = ["", ""];
+        if (this.dateValue.length === 2) {
+          let currentDate = new Date();
+          let currentStamp = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate()
+          ).valueOf();
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          if (currentStamp == first) {
+            describe[0] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == first) {
+            describe[0] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == first) {
+            describe[0] = "后天";
+          } else {
+            var str = '星期' + '日一二三四五六'.charAt(new Date(first).getDay());
+            describe[0] = str;
+          }
+          if (currentStamp == second) {
+            describe[1] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == second) {
+            describe[1] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == second) {
+            describe[1] = "后天";
+          } else {
+            var str = '星期' + '日一二三四五六'.charAt(new Date(second).getDay());
+            describe[1] = str;
+          }
+        }
+        return describe;
+      },
+      getBalance() {
+        return formatNumber(this.available)
+      }
+    };
+    methods = {
+      handleMethods(index) {
+        this.payMethodList.forEach((item, _index) => {
+          if (index === _index) {
+            item.checked = true
+          } else {
+            item.checked = false
+          }
+        });
+        this.$apply()
+      },
+      handlePay() {
+        if (this.orderInfo.orderState === 4) {
+          wepy.showToast({
+            title: '订单已失效，请重新下单！',
+            icon: 'none',
+            duration: 1200
+          })
+        } else {
+          let index = null
+          this.payMethodList.forEach((item, _index) => {
+            if (item.checked) {
+              index = _index
+            }
+          });
+          let row = this.payMethodList[index]
+          if (row.payChannelCode === 'BALANCE') {
+            payApply({
+              orders: {
+                orderBizCategory: this.orderInfo.orderBizCategory,
+                orderNo: this.orderInfo.orderNo,
+                orderTotalFee: this.orderInfo.payPrice,
+                sign: this.orderInfo.sign
+              },
+              payBizCategory: row.payBizCategory,
+              payPlatform: row.payPlatform,
+              payTerminal: row.payTerminal,
+              payModeCode: row.payModeCode,
+              payOptional: {
+                id: this.orderInfo.userId
+              },
+            }).then(res => {
+              this.showModal = true
+              this.$apply()
+              console.log('11',res)
+            })
+          } else if (row.payChannelCode === 'WXA_API') {
+            console.log('小程序支付还未开放')
+          }
+        }
+      },
+      smsCodeInput(e) {
+        this.smsCode = e.detail.value
+      },
+      /**
+       * 获取验证码
+       */
+      handleGetCode() {
+        let query = {
+          userId: this.orderInfo.userId,
+          isShowPhoneNo: false
+        }
+        sendVialidate(query).then(res => {
+          this.sendPhoneNo = res.sendPhoneNo
+          this.second = 60
+          this.isOption = true
+          this.codeTimer = setInterval(() => {
+            this.second--
+              this.$apply()
+            if (this.second <= 0) {
+              clearInterval(this.codeTimer);
+              this.isOption = false
+              this.$apply()
+            }
+          }, 1000);
+        })
+      },
+      handleCloseDialog() {
+        this.showModal = false
+        this.$apply()
+      },
+      submitCode() {
+        wepy.showLoading({
+          title: '加载中...'
+        })
+        submitValidate({
+          phoneNo: this.sendPhoneNo,
+          smsCode: this.smsCode
+        }).then(res => {
+          if (res.state == 1) {
+            balancePay({
+              payApplyNo: this.orderInfo.orderNo
+            }).then(res => {
+              console.log('余额支付', res)
+            })
+            wepy.hideLoading()
+          } else if (res.state == 2) {
+            wepy.showToast({
+              title: res.msg,
+              icon: 'none',
+              duration: 1500
+            })
+          }
+        })
+      },
+      preventTouchMove() {
+        console.warn('preventTouchMove方法已阻止其他事件。')
+      }
+    }
+    onShow() {}
+    onLoad(option) {
+      payMode({
+        bizCategory: 'P_BIZ_CATEGORY_DD',
+        bizTerminal: 'P_TERMINAL_WECHAT_MINIPRO'
+      }).then(res => {
+        this.payMethodList = res.payModes
+        if (this.payMethodList.length > 0) {
+          this.payMethodList[0].checked = true
+        }
+        this.available = res.available
+        this.$apply()
+      })
+      if (option.orderNo) {
+        payOrderInfo({
+          orderNo: option.orderNo
+        }).then(res => {
+          this.orderInfo = res.orderInfo
+          this.orderInfo.sign = res.sign
+          let createTimeValue = new Date(this.orderInfo.orderTime).valueOf();
+          this.dateValue = [new Date(this.orderInfo.bookCheckinTime).toString('yyyy-MM-dd'), new Date(this.orderInfo.checkoutTime).toString('yyyy-MM-dd')]
+          this.endTimeValue = createTimeValue + 1000 * 60 * 15;
+          this.currentTime = new Date().valueOf();
+          this.$apply()
+          if (this.currentTime > this.endTimeValue) {
+            this.orderInfo.orderState = 4
+            this.$apply()
+          }
+          if (this.orderInfo.orderState === 0 && this.currentTime < this.endTimeValue) {
+            this.timer = setInterval(() => {
+              this.currentTime += 1000;
+              this.$apply();
+            }, 1000);
+            this.$apply()
+          }
+        })
+      }
+    }
+  }
+</script>

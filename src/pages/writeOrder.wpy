@@ -27,6 +27,9 @@
     font-size: 30rpx;
     font-weight: 600;
     color: #333333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .right-label-describe-view {
     display: flex;
@@ -129,7 +132,7 @@
     height: 90rpx;
     line-height: 90rpx;
     display: flex;
-    .item-right-text-view{
+    .item-right-text-view {
       width: 70rpx;
     }
     input {
@@ -181,7 +184,7 @@
   .bottom-warn-label-view {
     width: 100%;
     background-color: #ffffff;
-    margin-top: 20rpx;
+    margin-bottom: 120rpx;
     padding: 20rpx 30rpx;
     box-sizing: border-box;
   }
@@ -201,116 +204,222 @@
   .bottom-button-label-view {
     width: 100%;
     display: flex;
-    height: 98rpx;
+    height: 100rpx;
     border-top: 2rpx solid #E4E4E4;
-    box-sizing: border-box;
     overflow: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
   }
   .button-left-view {
     display: flex;
+    justify-content: space-between;
     position: relative;
     width: 440rpx;
     height: 100rpx;
     background-color: #ffffff;
   }
   .button-right-view {
-    display: flex;
-    position: relative;
     width: 310rpx;
     height: 100rpx;
     background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 30rpx;
+    line-height: 100rpx;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .picker-label-view {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+  }
+  .picker-label-item-view {
+    width: 80rpx;
+    height: 90rpx;
+    font-size: 28rpx;
+  }
+  .proceholder-label-item-view {
+    width: 440rpx;
+    height: 90rpx;
+    color: #CCCCCC;
+    font-size: 28rpx;
+  }
+  .button-inner-price-left-view {
+    margin-left: 30rpx;
+    height: 100rpx;
+    color: #FF6600;
+  }
+  .button-inner-price-right-view {
+    display: flex;
+    height: 100rpx;
+    line-height: 100rpx;
+    padding: 0px 20rpx;
+  }
+  .popup-title-label-view {
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #333333;
+    text-align: center;
+  }
+  .popup-inner-label-info-view {
+    width: 690rpx;
+    margin: 0px auto;
+  }
+  .popup-item-view {
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    display: flex;
+    justify-content: space-between;
+  }
+  .item-left-label-view {
+    font-size: 28rpx;
+    color: #333333;
+  }
+  .item-right-label-view {
+    font-size: 28rpx;
+    color: #FF6600;
+  }
+  .popup-bottom-item-view {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 690rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    bottom: 0px;
+    left: 30rpx;
   }
 </style>
 
 <template>
   <view class="body">
-    <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y>
-      <view class="top-hotel-info-label-view">
-        <view class="top-inner-info-label-view">
-          <view class="info-item-left-img-view">
-            <image lazy-load src="../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
+    <!-- <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y> -->
+    <view class="top-hotel-info-label-view">
+      <view class="top-inner-info-label-view">
+        <view class="info-item-left-img-view">
+          <image lazy-load src="../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
+        </view>
+        <view class="info-item-right-label-view">
+          <view class="right-label-title-view">{{orderInfo.title}}</view>
+          <view class="right-label-describe-view">
+            <view>{{orderInfo.type}}</view>
+            <view class="tag-label-view"></view>
+            <view>{{orderInfo.breakfast}}</view>
+            <view class="tag-label-view" wx:if="{{orderInfo.cancelLimit}}"></view>
+            <view style="color:#FF6600;" wx:if="{{orderInfo.cancelLimit}}">{{orderInfo.cancelLimit}}</view>
           </view>
-          <view class="info-item-right-label-view">
-            <view class="right-label-title-view">花园景观双床房-无早餐</view>
-            <view class="right-label-describe-view">
-              <view>豪华双床房</view>
-              <view class="tag-label-view"></view>
-              <view>不含早</view>
-              <view class="tag-label-view"></view>
-              <view style="color:#FF6600;">随时取消</view>
+          <view class="warn-label-view" wx:if="{{orderInfo.cancelLimit}}">{{orderInfo.cancelMsg}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="select-label-view" @tap="handleDate">
+      <view class="selected-left-item-view">
+        <view class="selected-text-label-view">入住</view>
+        <view class="selected-date-label-view">
+          <text>{{formatDate[0]}}</text>
+          <text style="margin-left:10rpx;color:#999999;">{{getDescribe[0]}}</text>
+        </view>
+      </view>
+      <view class="selected-right-item-view">
+        <view class="selected-text-label-view">离店</view>
+        <view class="selected-date-label-view">
+          <text>{{formatDate[1]}}</text>
+          <text style="margin-left:10rpx;color:#999999;">{{getDescribe[1]}}</text>
+        </view>
+      </view>
+      <view class="abs-selected-label-view">共{{getDays}}晚</view>
+    </view>
+    <view class="bottom-background-iamge-label-view">
+      <image src="../images/bottom-background-image.png" style="width:100%;height:100%;"></image>
+    </view>
+    <view class="default-label-text-view" style="margin-top:20rpx;">
+      <view class="default-inner-label-text-view border-bottom">
+        <text style="font-weight:600;">入住信息</text>
+      </view>
+    </view>
+    <view class="default-label-text-view">
+      <view class="default-inner-label-text-view border-bottom">
+        <view class="item-left-text-view">房间数</view>
+        <view class="item-right-input-view">
+          <picker @change="roomPickerChange" range-key="label" style="width:100%;" value="{{index}}" range="{{roomsArray}}">
+            <view class="picker-label-view">
+              <view class="picker-label-item-view">{{count}}间</view>
+              <view class="proceholder-label-item-view">每间需填1人姓名</view>
             </view>
-            <view class="warn-label-view">8月24日 12点前可以免费取消</view>
-          </view>
+          </picker>
+        </view>
+        <view class="item-arrow-right-img-view">
+          <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;" />
         </view>
       </view>
-      <view class="select-label-view" @tap="handleDate">
-        <view class="selected-left-item-view">
-          <view class="selected-text-label-view">入住</view>
-          <view class="selected-date-label-view">
-            <text>{{formatDate[0]}}</text>
-            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[0]}}</text>
-          </view>
-        </view>
-        <view class="selected-right-item-view">
-          <view class="selected-text-label-view">离店</view>
-          <view class="selected-date-label-view">
-            <text>{{formatDate[1]}}</text>
-            <text style="margin-left:10rpx;color:#999999;">{{getDescribe[1]}}</text>
-          </view>
-        </view>
-        <view class="abs-selected-label-view">共{{getDays}}晚</view>
-      </view>
-      <view class="bottom-background-iamge-label-view">
-        <image src="../images/bottom-background-image.png" style="width:100%;height:100%;"></image>
-      </view>
-      <view class="default-label-text-view" style="margin-top:20rpx;">
-        <view class="default-inner-label-text-view border-bottom">
-          <text style="font-weight:600;">入住信息</text>
-        </view>
-      </view>
-      <view class="default-label-text-view">
-        <view class="default-inner-label-text-view border-bottom">
-          <view class="item-left-text-view">房间数</view>
-          <view class="item-right-input-view">
-            <input style="width:100%;" disabled value="{{rooms}}" placeholder="每间需填1人姓名" placeholder-class="placeholder-class" />
-          </view>
-          <view class="item-arrow-right-img-view">
-            <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;" />
-          </view>
-        </view>
-      </view>
-      <view class="default-label-more-view">
-        <view class="default-inner-label-more-view">
-          <view class="item-label-more-left-view">入住人</view>
-          <view class="item-right-more-input-view">
+    </view>
+    <view class="default-label-more-view">
+      <view class="default-inner-label-more-view">
+        <view class="item-label-more-left-view">入住人</view>
+        <view class="item-right-more-input-view">
+          <repeat for="{{rooms}}">
             <view class="item-right-more-inner-view border-bottom">
-              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class" />
+              <input style="width:100%;color:#333333;" @input="roomsName" data-index="{{index}}" value="{{item.name}}" placeholder="房间{{index+1}},每间需填1人姓名" placeholder-class="placeholder-class" />
             </view>
-            <view class="item-right-more-inner-view border-bottom">
-              <input style="width:100%;" value="{{rooms}}" placeholder="房间1,每间需填1人姓名" placeholder-class="placeholder-class" />
-            </view>
-          </view>
+          </repeat>
         </view>
       </view>
-      <view class="default-label-text-view">
-        <view class="default-inner-label-text-view border-bottom">
-          <view class="item-left-text-view">手机号</view>
-          <view class="item-right-input-view">
-             <view class="item-right-text-view">+86</view>
-            <input value="{{phone}}" placeholder="用于接收通知" placeholder-class="placeholder-class" />
-          </view>
+    </view>
+    <view class="default-label-text-view" style="margin-bottom:20rpx;">
+      <view class="default-inner-label-text-view border-bottom">
+        <view class="item-left-text-view">手机号</view>
+        <view class="item-right-input-view">
+          <view class="item-right-text-view">+86</view>
+          <input value="{{phone}}" @input="phoneInput" placeholder="用于接收通知" placeholder-class="placeholder-class" />
         </view>
       </view>
-      <view class="bottom-warn-label-view">
-        <view class="warn-title-label-view">取消规则</view>
-        <view class="warin-info-label-view">【YYYY-MM-DD HH:MM】前取消修改将收取首晚房费作为您的违约费用。否则将收取全额房费。</view>
+    </view>
+    <view class="bottom-warn-label-view">
+      <view class="warn-title-label-view">取消规则</view>
+      <view class="warin-info-label-view">{{orderInfo.refundMsg}}</view>
+    </view>
+    <!-- </scroll-view> -->
+    <view class="bottom-button-label-view">
+      <view class="button-left-view">
+        <view class="button-inner-price-left-view">
+          <text style="line-height:120rpx;font-size:32rpx;">¥</text>
+          <text style="line-height:100rpx;font-size:48rpx;">{{getPrice}}</text>
+        </view>
+        <view class="button-inner-price-right-view" @tap="handleModal">
+          <view style="color:#cccccc;font-size:24rpx;line-hegiht:100rpx;">明细</view>
+          <image src="../images/arrow-right-icon.png" style="width:30rpx;height:30rpx;transform:rotate(-90deg);margin-top:34rpx;" />
+        </view>
       </view>
-  </view>
-  </scroll-view>
-  <view class="bottom-button-label-view">
-    <view class="button-left-view"></view>
-    <view class="button-right-view"></view>
-  </view>
+      <view class="button-right-view" @tap="handleSubmit">提交订单</view>
+    </view>
+    <popup size="500" duration='360' type="bottom" :showModal.sync="showModal">
+      <view class="popup-title-label-view">费用明细</view>
+      <scroll-view style="height:{{340}}rpx;width:100%;" scroll-y>
+        <view class="popup-inner-label-info-view">
+          <view class="popup-item-view" style="margin-bottom:6rpx;">
+            <view class="item-left-label-view">房费合计</view>
+            <view class="item-right-label-view">￥{{getPrice}}</view>
+          </view>
+          <repeat for="{{nightlyRateDtos}}" key="index" item="item" index="index">
+            <view class="popup-item-view">
+              <view class="item-left-label-view" style="color:#666666;color:24rpx;">{{item.date}} {{orderInfo.breakfast}}</view>
+              <view class="item-right-label-view" style="color:#666666;color:24rpx;">￥<text>{{item.salePrice}}</text> <text>x{{count}}</text> </view>
+            </view>
+          </repeat>
+        </view>
+      </scroll-view>
+      <view class="popup-bottom-item-view">
+        <view class="item-left-label-view">在线支付</view>
+        <view class="item-right-label-view">￥{{getPrice}}</view>
+      </view>
+    </popup>
   </view>
 </template>
 
@@ -326,11 +435,15 @@
   import {
     calculateDiffTime
   } from "../lib/utils.js";
-  // import { getOrder } from '../server/index.js'
+  import {
+    orderWrite,
+    selectPrices,
+    addOrder
+  } from '../server/index.js'
   export default class WriteOrder extends wepy.page {
     config = {
       navigationBarTitleText: '填写订单',
-      disableScroll:true
+      // disableScroll: true
     }
     components = {
       popup: popup //弹窗
@@ -386,16 +499,199 @@
           }
         }
         return describe;
+      },
+      getPrice() {
+        let price = 0
+        if (this.nightlyRateDtos.length > 0) {
+          this.nightlyRateDtos.forEach(item => {
+            price += item.salePrice
+          })
+        }
+        return price * this.count
       }
     }
     data = {
       scrollHeight: 0,
-      dateValue: ['2019-08-09', '2019-08-10']
+      dateValue: ['2019-08-10', '2019-08-11'],
+      roomInfo: {},
+      orderInfo: {},
+      houseId: '',
+      count: 1,
+      phone: '',
+      roomsArray: [{
+        label: '1间',
+        value: 1
+      }, {
+        label: '2间',
+        value: 2
+      }, {
+        label: '3间',
+        value: 3
+      }, {
+        label: '4间',
+        value: 4
+      }, {
+        label: '5间',
+        value: 5
+      }, {
+        label: '6间',
+        value: 6
+      }],
+      showModal: false,
+      nightlyRateDtos: [],
+      rooms: [{
+        name: ''
+      }]
     }
-    methods = {}
+    methods = {
+      roomsName(e) {
+        let index = e.currentTarget.dataset.index
+        this.rooms[index].name = e.detail.value
+        console.log(this.rooms)
+        this.$apply()
+      },
+      roomPickerChange(e) {
+        let index = e.detail.value
+        this.count = this.roomsArray[index].value
+        this.rooms = []
+        for (let i = 0; i < this.count; i++) {
+          let obj = {
+            name: ''
+          }
+          this.rooms.push(obj)
+        }
+        this.$apply()
+      },
+      phoneInput(e) {
+        this.phone = e.detail.value
+        this.$apply()
+      },
+      handleModal() {
+        this.showModal = true
+        this.$apply()
+      },
+      handleSubmit() {
+        let full = null
+        this.rooms.forEach(item => {
+          if (item.name === '') {
+            full = 1
+            return
+          }
+          if (!(/^[\u4E00-\u9FA5]{2,4}$/).test(item.name)) {
+            full = 2
+            return
+          }
+        });
+        if (full === 1) {
+          wepy.showToast({
+            title: '每间需填写一位姓名',
+            icon: 'none',
+            duration: 1200
+          })
+        } else if (full === 2) {
+          wepy.showToast({
+            title: '请填写正确的姓名',
+            icon: 'none',
+            duration: 1200
+          })
+        } else if (!(/^1[34578]\d{9}$/.test(this.phone))) {
+          wepy.showToast({
+            title: '请输入正确的手机号',
+            icon: 'none',
+            duration: 1200
+          })
+        } else {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          let name = ''
+          if (this.count > 0) {
+            this.rooms.forEach((item, index) => {
+              if (index === this.rooms.length - 1) {
+                name += item.name
+              } else {
+                name += item.name + ','
+              }
+            });
+          }
+          let query = {
+            houseId: this.houseId,
+            inDate: this.dateValue[0] ? new Date(this.dateValue[0]).toString('yyyyMMdd') : '',
+            outDate: this.dateValue[1] ? new Date(this.dateValue[1]).toString('yyyyMMdd') : '',
+            houseNum: this.count,
+            userCount: 1,
+            userName: name,
+            mobile: this.phone,
+            orderType: 2,
+            message: '',
+            deposit: 0,
+            agentId: 0,
+            tutorId: 0,
+            ignoreLogin: 1,
+            discount: 0,
+            rebateType: '',
+            keyId: this.roomInfo.keyId,
+            useType: 0,
+            openId: ''
+          }
+          addOrder(query).then(res => {
+            wepy.hideLoading()
+            console.log(res)
+            if (res && res.orderInfo.orderNo) {
+              wepy.navigateTo({
+                url: './pay?orderNo=' + res.orderInfo.orderNo
+              })
+            }
+          })
+        }
+      }
+    }
     onShow() {}
-    onLoad() {
+    onLoad(option) {
       this.scrollHeight = changePXToRPX(getSysHeight()) - 100;
+      if (option.date) {
+        this.dateValue = option.date.split(',') || []
+      }
+      if (option.roomInfo && option.houseId) {
+        this.houseId = option.houseId
+        this.roomInfo = JSON.parse(option.roomInfo)
+        console.log(this.roomInfo)
+        let query = {
+          keyId: this.roomInfo.keyId,
+          houseId: option.houseId,
+          startDate: new Date(this.dateValue[0]).toString('yyyyMMdd'),
+          endDate: new Date(this.dateValue[1]).toString('yyyyMMdd'),
+          price: this.roomInfo.price,
+          hotelBrand: this.roomInfo.source,
+          terminal: 'P_TERMINAL_MOBILE_B'
+        }
+        orderWrite(query).then(res => {
+          let tempObj = res.userInfo
+          this.orderInfo = {
+            title: tempObj.houseTitle,
+            avatar: tempObj.imgUrl,
+            type: tempObj.houseInfo.houseTitle,
+            breakfast: ((tempObj.houseInfo.breakfast === null || tempObj.houseInfo.breakfast === 0) ? '无早' : '有早'),
+            cancelLimit: tempObj.cancelLimit,
+            cancelMsg: tempObj.cancelMsg,
+            refundMsg: tempObj.refundPromptMsg,
+            checkPolicy: tempObj.checkPolicy
+          }
+          this.$apply()
+        })
+        let query1 = {
+          houseId: option.houseId,
+          inDate: new Date(this.dateValue[0]).toString('yyyyMMdd'),
+          outDate: new Date(this.dateValue[1]).toString('yyyyMMdd'),
+          houseCount: this.count,
+          keyId: this.roomInfo.keyId,
+          orderType: 2
+        }
+        selectPrices(query1).then(res => {
+          this.nightlyRateDtos = res.nightlyRateDtos
+          this.$apply()
+        })
+      }
       this.$apply()
     }
   }

@@ -141,7 +141,6 @@
       this.mapCtx = wx.createMapContext('myMap')
       hotelDetailInfo({
         hotelId: option.hotelId,
-        sid: ''
       }).then(res => {
         console.log(res.hotelInfo)
         this.hotelInfo = res.hotelInfo
