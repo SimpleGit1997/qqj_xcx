@@ -206,7 +206,7 @@
     </view>
     <view class="pay-methods-label-view">请选择支付方式</view>
     <repeat for="{{payMethodList}}" item="item" index="index" key="index">
-      <view class="pay-methods-item-label-view" wx:if="{{item.payChannelCode=='WXA_API'}}">
+      <view class="pay-methods-item-label-view" wx:if="{{item.payModeCode=='P_MODE_WECHAT'}}">
         <view class="pay-methods-left-label-view">
           <image class="methods-left-img" src="../images/wx-icon-logo.png" />
           <view class="methods-left-text-view">微信</view>
@@ -219,7 +219,7 @@
           </view>
         </view>
       </view>
-      <view class="pay-methods-item-label-view" wx:if="{{item.payChannelCode=='BALANCE'}}">
+      <view class="pay-methods-item-label-view" wx:if="{{item.payModeCode=='P_MODE_BALANCE'}}">
         <view class="pay-methods-left-label-view">
           <image class="methods-left-img" src="../images/red-balance-icon.png" />
           <view class="methods-left-text-view">余额</view>
@@ -243,7 +243,7 @@
     <view wx:if="{{showModal}}" class="modal-mask-dialog" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
     <view wx:if="{{showModal}}" class="fixed-view-dialog" catchtouchmove="preventTouchMove">
       <view class="dialog-inner-input-view">
-        <input @input="smsCodeInput" value="{{smsCode}}" class="dialog-input" placeholder="请输入验证码" placeholder-style="color:#cccccc;" />
+        <input @input="smsCodeInput" type="number" value="{{smsCode}}" class="dialog-input" placeholder="请输入验证码" placeholder-style="color:#cccccc;" />
         <view class="input-label-text-view" wx:if="{{!isOption}}" @tap="handleGetCode">获取验证码</view>
         <view class="input-label-text-view" style="color:#cccccc;" wx:if="{{isOption}}">{{second}}秒后重试</view>
       </view>
@@ -387,14 +387,14 @@
             }
           });
           let row = this.payMethodList[index]
-          if (row.payChannelCode === 'BALANCE') {
+          if (row.payModeCode === 'P_MODE_BALANCE') {
             payApply({
-              orders: {
+              orders: [{
                 orderBizCategory: this.orderInfo.orderBizCategory,
                 orderNo: this.orderInfo.orderNo,
                 orderTotalFee: this.orderInfo.payPrice,
                 sign: this.orderInfo.sign
-              },
+              }],
               payBizCategory: row.payBizCategory,
               payPlatform: row.payPlatform,
               payTerminal: row.payTerminal,
@@ -402,13 +402,66 @@
               payOptional: {
                 id: this.orderInfo.userId
               },
-            }).then(res => {
-              this.showModal = true
-              this.$apply()
-              console.log('11',res)
+            }).then(data => {
+              if (data) {
+                this.showModal = true
+                this.payApplyNo = data.billno
+                this.$apply()
+              }
             })
-          } else if (row.payChannelCode === 'WXA_API') {
-            console.log('小程序支付还未开放')
+          } else if (row.payModeCode === 'P_MODE_WECHAT') {
+            console.log(JSON.stringify({
+              orders: [{
+                orderBizCategory: this.orderInfo.orderBizCategory,
+                orderNo: this.orderInfo.orderNo,
+                orderTotalFee: this.orderInfo.payPrice,
+                sign: this.orderInfo.sign
+              }],
+              payBizCategory: row.payBizCategory,
+              payPlatform: row.payPlatform,
+              payTerminal: row.payTerminal,
+              payModeCode: row.payModeCode,
+              payOptional: {
+                id: this.orderInfo.userId
+              },
+            }))
+            payApply({
+              orders: [{
+                orderBizCategory: this.orderInfo.orderBizCategory,
+                orderNo: this.orderInfo.orderNo,
+                orderTotalFee: this.orderInfo.payPrice,
+                sign: this.orderInfo.sign
+              }],
+              payBizCategory: row.payBizCategory,
+              payPlatform: row.payPlatform,
+              payTerminal: row.payTerminal,
+              payModeCode: row.payModeCode,
+              payOptional: {
+                id: this.orderInfo.userId
+              },
+            }).then(data => {
+              wx.requestPayment({
+                timeStamp: data.timeStamp,
+                nonceStr: data.nonceStr,
+                package: data.package,
+                signType: data.signType,
+                paySign: data.paySign,
+                success(res) {
+                  if (data) {
+                    wepy.navigateTo({
+                      url: './paySuccess?orderNo=' + this.orderInfo.orderNo
+                    })
+                  }
+                },
+                fail(res) {
+                  wepy.showToast({
+                    title: '请重新支付！',
+                    icon: 'none',
+                    duration: 1200
+                  })
+                }
+              })
+            })
           }
         }
       },
@@ -450,20 +503,13 @@
           phoneNo: this.sendPhoneNo,
           smsCode: this.smsCode
         }).then(res => {
-          if (res.state == 1) {
-            balancePay({
-              payApplyNo: this.orderInfo.orderNo
-            }).then(res => {
-              console.log('余额支付', res)
+          balancePay({
+            payApplyNo: this.payApplyNo
+          }).then(res => {
+            wepy.navigateTo({
+              url: './paySuccess?orderNo=' + this.orderInfo.orderNo
             })
-            wepy.hideLoading()
-          } else if (res.state == 2) {
-            wepy.showToast({
-              title: res.msg,
-              icon: 'none',
-              duration: 1500
-            })
-          }
+          })
         })
       },
       preventTouchMove() {

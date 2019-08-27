@@ -84,19 +84,107 @@
     text-align: center;
     color: #9057a8;
   }
+  .button-view {
+    width: 690rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #333333;
+    border-radius: 10rpx;
+    border: 2rpx solid #DDDDDD;
+    background-color: #F5F5F5;
+    margin: 0px auto;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .navbar {
+    width: 100%;
+    background-color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .navbar-title-view {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    box-sizing: border-box;
+    padding-left: 115px;
+    padding-right: 115px;
+  }
+  .nav-menu-view {
+    display: flex;
+    box-sizing: border-box;
+    display: inline-flex;
+    border: 1px solid #f0f0f0;
+    border-radius: 40rpx;
+    overflow: hidden;
+    position: relative;
+    z-index: 70;
+    .nav-tag {
+      margin: 4px 0px;
+      right: 50%;
+      width: 1px;
+      background-color: #f0f0f0;
+    }
+    .navbar-action_left {
+      width: 38px;
+      height: 32px;
+      box-sizing: border-box;
+      padding: 0px 2px 0px 4px;
+      &:active {
+        background-color: #c4bebe;
+      }
+    }
+    .navbar-action_right {
+      width: 42px;
+      height: 32px;
+      padding: 2px 8px 4px 6px;
+      box-sizing: border-box;
+      &:active {
+        background-color: #c4bebe;
+      }
+    }
+  }
 </style>
 
 <template>
   <view class="body">
-    <view class="onload-img-view">
+    <view class="navbar" style="height:{{navbarHeight}}px;">
+      <view class="nav-menu-view" style="height:{{navMenuHeight}}px;margin:{{navMenuTop}}px 0px 0px {{navMenuLeft}}px;">
+        <view class="navbar-action_left" @tap="handleBack">
+          <image style="width:100%;height:100%;" src="../images/arrow-left-icon.png" />
+        </view>
+        <view class="nav-tag"></view>
+        <view class="navbar-action_right" @tap="handleIndex">
+          <image style="width:100%;height:100%;" src="../images/default-index-icon.png" />
+        </view>
+      </view>
+      <view class="navbar-title-view" style="height:{{navTitleHeight}}px;margin-top:{{navTitleTop}}px;line-height:{{navTitleHeight}}px;">惠享住</view>
+    </view>
+    <view class="onload-img-view" style="margin-top:{{navbarHeight}}px;">
       <image style="width: 100%;height:100%;" src="../images/onload-img.png" />
     </view>
+    <!-- <view class="button-view" @tap="handleToLogin">登录/注册</view> -->
+    <button class="button-view" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfoToLogin">
+              <view>登录/注册</view>
+            </button>
     <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo" hover-class="hover-button">
-        <view class="button-img-view">
-          <image style="width: 100%;height:100%;margin-top:20rpx;" src="../images/wxlogo-img.png" />
-        </view>
-        <view>微信授权登录</view>
-      </button>
+              <view class="button-img-view">
+                <image style="width: 100%;height:100%;margin-top:20rpx;" src="../images/wxlogo-img.png" />
+              </view>
+              <view>微信授权登录</view>
+            </button>
     <view wx:if="{{showModal}}" class="modal-mask-dialog" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
     <view wx:if="{{showModal}}" class="fixed-view-dialog" catchtouchmove="preventTouchMove">
       <view class="dialog-title-view">授权手机号码</view>
@@ -109,25 +197,89 @@
 <script>
   import wepy from 'wepy';
   import {
-    getOpenId
+    getOpenId,
+    bindPhone
   } from '../server/index.js';
+  import {
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
   export default class Onload extends wepy.page {
     config = {
       navigationBarTitleText: '惠享住',
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      navigationStyle: 'custom'
     };
     components = {};
     data = {
+      menuInfo: {},
+      navbarHeight: 0,
+      navMenuHeight: 0,
+      navMenuLeft: 0,
+      navMenuTop: 0,
+      navTitleTop: 0,
+      navTitleHeight: 0,
       showModal: false
     };
     computed = {};
     watch = {};
     onLoad() {
+      let statusBarHeight = wepy.getSystemInfoSync().statusBarHeight
+      this.menuInfo = wx.getMenuButtonBoundingClientRect()
+      this.navbarHeight = (statusBarHeight + this.menuInfo.height + (this.menuInfo.top - statusBarHeight) * 2)
+      this.navMenuLeft = (wepy.getSystemInfoSync().windowWidth - this.menuInfo.right)
+      this.navMenuTop = (this.menuInfo.top)
+      this.navMenuHeight = (this.menuInfo.height)
+      this.navTitleTop = (statusBarHeight)
+      this.navTitleHeight = (this.menuInfo.height + (this.menuInfo.top - statusBarHeight) * 2)
     }
-    onShow() {
-    }
+    onShow() {}
     methods = {
+      handleBack() {
+        console.log(11)
+        wx.navigateBack({
+          delta: 1
+        })
+      },
+      handleIndex() {
+        console.log(11)
+        wx.reLaunch({
+          url: './index'
+        })
+      },
       getUserInfo(e) {
+        wepy.showLoading({
+          title: '加载中...'
+        })
+        wepy.login().then(res => {
+          return new Promise((resolve, reject) => {
+            resolve(res.code);
+          });
+        }).then(code => {
+          console.log(code)
+          getOpenId({
+            code: code,
+          }).then(res => {
+            console.log(res)
+            wepy.hideLoading()
+            if (res.openid) {
+              wepy.setStorageSync('openId', res.openid);
+            }
+            if (res.sid) {
+              wepy.setStorageSync('sid', res.sid);
+            }
+            if (res.loginId) {
+              wepy.reLaunch({
+                url: './index'
+              });
+            } else {
+              this.showModal = true;
+              this.$apply();
+            }
+          });
+        });
+      },
+      getUserInfoToLogin(e) {
         wepy.showLoading({
           title: '加载中...'
         })
@@ -140,29 +292,36 @@
             code: code,
           }).then(res => {
             wepy.hideLoading()
-            // wepy.setStorageSync('token', res.data.token);
-            // wepy.setStorageSync('userInfo', res.data.userInfo);
-            // if (res.data.userInfo.member_phone) {
-            //   wepy.reLaunch({
-            //     url: './index'
-            //   });
-            // } else {
-            //   this.showModal = true;
-            //   this.$apply();
-            // }
+            if (res.openid) {
+              wepy.setStorageSync('openId', res.openid);
+              wepy.navigateTo({
+                url: './login'
+              })
+            }
           });
         });
+      },
+      handleToLogin() {
+        wepy.navigateTo({
+          url: './login'
+        })
       },
       hideModal() {
         this.showModal = false;
         this.$apply();
       },
       getPhoneNumber(e) {
+        console.log(JSON.stringify(e))
         if (e.detail.encryptedData) {
           bindPhone(e.detail).then(res => {
-            wepy.reLaunch({
-              url: './index'
-            });
+            if (res.sid) {
+              wepy.setStorageSync('sid', res.sid);
+              wepy.reLaunch({
+                url: './index'
+              });
+            } else {
+              console.log('发生未知异常。')
+            }
           });
         }
       },

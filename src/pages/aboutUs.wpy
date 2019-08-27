@@ -1,0 +1,108 @@
+<style lang="less">
+  .header-log {
+    height: 250rpx;
+    overflow: hidden;
+    margin-top: 60rpx;
+  }
+  .header-log-icon {
+    width: 120rpx;
+    height: 120rpx;
+    margin: 0px auto;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .header-log-text {
+    text-align: center;
+    color: #999999;
+    font-size: 24rpx;
+    margin-top: 20rpx;
+  }
+  .view-list {
+    background: #ffffff;
+  }
+  .view-list-li {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    font-size: 28rpx;
+    color: #333333;
+    font-weight: 400;
+    line-height: 90rpx;
+    align-items: center;
+    padding: 0 30rpx 0 30rpx;
+    border-bottom: 2rpx solid #EEEEEE;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .view-list-iconImage {
+    position: absolute;
+    right: 10rpx;
+    width: 30rpx;
+    height: 30rpx;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+
+<template>
+  <view class="body">
+    <!-- 头部 -->
+    <view class="header-log">
+      <view class="header-log-icon">
+        <image src="../images/hemeihui-logo-icon.png" />
+      </view>
+      <view class="header-log-text">版本 v2.1.0</view>
+    </view>
+    <!-- 列表 -->
+    <view class="view-list">
+      <!-- 关于合发 -->
+      <view class="view-list-li" @tap="handleAboutHefa">
+        <view>关于合发</view>
+        <view class="view-list-icon view-list-iconImage">
+          <image src="../images/arrow-right-icon.png" />
+        </view>
+      </view>
+      <!-- 联系我们 -->
+      <view class="view-list-li" @tap="handleUs">
+        <view>联系我们</view>
+        <view class="view-list-icon view-list-iconImage">
+          <image src="../images/arrow-right-icon.png" />
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class AboutUs extends wepy.page {
+    config = {
+      navigationBarTitleText: '关于我们'
+    }
+    data = {}
+    methods = {
+      handleAboutHefa() {
+        wepy.navigateTo({
+          url: './aboutHefa'
+        })
+      },
+      handleAdvice() {
+        wepy.navigateTo({
+          url: './advice'
+        })
+      },
+      // 联系我们
+      handleUs() {
+        wepy.navigateTo({
+          url: './aboutInfo'
+        })
+      },
+    }
+    onLoad() {}
+  }
+</script>

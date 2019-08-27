@@ -1,0 +1,216 @@
+<style lang="less">
+  page {
+    height: 100%;
+  }
+  .top-warn-info-view{
+    padding: 20rpx 30rpx;
+    background-color: #FFF8E6;
+    color: #333333;
+    font-size: 28rpx;
+    line-height: 40rpx;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .default-row-info-label-view {
+    width: 690rpx;
+    display: flex;
+    overflow: hidden;
+    border-radius: 10rpx;
+    margin: 30rpx auto 0px auto;
+    background: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 0rpx 4rpx 8rpx 0rpx rgba(0, 0, 0, 0.2);
+  } // 左侧线
+  .assetsList-left-Line {
+    width: 6rpx;
+  }
+  .assetsList-left-Line-bg-RM {
+    //RM资产
+    background: #9013FE;
+  }
+  .assetsList-left-Line-bg-city {
+    //城代收益
+    background: #BD10E0;
+  }
+  .assetsList-left-Line-bg-slice {
+    //片代收益
+    background: #417505;
+  }
+  .assetsList-left-Line-bg-town {
+    //街镇
+    background: #7ED321;
+  }
+  .assetsList-left-Line-bg-news {
+    //新零售
+    background: #8B572A;
+  }
+  .assetsList-left-Line-bg-goods {
+    //合发购
+    background: #F5A623;
+  }
+  .assetsList-left-Line-bg-global {
+    //全球家
+    background: #D0021B;
+  }
+  .assetsList-left-Line-bg-welfare {
+    background: #FF6376;
+  } // 右侧内容
+  .assetsList-right-content {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 34rpx 0 24rpx 50rpx;
+  }
+  .assetsList-right-content-title {
+    height: 60rpx;
+    font-size: 36rpx;
+    font-weight: 600;
+    color: #333333;
+    margin: 0 0 6rpx 0;
+    line-height: 60rpx;
+  }
+  .assetsList-right-content-money {
+    height: 60rpx;
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #FF0000;
+    margin: 0 0 6rpx 0;
+    line-height: 60rpx;
+  }
+  .assetsList-right-content-text {
+    // height: 60rpx;
+    // line-height: 60rpx;
+    font-size: 32rpx;
+    font-weight: 400;
+    color: #333333;
+    margin: 0 0 6rpx 0;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-warn-info-view">{{warnInfo}}</view>
+    <view class="default-row-info-label-view">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-RM"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">{{checkInfo.RMGrade==1?'个人':'RM'}}资产</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.RMAsset}}</view>
+        <view class="assetsList-right-content-text">{{RMInfo[checkInfo.RMGrade]}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{checkInfo.cityAgent}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-city"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">城代收益</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.cityAsset}}</view>
+        <view class="assetsList-right-content-text">代理区域：{{checkInfo.cityAgent.cityName}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{checkInfo.regionAgent}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-slice"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">片代收益</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.regionAsset}}</view>
+        <view class="assetsList-right-content-text">代理区域：{{checkInfo.regionAgent.cityName+checkInfo.regionAgent.regionName}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{checkInfo.townAgent}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-town"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">街镇代收益</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.townAsset}}</view>
+        <view class="assetsList-right-content-text">代理区域：{{checkInfo.townAgent.cityName+checkInfo.townAgent.regionName+checkInfo.townAgent.townName}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{!!checkInfo.isOtoShops}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-news"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">新零售资产</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.otoAsset}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{!!propertyInfo.mallAsset}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-goods"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">合发购资产</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.mallAsset}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{!!propertyInfo.globalAsset}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-global"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">全球家资产</view>
+        <view class="assetsList-right-content-money">￥{{_propertyInfo.globalAsset}}</view>
+      </view>
+    </view>
+    <view class="default-row-info-label-view" wx:if="{{!!propertyInfo.optionAsset}}">
+      <view class="assetsList-left-Line assetsList-left-Line-bg-welfare"></view>
+      <view class="assetsList-right-content">
+        <view class="assetsList-right-content-title">福利期权</view>
+        <view class="assetsList-right-content-money">{{_propertyInfo.optionAsset}}期权</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import {
+    myAsset,
+    checkShops
+  } from '../server/index.js'
+  import {
+    formatNumber
+  } from '../lib/utils.js'
+  export default class Propeety extends wepy.page {
+    config = {
+      navigationBarTitleText: '资产'
+    };
+    components = {};
+    data = {
+      warnInfo:'小程序资产提示语：这里仅展示总的资产，查看资产明细请登录合美惠APP查看',
+      propertyInfo: {},
+      _propertyInfo: {},
+      checkInfo: {},
+      RMInfo: {
+        1: '等级：免费会员',
+        2: '等级：初级门店',
+        3: '等级：中级门店',
+        4: '等级：高级门店'
+      },
+    };
+    watch = {};
+    computed = {};
+    methods = {};
+    onLoad() {
+      wepy.showLoading({
+        title:'加载中...'
+      })
+      myAsset({}).then(res => {
+        this.propertyInfo = res
+        let RMAsset = 0
+        RMAsset = (!!this.propertyInfo.rmEarningsAsset ? this.propertyInfo.rmEarningsAsset : 0) + (!!this.propertyInfo.rmAsset ? this.propertyInfo.rmAsset : 0) + (!!this.propertyInfo.shoppingBonusAsset ? this.propertyInfo.shoppingBonusAsset : 0)
+        console.log((!!this.propertyInfo.rmEarningsAsset ? this.propertyInfo.rmEarningsAsset : 0), (!!this.propertyInfo.rmAsset ? this.propertyInfo.rmAsset : 0), (!!this.propertyInfo.shoppingBonusAsset ? this.propertyInfo.shoppingBonusAsset : 0))
+        console.log(RMAsset)
+        this._propertyInfo = {
+          RMAsset: formatNumber(RMAsset),
+          cityAsset: !!this.propertyInfo.cityAsset ? formatNumber(this.propertyInfo.cityAsset) : 0,
+          regionAsset: !!this.propertyInfo.regionAsset ? formatNumber(this.propertyInfo.regionAsset) : 0,
+          townAsset: !!this.propertyInfo.townAsset ? formatNumber(this.propertyInfo.townAsset) : 0,
+          otoAsset: !!this.propertyInfo.otoAsset ? formatNumber(this.propertyInfo.otoAsset) : 0,
+          mallAsset: !!this.propertyInfo.mallAsset ? formatNumber(this.propertyInfo.mallAsset) : 0,
+          globalAsset: !!this.propertyInfo.globalAsset ? formatNumber(this.propertyInfo.globalAsset) : 0,
+          optionAsset: !!this.propertyInfo.optionAsset ? this.propertyInfo.optionAsset : 0,
+        }
+        console.log(formatNumber(RMAsset))
+        checkShops({}).then(res => {
+          this.checkInfo = res
+          this.$apply()
+        })
+        wepy.hideLoading()
+        this.$apply()
+      })
+    }
+    onShow() {}
+  }
+</script>

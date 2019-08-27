@@ -3,6 +3,20 @@ import wepy from 'wepy'
 import { request } from '../lib/request'
 import config from '../config/index'
 
+
+
+/**
+ * 获取全球家banner
+ * @param {*} param
+ */
+function advertisingAllocationDetailListH5OrApp(param) {
+  return new Promise((resolve, reject) => {
+    request('POST', config.host + '/Advertising/advertisingAllocationDetailListH5OrApp', param, false, "FORM", true).then(res => {
+      resolve(res)
+    })
+  })
+}
+
 /**
  * 获取城市列表
  * @param {*} param
@@ -148,13 +162,100 @@ function payMode(param) {
   })
 }
 
+
+/**
+ * 全球家酒店收藏查询接口
+ * @param {*} param 
+ */
+function selectAllFollow(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/myFollowHouse/selectAllFollow',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 收藏
+ * @param {*} param 
+ */
+function attentionHotel(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/hotelinfo/attentionHotel',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 取消收藏
+ * @param {*} param 
+ */
+function disAttentionHotel(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/hotelinfo/disAttentionHotel',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 全球家酒店浏览查询接口
+ * @param {*} param 
+ */
+function selectUserBrowse(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/myFollowHouse/selectUserBrowse',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 全球家收藏浏览条数
+ * @param {*} param 
+ */
+function selectFollowAndBrowseTotal(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/myFollowHouse/selectFollowAndBrowseTotal',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
 /**
  * 预支付
  * @param {*} param 
  */
 function payApply(param) {
   return new Promise((resolve, reject) => {
-    request('POST',config.host + '/user/pay/apply/submit?sid='+wepy.getStorageSync('sid'),  param, true, "JSON", false).then(res => {
+    request('POST',config.host + '/user/pay/apply/submit?sid='+ wepy.getStorageSync('sid'),  param, true, "JSON", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 取消订单
+ * @param {*} param 
+ */
+function orderCancel(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/orderInfo/cancel',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 退订订单
+ * @param {*} param 
+ */
+function orderQuite(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/orderInfo/cancelOrder',  param, true, "FORM", false).then(res => {
       resolve(res)
     })
   })
@@ -178,7 +279,7 @@ function sendVialidate(param) {
  */
 function submitValidate(param) {
   return new Promise((resolve, reject) => {
-    request('POST',config.host + '/pay/sms/validate',  param, true, "FORM", true).then(res => {
+    request('POST',config.host + '/pay/sms/validate',  param, true, "FORM", false).then(res => {
       resolve(res)
     })
   })
@@ -209,12 +310,199 @@ function findAllOrders(param) {
 }
 
 /**
- * 登录
+ * 订单详情
+ * @param {*} param 
+ */
+function findOrderInfoDetail(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/orderInfo/findOrderInfoDetail',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 酒店评论
+ * @param {*} param 
+ */
+function getAllComment(param) {
+  return new Promise((resolve, reject) => {
+    request('GET',config.host + '/commentInfo/getAllComment',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 获取我的页面用户信息
+ * @param {*} param 
+ */
+function refreshUser(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/refreshUser',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 发送手机验证码 更改二级密码
+ * @param {*} param 
+ */
+function sendResetPasswordMsg(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/sms/sendResetPasswordMsg',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 更改二级密码
+ * @param {*} param 
+ */
+function changeTwoStagePassword(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/broker/backtwo',  param, true, "FORM", true).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 获取资产信息
+ * @param {*} param 
+ */
+function myAsset(param) {
+  return new Promise((resolve, reject) => {
+    request('GET',config.host + '/user/myAsset',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 资产门店信息
+ * @param {*} param 
+ */
+function checkShops(param) {
+  return new Promise((resolve, reject) => {
+    request('GET',config.host + '/user/checkShops',  param, true, "JSON", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 验证二级密码
+ * @param {*} param 
+ */
+function checkTwoStagePwd(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/checkSecPwd',  param, true, "FORM", true).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 检查登录
+ * @param {*} param 
+ */
+function loginCheck(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/loginCheck',  param, true, "FORM", true).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 小程序换取openId
  * @param {*} param 
  */
 function getOpenId(param) {
   return new Promise((resolve, reject) => {
-    request('POST',config.host + '/wechat/userbind/find',  param, true, "FORM", true).then(res => {
+    request('GET',config.host + '/sns-server/wechat/minipro/login',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 绑定手机号码
+ * @param {*} param 
+ */
+function bindPhone(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/sns-server/wechat/minipro/auth-login',  param, true, "JSON", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 验证码登录
+ * @param {*} param 
+ */
+function smsLogin(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/sns-server/wechat/minipro/sms-login',  param, true, "JSON", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 账号密码登录
+ * @param {*} param 
+ */
+function accountLogin(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/sns-server/wechat/minipro/account-login',  param, true, "JSON", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 登录发送验证码
+ * @param {*} param 
+ */
+function sendQuickLoginMsg(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/sms/sendQuickLoginMsg',  param, true, "FORM", false).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+/**
+ * 查看是否设置资产二级密码
+ * @param {*} param 
+ */
+function checkHadSecPwd(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/user/checkHadSecPwd',  param, true, "FORM", true).then(res => {
+      resolve(res)
+    })
+  })
+}
+
+
+/**
+ * 发表评论
+ * @param {*} param 
+ */
+function addComment(param) {
+  return new Promise((resolve, reject) => {
+    request('POST',config.host + '/commentInfo/addComment',  param, true, "FORM", false).then(res => {
       resolve(res)
     })
   })
@@ -222,6 +510,7 @@ function getOpenId(param) {
 
 
 export {
+  advertisingAllocationDetailListH5OrApp,
   findRegions,
   queryRegionsByParentId,
   getHotelList,
@@ -239,5 +528,27 @@ export {
   balancePay,
   payApply,
   findAllOrders,
-  getOpenId
+  findOrderInfoDetail,
+  orderCancel,
+  orderQuite,
+  selectAllFollow,
+  selectUserBrowse,
+  selectFollowAndBrowseTotal,
+  disAttentionHotel,
+  attentionHotel,
+  getAllComment,
+  refreshUser,
+  sendResetPasswordMsg,
+  changeTwoStagePassword,
+  checkTwoStagePwd,
+  myAsset,
+  checkShops,
+  loginCheck,
+  getOpenId,
+  bindPhone,
+  smsLogin,
+  accountLogin,
+  sendQuickLoginMsg,
+  checkHadSecPwd,
+  addComment
 }

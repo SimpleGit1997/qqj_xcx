@@ -377,7 +377,7 @@
         <view class="item-left-text-view">手机号</view>
         <view class="item-right-input-view">
           <view class="item-right-text-view">+86</view>
-          <input value="{{phone}}" @input="phoneInput" placeholder="用于接收通知" placeholder-class="placeholder-class" />
+          <input value="{{phone}}" type="number" @input="phoneInput" placeholder="用于接收通知" placeholder-class="placeholder-class" />
         </view>
       </view>
     </view>
@@ -399,7 +399,7 @@
       </view>
       <view class="button-right-view" @tap="handleSubmit">提交订单</view>
     </view>
-    <popup size="500" duration='360' type="bottom" :showModal.sync="showModal">
+    <popup :size.sync="popupHeight" duration='360' type="bottom" :showModal.sync="showModal">
       <view class="popup-title-label-view">费用明细</view>
       <scroll-view style="height:{{340}}rpx;width:100%;" scroll-y>
         <view class="popup-inner-label-info-view">
@@ -511,8 +511,9 @@
       }
     }
     data = {
+      popupHeight:500,
       scrollHeight: 0,
-      dateValue: ['2019-08-10', '2019-08-11'],
+      dateValue: [],
       roomInfo: {},
       orderInfo: {},
       houseId: '',
@@ -577,10 +578,10 @@
             full = 1
             return
           }
-          if (!(/^[\u4E00-\u9FA5]{2,4}$/).test(item.name)) {
-            full = 2
-            return
-          }
+          // if (!(/^[\u4E00-\u9FA5]{2,4}$/).test()) {
+          //   full = 2
+          //   return
+          // }
         });
         if (full === 1) {
           wepy.showToast({
@@ -588,13 +589,15 @@
             icon: 'none',
             duration: 1200
           })
-        } else if (full === 2) {
-          wepy.showToast({
-            title: '请填写正确的姓名',
-            icon: 'none',
-            duration: 1200
-          })
-        } else if (!(/^1[34578]\d{9}$/.test(this.phone))) {
+        } 
+        // else if (full === 2) {
+        //   wepy.showToast({
+        //     title: '请填写正确的姓名',
+        //     icon: 'none',
+        //     duration: 1200
+        //   })
+        // } 
+        else if (!(/^1[34578]\d{9}$/.test(this.phone))) {
           wepy.showToast({
             title: '请输入正确的手机号',
             icon: 'none',

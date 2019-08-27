@@ -373,10 +373,12 @@
         } else if (this.value.length == 1) {
           let firstStamp = new Date(this.value[0].replace(/-/gi, '/'));
           let secondStamp = new Date(value.replace(/-/gi, '/'));
-          if (firstStamp < secondStamp) {
-            this.value.push(value);
-          } else {
-            this.value.unshift(value);
+          if (firstStamp.valueOf() !== secondStamp.valueOf()) {
+            if (firstStamp < secondStamp) {
+              this.value.push(value);
+            } else {
+              this.value.unshift(value);
+            }
           }
         } else if (this.value.length == 2) {
           this.value = [];

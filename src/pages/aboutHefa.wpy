@@ -1,0 +1,31 @@
+<style lang="less">
+  page {
+    background-color: #ffffff;
+  }
+  .text {
+    color: #333333;
+    font-size: 28rpx;
+    margin: 20rpx 30rpx;
+    line-height: 1.7;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="text">&#12288;&#12288;合发（上海）网络技术有限公司成立于2011年，是一家以“互联网+房地产+酒店+商城+大数据”为主营业务的新零售闭环生态型电商平台。公司总部运营中心坐落于上海浦东新区临港新城，美丽的滴水湖畔。研发中心位于市北高新科技园，目前业务遍布全国300多个城市。</view>
+    <view class="text">&#12288;&#12288;公司自成立以来，一直积极响应国家号召，以十八大提出的“创新，协调，绿色，开发，共享”五大发展理念为指导，在借鉴美国先进成功的RM和AIRBNB的经营理念的基础上，结合中国国情改造升级。以房产去库存为己任，以消费拉动创业为基础，以移动互联网，区块链，云计算，大数据，物联网等为工具，全力打造一个无国界，跨行业，共享式的产业化电商平台。平台以“筑财富通路，让伙伴幸福”为使命，开启了“流通创造价值，消费产生利润”的新商业模式，为创业，就业，扶贫提供了全方位一体化解决方案。在帮助传统企业插上互联网翅膀的同时，更有效地助力企业产品走向全国乃至全世界。通过互联网创新模式让大众创业实现低门槛加入，更好帮助老百姓创业，以创业带动就业，积累了大量可行的经验和基础。</view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class AboutHefa extends wepy.page {
+    config = {
+      navigationBarTitleText: '关于合发',
+      backgroundColor: "#ffffff"
+    }
+    data = {}
+    methods = {}
+    onLoad() {}
+  }
+</script>

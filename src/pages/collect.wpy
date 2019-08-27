@@ -1,0 +1,367 @@
+<style lang="less">
+  .top-state-label-view {
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+  }
+  .item-state-label-view {
+    height: 84rpx;
+    line-height: 84rpx;
+    text-align: center;
+    color: #333333;
+    font-size: 28rpx;
+  }
+  .checked {
+    border-bottom: 4rpx solid #FA8C1D;
+    font-weight: 500;
+  }
+  .default-label-row-view {
+    width: 100%;
+    background-color: #ffffff;
+  }
+  .default-inner-label-row-view {
+    width: 690rpx;
+    height: 240rpx;
+    margin: 0px auto;
+    display: flex;
+    position: relative;
+    &:active {
+      opacity: 0.7;
+    }
+  }
+  .border-bottom {
+    border-bottom: 2rpx solid #efefef;
+  }
+  .hotel-img {
+    margin: 20rpx 20rpx 20rpx 0px;
+    width: 200rpx;
+    height: 200rpx;
+  }
+  .hotel-info-label-view {
+    width: 470rpx;
+    height: 200rpx;
+    margin: 20rpx 0px;
+  }
+  .hotel-name-label-view {
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #333333;
+  }
+  .hotel-comment-label-view {
+    margin-top: 10rpx;
+    width: 100%;
+    height: 30rpx;
+    font-size: 24rpx;
+    line-height: 30rpx;
+    color: #333333;
+    font-weight: 400;
+    display: flex;
+  }
+  .hotel-type-label-view {
+    width: 100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    margin-top: 14rpx;
+    font-size: 24rpx;
+    color: #333333;
+    font-weight: 400;
+    display: flex;
+  }
+  .type-tag-view {
+    width: 2rpx;
+    height: 20rpx;
+    margin: 5rpx 20rpx;
+    background-color: #DDDDDD;
+  }
+  .hotel-position-label-view {
+    width: 100%;
+    margin-top: 8rpx;
+    font-size: 24rpx;
+    color: #333333;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+  .abs-hotel-price-label-view {
+    position: absolute;
+    right: 0rpx;
+    top: 70rpx;
+    height: 56rpx;
+    display: flex;
+    color: #FF6600;
+    font-size: 40rpx;
+  }
+  .abs-mid-warning-view {
+    width: 200rpx;
+    position: absolute;
+    top: 320rpx;
+    left: 276rpx;
+  }
+  .mid-img-view {
+    width: 80rpx;
+    height: 80rpx;
+    margin: 0px auto;
+  }
+  .mid-text-view {
+    width: 100%;
+    height: 40rpx;
+    color: #999999;
+    font-size: 28rpx;
+    text-align: center;
+    margin: 20rpx auto 40rpx auto;
+  }
+  .mid-button-view {
+    width: 200rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    border: 2rpx solid #FF6600;
+    color: #FF6600;
+    text-align: center;
+    font-size: 28rpx;
+    border-radius: 30rpx;
+    &:active {
+      opacity: .7;
+    }
+  }
+</style>
+  
+<template>
+  <view class="body">
+    <view class="top-state-label-view">
+      <view @tap="handleState(0)" class="item-state-label-view {{swiperIndex==0?'checked':''}}" style="margin-right:50rpx;">收藏({{followTotal}})</view>
+      <view @tap="handleState(1)" class="item-state-label-view {{swiperIndex==1?'checked':''}}">浏览({{browseTotal}})</view>
+    </view>
+    <swiper duration="{{300}}" @change="changeSwiper" current="{{swiperIndex}}" class="swiper-view" style="height:{{scrollHeight}}rpx;">
+      <swiper-item>
+        <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolowerFollow">
+          <repeat for="{{followList}}" key="index" item="item" index="index">
+            <view class="default-label-row-view">
+              <view class="default-inner-label-row-view {{index+1===followList.length?'':'border-bottom'}}" @tap="handleFollowHotel({{index}})">
+                <image lazy-load @error="followImgError" data-errorIndex="{{index}}" class="hotel-img" src="{{item.imageUrl?item.imageUrl:'../images/default-hotel-img.png'}}" />
+                <view class="hotel-info-label-view">
+                  <view class="hotel-name-label-view">{{item.title}}</view>
+                  <view class="hotel-comment-label-view">
+                    <view wx:if="{{!item.commentNum&&!item.commentScore}}">暂无点评数据</view>
+                    <view wx:else>
+                      <text style="color:#FF6600;">{{item.commentScore}}分</text> 来自 <text style="color:#FF6600;">{{item.commentNum}}</text>条点评
+                    </view>
+                  </view>
+                  <view class="hotel-type-label-view" wx:if="{{item.starName||item.renovationDate}}">
+                    <view wx:if='{{item.starName}}'>{{item.starName}}</view>
+                    <view wx:if="{{item.starName&&item.renovationDate}}" class="type-tag-view"></view>
+                    <view wx:if="{{item.renovationDate}}">{{item.renovationDate}}装修</view>
+                  </view>
+                  <view class="hotel-position-label-view">{{item.address}}</view>
+                </view>
+                <view class="abs-hotel-price-label-view">
+                  <text style="font-size:20rpx;line-height:66rpx;">¥</text>
+                  <text style="font-weight:600;line-height:56rpx;">{{item.price?item.price:'0'}}</text>
+                  <text style="font-size:20rpx;color:#333333;line-height:66rpx;">起</text>
+                </view>
+              </view>
+            </view>
+          </repeat>
+          <view class="abs-mid-warning-view" wx:if="{{followList.length===0}}">
+            <view class="mid-img-view">
+              <image src="../images/like-disable-icon.png" style="width:100%;height:100%;" />
+            </view>
+            <view class="mid-text-view">还没有收藏内容</view>
+            <view class="mid-button-view" @tap="handleSearch">去发现</view>
+          </view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolowerBrowse">
+          <repeat for="{{browseList}}" key="index" item="item" index="index">
+            <view class="default-label-row-view">
+              <view class="default-inner-label-row-view {{index+1===followList.length?'':'border-bottom'}}" @tap="handleBrowseHotel({{index}})">
+                <image lazy-load @error="browseImgError" data-errorIndex="{{index}}" class="hotel-img" src="{{item.imageUrl?item.imageUrl:'../images/default-hotel-img.png'}}" />
+                <view class="hotel-info-label-view">
+                  <view class="hotel-name-label-view">{{item.title}}</view>
+                  <view class="hotel-comment-label-view">
+                    <view wx:if="{{!item.commentNum&&!item.commentScore}}">暂无点评数据</view>
+                    <view wx:else>
+                      <text style="color:#FF6600;">{{item.commentScore}}分</text> 来自 <text style="color:#FF6600;">{{item.commentNum}}</text>条点评
+                    </view>
+                  </view>
+                  <view class="hotel-type-label-view" wx:if="{{item.starName||item.renovationDate}}">
+                    <view wx:if='{{item.starName}}'>{{item.starName}}</view>
+                    <view wx:if="{{item.starName&&item.renovationDate}}" class="type-tag-view"></view>
+                    <view wx:if="{{item.renovationDate}}">{{item.renovationDate}}装修</view>
+                  </view>
+                  <view class="hotel-position-label-view">{{item.address}}</view>
+                </view>
+                <view class="abs-hotel-price-label-view">
+                  <text style="font-size:20rpx;line-height:66rpx;">¥</text>
+                  <text style="font-weight:600;line-height:56rpx;">{{item.price?item.price:'0'}}</text>
+                  <text style="font-size:20rpx;color:#333333;line-height:66rpx;">起</text>
+                </view>
+              </view>
+            </view>
+          </repeat>
+        </scroll-view>
+      </swiper-item>
+    </swiper>
+  </view>
+</template>
+  
+<script>
+  import wepy from 'wepy'
+  import {
+    getSysWidth,
+    getSysHeight,
+    changePXToRPX,
+    changeRPXToPX
+  } from '../lib/wx-system.js'
+  import {
+    selectAllFollow,
+    selectUserBrowse,
+    selectFollowAndBrowseTotal,
+    loginCheck
+  } from '../server/index.js'
+  export default class Collect extends wepy.page {
+    config = {
+      navigationBarTitleText: '收藏',
+      disableScroll: true
+    }
+    components = {};
+    data = {
+      swiperIndex: 0,
+      scrollHeight: 0,
+      followTotal: 0,
+      browseTotal: 0,
+      followQuery: {
+        pageNo: 1,
+        pageSize: 20
+      },
+      browseQuery: {
+        pageNo: 1,
+        pageSize: 20
+      },
+      followList: [],
+      browseList: []
+    }
+    methods = {
+      handleFollowHotel(index) {
+        let hotelId = this.followList[index].hotelId
+        wepy.navigateTo({
+          url: './hotelDetail?hotelId=' + hotelId
+        })
+      },
+      handleBrowseHotel(index) {
+        let hotelId = this.browseList[index].hotelId
+        wepy.navigateTo({
+          url: './hotelDetail?hotelId=' + hotelId
+        })
+      },
+      handleState(value) {
+        this.swiperIndex = value
+        this.$apply()
+      },
+      changeSwiper(e) {
+        let value = e.detail.current
+        this.swiperIndex = value
+        this.$apply()
+      },
+      browseImgError(e) {
+        let errorImgIndex = e.target.dataset.errorindex
+        this.browseTotal[errorImgIndex].imageUrl = '../images/default-hotel-img.png'
+        this.$apply()
+      },
+      followImgError(e) {
+        let errorImgIndex = e.target.dataset.errorindex
+        this.followList[errorImgIndex].imageUrl = '../images/default-hotel-img.png'
+        this.$apply()
+      },
+      scrolltolowerFollow() {
+        if (this.followList.length < this.followTotal) {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          this.followQuery.pageNo++
+            selectAllFollow(this.followQuery).then(res => {
+              let list = res.AllFollows
+              list.forEach(item => {
+                this.followList.push(item)
+              });
+              wepy.hideLoading()
+              this.$apply()
+            })
+        } else {
+          wx.showToast({
+            title: '暂无更多数据哦～',
+            icon: 'none',
+            duration: 1200
+          })
+        }
+      },
+      scrolltolowerBrowse() {
+        if (this.browseList.length < this.browseTotal) {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          this.browseQuery.pageNo++
+            selectUserBrowse(this.browseQuery).then(res => {
+              let list = res.AllFollows
+              list.forEach(item => {
+                this.browseList.push(item)
+              });
+              wepy.hideLoading()
+              this.$apply()
+            })
+        } else {
+          wx.showToast({
+            title: '暂无更多数据哦～',
+            icon: 'none',
+            duration: 1200
+          })
+        }
+      },
+      handleSearch() {
+        wepy.reLaunch({
+          url: './index'
+        })
+      }
+    }
+    onShow() {
+      loginCheck().then(res => {
+        if (res.state == 3) {
+          wepy.navigateTo({
+            url: './onload?page=collect'
+          })
+        } else if (res.state == 1) {
+          this.browseQuery.pageNo = 1
+          this.followQuery.pageNo = 1
+          selectFollowAndBrowseTotal({}).then(res => {
+            this.followTotal = res.followTotal || 0
+            this.browseTotal = res.browseTotal || 0
+            this.$apply()
+          })
+          selectAllFollow(this.followQuery).then(res => {
+            this.followList = res.AllFollows
+            this.$apply()
+          })
+          selectUserBrowse(this.browseQuery).then(res => {
+            this.browseList = res.AllFollows
+            this.$apply()
+          })
+        }
+      })
+    }
+    onLoad(option) {
+      this.scrollHeight = changePXToRPX(getSysHeight()) - 88;
+      this.$apply()
+    }
+  }
+</script>

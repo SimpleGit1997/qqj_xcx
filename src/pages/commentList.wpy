@@ -1,0 +1,321 @@
+<style lang="less">
+  .body {
+    background: #ffffff;
+  }
+  .view-header-evaluate {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    padding: 0 38rpx;
+    text-align: centert;
+    align-items: center;
+    border-top: 2rpx solid #E5E5E5;
+    border-bottom: 2rpx solid #E5E5E5;
+  }
+  .view-header-left-text {
+    color: #333333;
+    font-size: 28rpx;
+  }
+  .view-header-left-texts {
+    color: #FF6600;
+    font-size: 36rpx;
+  }
+  .view-header-evaluate-left {
+    height: 90rpx;
+    padding: 0 38rpx 0 0;
+    border-right: 2rpx solid #DDDDDD;
+  }
+  .view-header-evaluate-right {
+    height: 90rpx;
+    padding: 0 0 0 38rpx;
+  } // 用户评价
+  .view-User-Comments {}
+  .view-User-Comments-title {
+    color: #333333;
+    font-size: 28rpx;
+    padding: 30rpx 30rpx 0 30rpx;
+  }
+  .view-User-Comments-conter {
+    padding: 30rpx 30rpx 0 30rpx;
+  }
+  .view-User-Comments-conter-list {
+    padding-top: 20rpx;
+  }
+  .border-bottom {
+    border-bottom: 2rpx solid #EEEEEE;
+  }
+  .view-User-Comments-conter-list:last-child {
+    border-bottom: 0rpx;
+  }
+  .view-User-Comments-conter-list-1 {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20rpx 0;
+    position: relative;
+  }
+  .view-User-Head-portrait {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .view-User-Comments-right-icon {
+    width: 20rpx;
+    height: 20rpx;
+    margin: 0 0 0 10rpx;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .view-name {
+    margin: 0 0 0 20rpx;
+    font-size: 30rpx;
+    color: #333333;
+  }
+  .view-User-Comments-conter-list-2 {
+    font-size: 28rpx;
+    color: #333333;
+    margin: 0 0 20rpx 0;
+  }
+  .view-User-Comments-conter-list-3 {
+    color: #999999;
+    font-size: 24rpx;
+    display: flex;
+    margin: 0 0 10rpx 0;
+    line-height: 30rpx;
+  }
+  .view-User-Comments-conter-list-2-img {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 10rpx 0;
+  }
+  .view-User-Comments-conter-list-2-img-list {
+    width: 220rpx;
+    height: 220rpx;
+    margin: 0 10rpx 10rpx 0;
+  }
+  .user-star-image {
+    display: flex;
+    position: absolute;
+    right: 0;
+  } // 4个评价星星
+  .evaluate {
+    display: flex;
+    height: 34rpx;
+    line-height: 34rpx;
+  }
+  .evaluate-star {
+    display: flex;
+    font-size: 24rpx;
+    color: #333333;
+    width: 240rpx;
+    align-items: center;
+  }
+  .evaluate-star-image {
+    width: 20rpx;
+    height: 20rpx;
+    display: flex;
+    margin: 0 0 0 4rpx;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .evaluate-star-title {
+    margin: 0 16rpx 0 0;
+  }
+  .evaluate-text {
+    font-size: 24rpx;
+    color: #999999;
+    margin: 0 0 0 10rpx;
+  }
+</style>
+<template>
+  <view class="body">
+    <view class="view-header-evaluate">
+      <view class="view-header-evaluate-left">
+        <view class="view-header-left-text">非常棒</view>
+        <view class="view-header-left-texts">{{totalScore}}分</view>
+      </view>
+      <view class="view-header-evaluate-right">
+        <view class="evaluate" style="margin:4rpx 0 16rpx 0 ">
+          <view class="evaluate-star">
+            <view class="evaluate-star-title">描述</view>
+            <repeat for="{{5}}" key="index" index="index" item="item">
+              <view class="evaluate-star-image">
+                <image src="{{msxfScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+              </view>
+            </repeat>
+            <view class="evaluate-text">{{msxfScore}}</view>
+          </view>
+          <view class="evaluate-star">
+            <view class="evaluate-star-title">卫生</view>
+            <repeat for="{{5}}" key="index" index="index" item="item">
+              <view class="evaluate-star-image">
+                <image src="{{zjwsScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+              </view>
+            </repeat>
+            <view class="evaluate-text">{{zjwsScore}}</view>
+          </view>
+        </view>
+        <view class="evaluate" style="margin:4rpx 0 16rpx 0 ">
+          <view class="evaluate-star">
+            <view class="evaluate-star-title">服务</view>
+            <repeat for="{{5}}" key="index" index="index" item="item">
+              <view class="evaluate-star-image">
+                <image src="{{aqcdScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+              </view>
+            </repeat>
+            <view class="evaluate-text">{{aqcdScore}}</view>
+          </view>
+          <view class="evaluate-star">
+            <view class="evaluate-star-title">位置</view>
+            <repeat for="{{5}}" key="index" index="index" item="item">
+              <view class="evaluate-star-image">
+                <image src="{{jtwzScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+              </view>
+            </repeat>
+            <view class="evaluate-text">{{jtwzScore}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="view-User-Comments">
+      <view class="view-User-Comments-title">共{{comments.total}}位房客点评</view>
+      <repeat for="{{commentList}}" index="index" item="item" key="inde">
+        <view class="view-User-Comments-conter">
+          <view class="view-User-Comments-conter-list {{commentList.length-1==index?'':'border-bottom'}}">
+            <view class="view-User-Comments-conter-list-1">
+              <view class="view-User-Head-portrait">
+                <image lazy-load src="{{imgUrl+item.imagePath+'!SQ120'}}" style="width:100%;height:100%;"></image>
+              </view>
+              <view class="view-name">{{item.nickname}}</view>
+              <view class="user-star-image">
+                <repeat for="{{5}}" key="_index" index="_index" item="_item">
+                  <view class="view-User-Comments-right-icon">
+                    <image src="{{item.totalScore>_index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                  </view>
+                </repeat>
+              </view>
+            </view>
+            <view class="view-User-Comments-conter-list-2">{{item.commentContent}}</view>
+            <view class="view-User-Comments-conter-list-2-img">
+              <repeat for="{{item.pictureList}}" key="_index" index="_index" item="_item">
+                <view class="view-User-Comments-conter-list-2-img-list" @tap="getImageInfo({{index}},{{_index}})">
+                  <image lazy-load src="{{imgUrl+_item.picPath}}" style="width:100%;height:100%;" />
+                </view>
+              </repeat>
+            </view>
+            <view class="view-User-Comments-conter-list-3">
+              <view>{{item.createTime}}</view>
+              <view style="margin-left:10rpx;">{{item.bedType}}</view>
+            </view>
+          </view>
+          <view>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import {
+    getAllComment
+  } from '../server/index.js'
+  export default class CommentList extends wepy.page {
+    config = {
+      navigationBarTitleText: '酒店评论'
+    }
+    data = {
+      imgUrl: '',
+      query: {
+        houseId: 0,
+        hotelId: '',
+        commentType: 0,
+        pageNum: 1,
+        pageSize: 10,
+        commentType: 0,
+        moduleId: 0
+      },
+      total: 0,
+      totalScore: 0,
+      msxfScore: 0,
+      zjwsScore: 0,
+      aqcdScore: 0,
+      jtwzScore: 0,
+      comments: {},
+      commentList: []
+    }
+    methods = {
+      // 预览图片
+      getImageInfo(index, _index) {
+        let current = this.imgUrl + this.commentList[index].pictureList[_index].picPath
+        let urls = []
+        this.commentList[index].pictureList.forEach(item => {
+          urls.push(this.imgUrl + item.picPath)
+        });
+        wepy.previewImage({
+          current: current,
+          urls: urls
+        })
+      }
+    }
+    onLoad(option) {
+      this.imgUrl = this.$parent.$config.imgUrl
+      if (option.hotelId) {
+        this.query.hotelId = option.hotelId
+        getAllComment(this.query).then(res => {
+          this.totalScore = res.totalScore
+          this.msxfScore = res.msxfScore
+          this.zjwsScore = res.zjwsScore
+          this.aqcdScore = res.aqcdScore
+          this.jtwzScore = res.jtwzScore
+          this.comments = res.comments
+          res.comments.list.forEach(item => {
+            item.createTime = new Date(item.commentTime).toString('yyyy-MM-dd')
+          });
+          this.commentList = res.comments.list
+          this.total = res.comments.total
+          this.$apply()
+        })
+      }
+    }
+    onReachBottom(e) {
+      if (this.commentList.length < this.total) {
+        wepy.showLoading({
+          title: '加载中...'
+        })
+        this.query.pageNum += 1;
+        getAllComment(this.query).then(res => {
+          if (res.data && res.comments.list) {
+            res.comments.list.forEach(item => {
+              this.commentList.push(item);
+            });
+          }
+          this.total = res.comments.total
+          wepy.hideLoading()
+          this.$apply();
+        });
+      } else {
+        wepy.showToast({
+          title: '暂无更多评论！',
+          icon: 'none',
+          duration: 1500
+        });
+      }
+    }
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+

@@ -390,7 +390,7 @@
     border-top: 2rpx solid #E4E4E4;
   }
   .view-data-times {
-    flex: 1;
+    width: 260rpx;
     display: flex;
     justify-content: center;
   }
@@ -402,7 +402,7 @@
     margin: 0 10rpx 0 0;
   }
   .view-data-times-now {
-    width: 48rpx;
+ 
     line-height: 80rpx;
     font-size: 24rpx;
   }
@@ -417,19 +417,36 @@
     margin: 20rpx 0 0 0;
     border: 2rpx solid #FF6600;
   }
+  .abs-banner-like-img-view {
+    position: absolute;
+    top: 20rpx;
+    right: 30rpx;
+    width: 48rpx;
+    height: 48rpx;
+  }
 </style>
 
 <template>
   <view class="body">
     <!-- 顶部区域 -->
     <view class="top-banner-view" @tap="handleImg">
-      <image lazy-load src="{{hotelImageList.length>0?hotelImageList[0].imageUrl:''}}" style="width:100%;height:100%;"></image>
+      <swiper wx:if="{{hotelImageList.length>0}}" style="width:100%;height:100%;" circular="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}">
+        <repeat for="{{hotelImageList}}" key="index" index="index" item="item">
+          <swiper-item>
+            <image lazy-load src="{{item.imageUrl}}" style="width:100%;height:100%;" />
+          </swiper-item>
+        </repeat>
+      </swiper>
+      <image wx:elif="{{hotelImageList.length==0}}" lazy-load src="../images/banner-default-hotel-img.png" style="width:100%;height:100%;" />
       <view class="abs-banner-label-view">
         <view class="banner-label-left-view">
           <view class="banner-label-text-name-view">{{hotelInfo.addressCn}}</view>
           <view class="banner-label-text-describe-view">{{hotelInfo.starName}}</view>
         </view>
         <view class="banner-label-right-view">{{hotelImageList.length}}张</view>
+      </view>
+      <view class="abs-banner-like-img-view" @tap.stop="handleLike">
+        <image src="{{!!attention?'../images/like-selected-icon.png':'../images/like-icon.png'}}" style="width:100%;height:100%;"></image>
       </view>
     </view>
     <view class="default-options-view">
@@ -452,7 +469,7 @@
         </view>
         <view class="default-row-right-view">
           <view wx:if="{{commentNum>0}}">{{commentNum}}条评论</view>
-          <view class="row-right-item-img-view" wx:if="{{commentNum>0}}">
+          <view class="row-right-item-img-view" wx:if="{{commentNum>0}}" @tap="handleComment">
             <image lazy-load src="../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
           </view>
         </view>
@@ -574,13 +591,13 @@
         </view>
       </repeat>
     </repeat>
-    <datepopup size="750" duration='400' type="bottom" :showModal.sync="dateModalDialog" v-on:hideModal="hideDateDialog">
+    <datepopup :size.sync="dataHeight" duration='400' type="bottom" :showModal.sync="dateModalDialog" v-on:hideModal="hideDateDialog">
       <scroll-view style="height:750rpx;width:100%;overflow:hidden;" scroll-y>
         <datepicker v-on:closeDialog="closeDateDialog" months="4" :value.sync="_dateValue"></datepicker>
       </scroll-view>
     </datepopup>
     <!-- 立即预定 -->
-    <popups size="730" duration='400' type="bottom" :showModal.sync="showModal">
+    <popups :size.sync="bottomHeight" duration='400' type="bottom" :showModal.sync="showModal">
       <view class="view-reserve-title">
         <view>{{tempObj.chirdren.title}}</view>
         <view class="view-reserve-title-icon" @tap="closeModal">
@@ -639,7 +656,10 @@
     roomRatePlanDetailInfo,
     hotelDetailInfo,
     hotelImageInfo,
-    roomRatePlanInfo
+    roomRatePlanInfo,
+    disAttentionHotel,
+    attentionHotel,
+    loginCheck
   } from '../server/index.js'
   import popups from '../components/popup/index'
   export default class HotelDetail extends wepy.page {
@@ -647,9 +667,12 @@
       navigationBarTitleText: '酒店详情',
     };
     data = {
+      dataHeight: 750,
+      bottomHeight: 720,
       hotelId: '',
       dateValue: [],
       _dateValue: [],
+      attention: 0,
       showModal: false,
       imgUrl: '',
       hotelImageList: [],
@@ -881,8 +904,50 @@
       },
       // 立即预定
       handleWriteOrder() {
+        loginCheck().then(res => {
+          if (res.state == 3) {
+            wepy.navigateTo({
+              url: './onload?page=hotelDetail?hotelId=' + this.hotelId
+            })
+          } else if (res.state == 1) {
+            wepy.navigateTo({
+              url: './writeOrder?roomInfo=' + JSON.stringify(this.roomInfo.houseInfo) + '&date=' + this.dateValue + '&houseId=' + this.tempObj.chirdren.houseId
+            })
+          }
+        })
+      },
+      handleLike() {
+        if (!!this.attention) {
+          disAttentionHotel({
+            checkBefore: 1,
+            hotelId: this.hotelId
+          }).then(res => {
+            this.attention = 0
+            this.$apply()
+            wepy.showToast({
+              title: '已取消收藏',
+              icon: 'none',
+              duration: 1200
+            })
+          })
+        } else if (!this.attention) {
+          attentionHotel({
+            checkBefore: 1,
+            hotelId: this.hotelId
+          }).then(res => {
+            this.attention = 1
+            this.$apply()
+            wepy.showToast({
+              title: '收藏成功！',
+              icon: 'none',
+              duration: 1200
+            })
+          })
+        }
+      },
+      handleComment() {
         wepy.navigateTo({
-          url: './writeOrder?roomInfo=' + JSON.stringify(this.roomInfo.houseInfo) + '&date=' + this.dateValue + '&houseId=' + this.tempObj.chirdren.houseId
+          url: './commentList?hotelId=' + this.hotelId
         })
       }
     };
@@ -894,6 +959,10 @@
       if (option.dateValue) {
         this.dateValue = option.dateValue.split(',') || []
         this._dateValue = this.dateValue
+      } else {
+        let todayFormat = Date.today().toString("yyyy-MM-dd");
+        let tomorrowFormat = Date.today().addDays(1).toString("yyyy-MM-dd");
+        this.dateValue.push(todayFormat, tomorrowFormat);
       }
       // 酒店图片列表
       this.gethotelImageInfo()
@@ -910,6 +979,7 @@
         hotelId: this.hotelId
       }).then(res => {
         console.log(res)
+        this.attention = res.attention
         this.commentNum = res.commentNum
         this.avgCommentScore = res.avgCommentScore
         this.hotelInfo = res.hotelInfo

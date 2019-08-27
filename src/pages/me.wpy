@@ -1,0 +1,517 @@
+<style lang="less">
+  .top-lalel-view {
+    width: 100%;
+    height: 310rpx;
+    background-color: #ffffff;
+    display: flex;
+    position: relative;
+    border-bottom: 2rpx solid #efefef;
+  }
+  .top-avatar-round-view {
+    width: 110rpx;
+    height: 110rpx;
+    margin: 150rpx 40rpx 0px 50rpx;
+    border-radius: 50%;
+    border: 2rpx solid #efefef;
+    box-sizing: border-box;
+    overflow: hidden;
+    image {
+      display: block;
+    }
+  }
+  .top-user-label-view {
+    margin-top: 150rpx;
+  }
+  .user-info-name-label-view {
+    font-size: 40rpx;
+    font-weight: 580;
+    color: #333333;
+    height: 60rpx;
+    line-height: 60rpx;
+  }
+  .user-info-level-label-view {
+    height: 40rpx;
+    line-height: 40rpx;
+    padding: 0px;
+    width: 116rpx;
+    text-align: center;
+    color: #f3344a;
+    font-size: 22rpx;
+    border: 2rpx solid #f3344a;
+    border-radius: 20rpx;
+  }
+  .abs-backgournd-img-view {
+    width: 244rpx;
+    height: 254rpx;
+    position: absolute;
+    top: 40rpx;
+    right: 0px;
+    z-index: 2;
+    image {
+      display: block;
+    }
+  }
+  .default-row-label-view {
+    width: 100%;
+    background-color: #ffffff;
+    .default-inner-row-label-view {
+      height: 90rpx;
+      line-height: 90rpx;
+      width: 690rpx;
+      margin: 0px auto;
+      display: flex;
+      font-size: 28rpx;
+      color: #333333;
+      justify-content: space-between;
+      .row-label-left-img-view {
+        width: 40rpx;
+        height: 40rpx;
+        margin: 26rpx 20rpx 0px 0px;
+        image {
+          display: block;
+        }
+      }
+      .row-label-right-img-view {
+        width: 30rpx;
+        height: 30rpx;
+        margin: 30rpx 0px 0px 10rpx;
+        image {
+          display: block;
+        }
+      }
+    }
+  }
+  .bottom-boder {
+    border-bottom: 1rpx solid #efefef;
+  }
+  .button::after {
+    border: none;
+  }
+  .button {
+    display: block;
+    font-size: 28rpx;
+    color: #333333;
+    padding: 0px;
+    background-color: #fff;
+    line-height: 90rpx;
+    width: 650rpx;
+    text-align: left;
+  }
+  .abs-item-num-view {
+    width: 28rpx;
+    height: 28rpx;
+    line-height: 28rpx;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #f3344a;
+    font-size: 22rpx;
+    text-align: center;
+    color: #ffffff;
+    top: -10rpx;
+    right: 26rpx;
+  }
+  .abs-zichan-label-view {
+    position: absolute;
+    right: 0;
+    top: 200rpx;
+    width: 136rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    color: #ffffff;
+    text-align: center;
+    font-size: 24rpx;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 46, 93, 1) 100%);
+    border-radius: 26rpx 0px 0px 26rpx;
+    z-index: 200;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .bottom-button-view {
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    margin-top: 20rpx;
+    background-color: #fff;
+    color: #FF0000;
+    font-size: 32rpx;
+    text-align: center;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .modal-mask-dialog {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    overflow: hidden;
+    z-index: 300;
+    color: #fff;
+  }
+  .fixed-view-dialog {
+    position: fixed;
+    width: 690rpx;
+    height: 690rpx;
+    left: 30rpx;
+    top: 320rpx;
+    background-color: #ffffff;
+    z-index: 700;
+    overflow: hidden;
+    overflow: hidden;
+  }
+  .modal-mask-dialog-input-view {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.5;
+    overflow: hidden;
+    z-index: 300;
+    color: #fff;
+  }
+  .fixed-view-dialog-input-view {
+    position: fixed;
+    width: 558rpx;
+    left: 96rpx;
+    top: 414rpx;
+    background-color: #ffffff;
+    z-index: 400;
+    overflow: hidden;
+    border-radius: 20rpx;
+  }
+  .dialog-inner-input-view {
+    width: 480rpx;
+    margin: 40rpx auto 20rpx auto;
+    border-radius: 20rpx;
+    border: 2rpx solid #eeeeee;
+    height: 90rpx;
+    display: flex;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    input {
+      width: 100%;
+      height: 90rpx;
+      line-height: 90rpx;
+      padding: 0px 20rpx;
+      box-sizing: border-box;
+    }
+  }
+  .dialog-bottom-button-label-view {
+    width: 100%;
+    height: 90rpx;
+    display: flex;
+    border-top: 2rpx solid #eeeeee;
+  }
+  .dialog-button-left-view {
+    width: 50%;
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #333333;
+    background-color: #fff;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .dialog-button-right-view {
+    width: 50%;
+    height: 90rpx;
+    line-height: 90rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ffffff;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 46, 93, 1) 100%);
+    &:active {
+      opacity: .7;
+    }
+  }
+  .dialog-inner-text-password-view {
+    color: #F3344A;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0px 30rpx 20rpx 0px;
+    font-size: 28rpx;
+  }
+  .dialog-text-label-view{
+    width: 100%;
+    height: 200rpx;
+    line-height: 200rpx;
+    text-align: center;
+  }
+</style>
+
+<template>
+  <view class="body" wx:if="{{checkLogin}}">
+    <view class="top-lalel-view">
+      <view class="top-avatar-round-view">
+        <image wx:if="{{userInfo.imagePath}}" style="width: 100%;height:100%;" src="{{imgUrl+userInfo.imagePath+'!YS'}}" />
+        <image wx:esle style="width: 100%;height:100%;" src="../images/default-user-img.png" />
+      </view>
+      <view class="top-user-label-view">
+        <view class="user-info-name-label-view">{{userInfo.name}}</view>
+        <view class="user-info-level-label-view">{{levelName[userInfo.vipLevel-1]}}</view>
+        <view class="abs-backgournd-img-view">
+          <image style="width: 100%;height:100%;" src="../images/mine-label-background-img.png" />
+        </view>
+      </view>
+      <view class="abs-zichan-label-view" @tap="handleSec">我的资产</view>
+    </view>
+    <view class="default-row-label-view" style="margin-top:20rpx;" @tap="handleQRCode">
+      <view class="default-inner-row-label-view bottom-boder">
+        <view style="display:flex;">
+          <view class="row-label-left-img-view">
+            <image style="width: 100%;height:100%;" src="../images/qr-code-icon.png" />
+          </view>
+          <view>我的二维码</view>
+        </view>
+        <view style="display:flex;">
+          <view class="row-label-right-img-view">
+            <image style="width: 100%;height:100%;" src="../images/arrow-right-icon.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="default-row-label-view" @tap="handleAboutUs">
+      <view class="default-inner-row-label-view">
+        <view style="display:flex;">
+          <view class="row-label-left-img-view">
+            <image style="width: 100%;height:100%;" src="../images/warning-icon.png" />
+          </view>
+          <view>关于我们</view>
+        </view>
+        <view style="display:flex;">
+          <view class="row-label-right-img-view">
+            <image style="width: 100%;height:100%;" src="../images/arrow-right-icon.png" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="bottom-button-view" @tap="handleExit">退出登录</view>
+    <view wx:if="{{showModal}}" class="modal-mask-dialog" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
+    <view wx:if="{{showModal}}" class="fixed-view-dialog" catchtouchmove="preventTouchMove">
+      <image wx:if="{{QRImgUrl}}" style="width:690rpx;;height:690rpx;" src="{{QRImgUrl}}" />
+      <canvas wx:else style="width: 690rpx;height:690rpx;background:#f1f1f1;" canvas-id="mycanvas" />
+    </view>
+    <view wx:if="{{inputModal}}" class="modal-mask-dialog-input-view" @tap="hideModal" catchtouchmove="preventTouchMove"></view>
+    <view wx:if="{{inputModal}}" class="fixed-view-dialog-input-view" catchtouchmove="preventTouchMove">
+      <view class="dialog-inner-input-view">
+        <input @input="secPwdInput" type="password" value="{{secPwd}}" placeholder="请输入密码" placeholder-style="color:#cccccc;" />
+      </view>
+      <view class="dialog-inner-text-password-view" @tap="handlePassword">忘记密码？</view>
+      <view class="dialog-bottom-button-label-view">
+        <view class="dialog-button-left-view" @tap="handleCloseDialog">取消</view>
+        <view class="dialog-button-right-view" @tap="submitCode">确认</view>
+      </view>
+    </view>
+    <view wx:if="{{warnModal}}" class="modal-mask-dialog-input-view" catchtouchmove="preventTouchMove"></view>
+    <view wx:if="{{warnModal}}" class="fixed-view-dialog-input-view" catchtouchmove="preventTouchMove">
+      <view class="dialog-text-label-view">你还没有设置二级密码</view>
+      <view class="dialog-bottom-button-label-view">
+        <view class="dialog-button-left-view" @tap="handleCloseDialog">取消</view>
+        <view class="dialog-button-right-view" @tap="handleSettingPwd">去设置</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy';
+  import md5 from 'md5'
+  import {
+    changeRPXToPX
+  } from '@/lib/wx-system.js';
+  import {
+    refreshUser,
+    checkTwoStagePwd,
+    loginCheck,
+    checkHadSecPwd
+  } from '../server/index.js';
+  var QR = require("../lib/qr_code.js");
+  export default class Me extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的',
+      enablePullDownRefresh: true,
+      navigationStyle: 'custom'
+    };
+    components = {};
+    data = {
+      checkLogin: false,
+      levelName: ["免费会员", "银卡会员", "铂金会员", "钻石会员"],
+      imgUrl: '',
+      url: '',
+      QRheight: 0,
+      QRwidth: 0,
+      userInfo: {},
+      showModal: false,
+      inputModal: false,
+      warnModal: false,
+      secPwd: '',
+      QRImgUrl: '',
+      isSecPwd: 2
+    };
+    computed = {};
+    watch = {};
+    onLoad() {
+      this.imgUrl = this.$parent.$config.imgUrl
+      this.url = this.$parent.$config.url
+      this.QRheight = changeRPXToPX(690)
+      this.QRwidth = changeRPXToPX(690)
+      this.$apply()
+    }
+    onShow() {
+      this.secPwd = wepy.getStorageSync('secPwd') || ''
+      this.$apply()
+      loginCheck().then(res => {
+        if (res.state == 3) {
+          wepy.navigateTo({
+            url: './onload?page=me'
+          })
+        } else if (res.state == 1) {
+          this.checkLogin = true
+          this.$apply()
+          refreshUser({}).then(data => {
+            this.userInfo = data.userCenterInfo;
+            this.$apply();
+          });
+          checkHadSecPwd({}).then(data => {
+            this.isSecPwd = data
+            this.$apply()
+          })
+        }
+      })
+    }
+    methods = {
+      secPwdInput(e) {
+        this.secPwd = e.detail.value
+        this.$apply()
+      },
+      handleSettingPwd() {
+        this.warnModal = false
+        this.$apply()
+        wepy.navigateTo({
+          url: './changePassword?mobilephone=' + this.userInfo.mobilephone
+        });
+      },
+      submitCode() {
+        let query = {
+          secPwd: md5(md5(this.secPwd))
+        }
+        checkTwoStagePwd(query).then(res => {
+          if (res == 1) {
+            this.inputModal = false
+            wepy.setStorageSync('secPwd', this.secPwd)
+            console.log(this.secPwd)
+            wepy.navigateTo({
+              url: './property'
+            })
+            this.$apply()
+          } else {
+            wx.showToast({
+              title: '密码错误，请重新输入！',
+              icon: 'none',
+              duration: 1000
+            });
+          }
+        })
+      },
+      handleQRCode() {
+        let url = this.url + 'html/register.html?tuiId=' + this.userInfo.userId + '&flag=1'
+        if (!this.QRImgUrl) {
+          wepy.showLoading({
+            title: '加载中...'
+          })
+          this.createQrCode(url, "mycanvas", this.QRwidth, this.QRheight)
+          setTimeout(() => {
+            this.setImgUrl()
+          }, 1000);
+          wepy.hideLoading()
+          this.showModal = true
+          this.$apply()
+        } else {
+          this.showModal = true
+          this.$apply()
+        }
+      },
+      handleSec() {
+        if (this.isSecPwd == 2) {
+          this.warnModal = true
+        } else {
+          this.inputModal = true
+          this.$apply()
+        }
+      },
+      handleAboutUs() {
+        wepy.navigateTo({
+          url: './aboutUs'
+        });
+      },
+      handleCloseDialog() {
+        this.inputModal = false
+        this.warnModal = false
+        this.$apply()
+      },
+      hideModal() {
+        this.showModal = false
+        this.$apply()
+      },
+      handlePassword() {
+        wepy.navigateTo({
+          url: './changePassword?mobilephone=' + this.userInfo.mobilephone
+        });
+      },
+      handleExit() {
+        try {
+          wepy.showLoading({
+            title: '正在清除...'
+          })
+          wx.clearStorageSync()
+          setTimeout(() => {
+            wx.reLaunch({
+              url: './index'
+            })
+          }, 1500);
+        } catch (e) {}
+      },
+      preventTouchMove() {
+        console.warn('preventTouchMove方法已阻止其他事件。')
+      }
+    };
+    onHide() {}
+    onUnload() {}
+    // 下拉刷新事件
+    onPullDownRefresh() {
+      wepy.showNavigationBarLoading();
+      wepy.stopPullDownRefresh();
+      wepy.hideNavigationBarLoading();
+    }
+    // 监听滚动事件
+    onPageScroll(e) {
+      let rpx = changePXToRPX(e.scrollTop);
+      this.$apply();
+    }
+    setImgUrl() {
+      let that = this
+      wx.canvasToTempFilePath({
+        canvasId: 'mycanvas',
+        success: function(res) {
+          var tempFilePath = res.tempFilePath;
+          that.QRImgUrl = tempFilePath
+          that.$apply()
+        },
+        fail: function(err) {
+          console.log(err)
+        }
+      })
+    }
+    createQrCode(url, canvasId, cavW, cavH) {
+      QR.api.draw(url, canvasId, cavW, cavH)
+    }
+  }
+</script>

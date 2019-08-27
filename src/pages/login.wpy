@@ -1,0 +1,350 @@
+<style lang="less">
+  page {
+    background-color: #ffffff;
+  }
+  .top-logo-icon-view {
+    width: 100%;
+    height: 160rpx;
+    margin: 40rpx auto 80rpx auto;
+    display: flex;
+    justify-content: center;
+  }
+  .top-title-view {
+    width: 100%;
+    height: 60rpx;
+    line-height: 60rpx;
+    display: flex;
+    padding: 0px 60rpx;
+    box-sizing: border-box;
+    color: #999999;
+    font-size: 44rpx;
+  }
+  .top-tag-view {
+    width: 2rpx;
+    height: 40rpx;
+    margin: 10rpx 30rpx;
+    background-color: #E5E5E5;
+  }
+  .checked {
+    color: #333333;
+    font-weight: 600;
+  }
+  .default-input-label-view {
+    width: 100%;
+    padding: 0px 60rpx;
+    box-sizing: border-box;
+    margin-top: 40rpx;
+  }
+  .default-row-input-view {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 120rpx;
+    line-height: 120rpx;
+    display: flex;
+    justify-content: space-between;
+    font-size: 34rpx;
+    color: #333333;
+    border-bottom: 2rpx solid #E5E5E5;
+  }
+  .defualt-row-left-text-view {}
+  .default-row-right-img {
+    width: 50rpx;
+    height: 50rpx;
+    margin: 34rpx 0px 36rpx 0px;
+  }
+  .default-input {
+    width: 100%;
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size: 34rpx;
+  }
+  .default-left-input {
+    height: 120rpx;
+    line-height: 120rpx;
+    font-size: 34rpx;
+    width: 400rpx;
+  }
+  .default-right-view {
+    color: #F3344A;
+    font-size: 30rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+  }
+  .default-right-number-view {
+    color: #CCCCCC;
+    font-size: 28rpx;
+    height: 120rpx;
+    line-height: 120rpx;
+  }
+  .default-login-button {
+    width: 100%;
+    height: 100rpx;
+    margin-top: 40rpx;
+    background-color: #DDDDDD;
+    color: #FFFFFF;
+    font-size: 32rpx;
+    line-height: 100rpx;
+    border-radius: 50rpx;
+    &:active {
+      opacity: .7;
+    }
+  }
+  button::after {
+    border: none;
+  }
+  .color-background {
+    background: linear-gradient(90deg, rgba(250, 140, 29, 1) 0%, rgba(252, 173, 62, 1) 100%);
+    &:active {
+      opacity: .7;
+    }
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-logo-icon-view">
+      <image src="../images/huixiangzhu-logo-icon.png" style="width:160rpx;height:100%;" />
+    </view>
+    <view class="top-title-view">
+      <view class="{{isPassword?'':'checked'}}" @tap="handleCheckCode">验证码登录</view>
+      <view class="top-tag-view"></view>
+      <view class="{{isPassword?'checked':''}}" @tap="handlePassword">密码登录</view>
+    </view>
+    <view class="default-input-label-view">
+      <view class="default-row-input-view" @tap="handleModal">
+        <view class="defualt-row-left-text-view">
+          {{cityInfo.zh}} (+{{cityInfo.code}}）
+        </view>
+        <image class="default-row-right-img" src="../images/login-page-arrow-bottom-icon.png" />
+      </view>
+      <view class="default-row-input-view">
+        <input value="{{phone}}" type="number" @input="phoneInput" class="default-input" placeholder="请输入手机号" placeholder-style="color:#CCCCCC;" />
+      </view>
+      <view class="default-row-input-view" wx:if="{{!isPassword}}">
+        <input value="{{code}}" type="number" @input="codeInput" class="default-left-input" placeholder="请输入验证码" placeholder-style="color:#CCCCCC;" />
+        <view wx:if="{{!isGetting}}" class="default-right-view" @tap="handleCode">
+          获取验证码
+        </view>
+        <view wx:if="{{isGetting}}" class="default-right-number-view">
+          {{second}}秒后重新获取
+        </view>
+      </view>
+      <view class="default-row-input-view" wx:if="{{isPassword}}">
+        <input value="{{password}}" type="password" @input="passwordInput" class="default-input" placeholder="请输入密码" placeholder-style="color:#CCCCCC;" />
+      </view>
+      <button class="default-login-button {{isSubmit?'color-background ':''}}" @tap="handleLogin">登录</button>
+    </view>
+    <popup :size.sync="systemHeight" duration='400' type="bottom" :showModal.sync="showModal">
+      <countryList wx:if="{{showModal}}" v-on:closeDialog="closeDialog"></countryList>
+    </popup>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import popup from '../components/popup/index'
+  import {
+    getSysHeight,
+    changePXToRPX
+  } from "../lib/wx-system.js";
+  import {
+    smsLogin,
+    accountLogin,
+    sendQuickLoginMsg
+  } from '../server/index.js'
+  import countryList from '../components/countryList/index'
+  export default class Login extends wepy.page {
+    config = {
+      navigationBarTitleText: "登录",
+      backgroundColor: "#ffffff"
+    };
+    components = {
+      popup: popup,
+      countryList: countryList
+    };
+    data = {
+      systemHeight: 0,
+      isPassword: false,
+      showModal: false,
+      cityInfo: {
+        code: 86,
+        en: "China",
+        locale: "CN",
+        nameIndex: "Z",
+        pinyin: "zhongguo",
+        tw: "中國",
+        zh: "中国",
+      },
+      timer: null,
+      isGetting: false,
+      second: 0,
+      phone: '',
+      code: '',
+      password: ''
+    };
+    computed = {
+      isSubmit() {
+        if (this.isPassword) {
+          if (this.phone.length > 0 && this.password.length > 0) {
+            return true
+          }
+        } else {
+          if (this.phone.length > 0 && this.code.length > 0) {
+            return true
+          }
+        }
+        return false
+      }
+    };
+    watch = {};
+    onLoad() {
+      this.systemHeight = changePXToRPX(getSysHeight())
+      this.$apply()
+    }
+    onShow() {}
+    methods = {
+      closeDialog(value) {
+        if (!!value.code) {
+          this.cityInfo = value
+        }
+        this.showModal = false
+        this.$apply()
+      },
+      handleCheckCode() {
+        this.isPassword = false
+        this.code = ''
+        this.$apply()
+      },
+      handlePassword() {
+        this.isPassword = true
+        this.password = ''
+        this.$apply()
+      },
+      handleCode() {
+        if (this.phone.length > 5 && this.phone.length < 20) {
+          let query = {
+            phone: this.phone,
+            type: 2,
+            areacode: this.cityInfo.code,
+            NECaptchaValidate: ''
+          }
+          sendQuickLoginMsg(query).then(res => {
+            wepy.showToast({
+              title: '已发送至手机，请查看!',
+              icon: 'none',
+              duration: 1500
+            })
+          })
+          this.second = 60;
+          this.timer = setInterval(() => {
+            if (this.second > 0) {
+              this.isGetting = true
+              this.second--
+                this.$apply()
+            } else {
+              this.isGetting = false
+              this.$apply()
+              clearTimeout(this.timer)
+            }
+          }, 1000);
+        } else {
+          wepy.showToast({
+            title: '请输入正确手机号码!',
+            icon: 'none',
+            duration: 1500
+          })
+        }
+      },
+      handleModal() {
+        this.showModal = true
+        this.$apply()
+      },
+      passwordInput(e) {
+        this.password = e.detail.value
+        this.$apply()
+      },
+      phoneInput(e) {
+        this.phone = e.detail.value
+        this.$apply()
+      },
+      codeInput(e) {
+        this.code = e.detail.value
+        this.$apply()
+      },
+      handleLogin() {
+        if (this.isPassword) {
+          if (this.phone.length == 0) {
+            wepy.showToast({
+              title: '请输入手机号码!',
+              icon: 'none',
+              duration: 1500
+            })
+          } else if (this.password == '') {
+            wepy.showToast({
+              title: '请输入密码!',
+              icon: 'none',
+              duration: 1500
+            })
+          } else {
+            wepy.showLoading({
+              title: '加载中...'
+            })
+            let query = {
+              phoneNo: this.phone,
+              areaCode: this.cityInfo.code,
+              password: this.password
+            }
+            accountLogin(query).then(res => {
+              wepy.hideLoading()
+              if (res.sid) {
+                wepy.setStorageSync('sid', res.sid);
+                wx.navigateBack({
+                  delta: 2
+                })
+              }
+            })
+          }
+        } else {
+          if (this.phone.length == 0) {
+            wepy.showToast({
+              title: '请输入手机号码!',
+              icon: 'none',
+              duration: 1500
+            })
+          } else if (this.code == '') {
+            wepy.showToast({
+              title: '请输入验证码!',
+              icon: 'none',
+              duration: 1500
+            })
+          } else {
+            wepy.showLoading({
+              title: '加载中...'
+            })
+            let query = {
+              phoneNo: this.phone,
+              areaCode: this.cityInfo.code,
+              smsCode: this.code
+            }
+            smsLogin(query).then(res => {
+              wepy.hideLoading()
+              if (res.sid) {
+                wepy.setStorageSync('sid', res.sid);
+                wx.navigateBack({
+                  delta: 2
+                })
+              }
+            })
+          }
+        }
+      }
+    };
+    onHide() {
+      clearTimeout(this.timer)
+    };
+    onUnload() {
+      clearTimeout(this.timer)
+    };
+  }
+</script>

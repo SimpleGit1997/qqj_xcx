@@ -174,7 +174,7 @@
                   </view>
                   <view class="item-hotel-text-view">全球家</view>
                   <view class="item-tag-view"></view>
-                  <view class="item-totel-name-view">{{item.hotelTitle}}</view>
+                  <view class="item-totel-name-view" @tap="handleHotel({{index}})">{{item.hotelTitle}}</view>
                   <view class="item-arrow-icon-view">
                     <image style="width:100%;height:100%;" src="../images/arrow-right-icon.png" />
                   </view>
@@ -183,7 +183,7 @@
                   {{item.orderStateLabel}}
                 </view>
               </view>
-              <view class="item-hotel-info-view">
+              <view class="item-hotel-info-view" @tap="handleOrderInfo({{index}})">
                 <image style="width:150rpx;height:150rpx;" src="../images/default-hotel-img.png" />
                 <view class="item-hotel-info-title-text-view">
                   <view class="item-hotel-info-text-view">
@@ -193,29 +193,29 @@
                     {{item.formatFirstTime}} - {{item.formatSecondTime}} 共{{item.days}}晚
                   </view>
                   <view class="item-abs-price-view">
-                    <text style="font-size:24rpx;color:#333333;">合计：</text>
-                    <text style="font-size:20rpx;color:#FF6600;line-height:46rpx;">￥</text>
-                    <text style="font-size:34rpx;color:#FF6600;">{{item.orderPrice}}</text>
+                    <text style="font-size:24rpx;color:#333333;line-height:30rpx;">合计：</text>
+                    <text style="font-size:20rpx;color:#FF6600;line-height:42rpx;">￥</text>
+                    <text style="font-size:34rpx;color:#FF6600;line-height:30rpx;">{{item.orderPrice}}</text>
                   </view>
                 </view>
               </view>
               <view class="item-bottom-button-view" wx:if="{{item.orderState==0}}">
-                <view class="bottom-default-button">取消订单</view>
-                <view class="bottom-checked-button">付款</view>
+                <view class="bottom-default-button" @tap="hadnleCancel({{index}})">取消订单</view>
+                <view class="bottom-checked-button" @tap="handlePay({{index}})">付款</view>
               </view>
               <view class="item-bottom-button-view" wx:if="{{item.orderState==1}}">
-                <view class="bottom-default-button">再次预定</view>
-                <view class="bottom-default-button">退订</view>
+                <view class="bottom-default-button" @tap="handleHotel({{index}})">再次预定</view>
+                <view class="bottom-default-button" @tap="handleQuite({{index}})">退订</view>
               </view>
               <view class="item-bottom-button-view" wx:if="{{item.orderState==9}}">
-                <view class="bottom-default-button">再次预定</view>
-                <view class="bottom-default-button">退订</view>
+                <view class="bottom-default-button" @tap="handleHotel({{index}})">再次预定</view>
+                <view class="bottom-default-button" @tap="handleQuite({{index}})">退订</view>
               </view>
               <view class="item-bottom-button-view" wx:if="{{item.orderState==3 && !item.commentInfo}}">
-                <view class="bottom-default-button">再次预定</view>
+                <view class="bottom-default-button" @tap="handleHotel({{index}})">再次预定</view>
               </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==4 || item.orderState==6 || item.orderState==7 || item.orderState==8}}">
-                <view class="bottom-default-button">再次预定</view>
+              <view class="item-bottom-button-view" wx:if="{{item.orderState==4 || item.orderState==5 ||item.orderState==6 || item.orderState==7 || item.orderState==8}}">
+                <view class="bottom-default-button" @tap="handleHotel({{index}})">再次预定</view>
               </view>
             </view>
           </repeat>
@@ -233,7 +233,7 @@
                   </view>
                   <view class="item-hotel-text-view">全球家</view>
                   <view class="item-tag-view"></view>
-                  <view class="item-totel-name-view">{{item.hotelTitle}}</view>
+                  <view class="item-totel-name-view" @tap="handleHotel({{index}})">{{item.hotelTitle}}</view>
                   <view class="item-arrow-icon-view">
                     <image style="width:100%;height:100%;" src="../images/arrow-right-icon.png" />
                   </view>
@@ -242,7 +242,7 @@
                   {{item.orderStateLabel}}
                 </view>
               </view>
-              <view class="item-hotel-info-view">
+              <view class="item-hotel-info-view" @tap="handleOrderInfo({{index}})">
                 <image style="width:150rpx;height:150rpx;" src="../images/default-hotel-img.png" />
                 <view class="item-hotel-info-title-text-view">
                   <view class="item-hotel-info-text-view">
@@ -252,29 +252,15 @@
                     {{item.formatFirstTime}} - {{item.formatSecondTime}} 共{{item.days}}晚
                   </view>
                   <view class="item-abs-price-view">
-                    <text style="font-size:24rpx;color:#333333;">合计：</text>
-                    <text style="font-size:20rpx;color:#FF6600;line-height:46rpx;">￥</text>
-                    <text style="font-size:34rpx;color:#FF6600;">{{item.orderPrice}}</text>
+                    <text style="font-size:24rpx;color:#333333;line-height:30rpx;">合计：</text>
+                    <text style="font-size:20rpx;color:#FF6600;line-height:42rpx;">￥</text>
+                    <text style="font-size:34rpx;color:#FF6600;line-height:30rpx;">{{item.orderPrice}}</text>
                   </view>
                 </view>
               </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==0}}">
-                <view class="bottom-default-button">取消订单</view>
-                <view class="bottom-checked-button">付款</view>
-              </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==1}}">
-                <view class="bottom-default-button">再次预定</view>
-                <view class="bottom-default-button">退订</view>
-              </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==9}}">
-                <view class="bottom-default-button">再次预定</view>
-                <view class="bottom-default-button">退订</view>
-              </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==3 && !item.commentInfo}}">
-                <view class="bottom-default-button">再次预定</view>
-              </view>
-              <view class="item-bottom-button-view" wx:if="{{item.orderState==4 || item.orderState==6 || item.orderState==7 || item.orderState==8}}">
-                <view class="bottom-default-button">再次预定</view>
+              <view class="item-bottom-button-view">
+                <view class="bottom-default-button" @tap="handleHotel({{index}})">再次预定</view>
+                <!-- <view wx:if="{{item.orderState==3&&!item.commentInfo}}" class="bottom-default-button" @tap="handleComment({{index}})">去评论</view> -->
               </view>
             </view>
           </repeat>
@@ -287,7 +273,10 @@
 <script>
   import wepy from 'wepy';
   import {
-    findAllOrders
+    findAllOrders,
+    orderCancel,
+    orderQuite,
+    loginCheck
   } from '../server/index.js';
   import {
     getSysWidth,
@@ -297,6 +286,7 @@
   } from '../lib/wx-system.js'
   import {
     calculateDiffTime,
+    formatNumber
   } from "../lib/utils.js";
   export default class OrderList extends wepy.page {
     config = {
@@ -337,10 +327,19 @@
     watch = {};
     onLoad() {
       this.scrollHeight = changePXToRPX(getSysHeight()) - 88;
-      this.getOrderList()
       this.$apply()
     }
-    onShow() {}
+    onShow() {
+      loginCheck().then(res => {
+        if (res.state == 3) {
+          wepy.navigateTo({
+            url: './onload?page=orderList'
+          })
+        } else if (res.state == 1) {
+          this.getOrderList(true)
+        }
+      })
+    }
     methods = {
       handleState(value) {
         this.query.orderState = value
@@ -361,8 +360,60 @@
           this.query.orderState = -3
         }
         this.query.pageNo = 1
-        this.getOrderList()
+        this.getOrderList(true)
         this.$apply()
+      },
+      handlePay(index) {
+        let row = this.orderList[index]
+        wepy.navigateTo({
+          url: './pay?orderNo=' + row.orderNo
+        })
+      },
+      hadnleCancel(index) {
+        let row = this.orderList[index]
+        wepy.showModal({
+          title: '提示',
+          content: '确定取消该订单？',
+        }).then(res => {
+          if (res.confirm) {
+            wepy.showLoading()
+            orderCancel({
+              orderNo: row.orderNo
+            }).then(res => {
+              wepy.hideLoading()
+              wx.showToast({
+                title: '取消成功！',
+                icon: 'none',
+                duration: 1200
+              })
+              this.getOrderList(false)
+            })
+          }
+        })
+      },
+      handleQuite(index) {
+        let row = this.orderList[index]
+        wepy.showModal({
+          title: '提示',
+          content: '订单退订后房费将会退还到您的账户余额',
+        }).then(res => {
+          if (res.confirm) {
+            wepy.showLoading({
+              title: '加载中...'
+            })
+            orderQuite({
+              orderNo: row.orderNo
+            }).then(res => {
+              wepy.hideLoading()
+              wx.showToast({
+                title: '退订成功',
+                icon: 'none',
+                duration: 1200
+              })
+              this.getOrderList(false)
+            })
+          }
+        })
       },
       /**
        * 下啦
@@ -422,13 +473,33 @@
           });
         }
       },
+      handleOrderInfo(index) {
+        let row = this.orderList[index]
+        wepy.navigateTo({
+          url: './orderDetail?orderNo=' + row.orderNo
+        })
+      },
+      handleHotel(index) {
+        let row = this.orderList[index]
+        wepy.navigateTo({
+          url: './hotelDetail?hotelId=' + row.hotelId
+        })
+      },
+      handleComment(index) {
+        let row = this.orderList[index]
+        wepy.navigateTo({
+          url: './addComment?orderNo=' + row.orderNo
+        })
+      }
     };
     onHide() {}
     onUnload() {}
-    getOrderList() {
-      wepy.showLoading({
-        title: '加载中...'
-      })
+    getOrderList(showLoading) {
+      if (showLoading) {
+        wepy.showLoading({
+          title: '加载中...'
+        })
+      }
       this.orderList = []
       findAllOrders(this.query).then(res => {
         if (res && res.orderInfoList) {

@@ -1,0 +1,123 @@
+<style lang="less">
+  page {
+    width: 100%;
+    height: 100%;
+  }
+  .header-log {
+    height: 250rpx;
+  }
+  .header-log-icon {
+    width: 120rpx;
+    height: 120rpx;
+    margin: 40rpx auto 0 auto;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .header-log-text {
+    text-align: center;
+    color: #333333;
+    font-size: 32rpx;
+    margin: 20rpx 0 0 0;
+  } // 列表
+  .view-list {
+    background: #ffffff;
+  }
+  .view-list-li {
+    display: flex;
+    font-size: 28rpx;
+    color: #333333;
+    font-weight: 400;
+    padding: 0 30rpx 0 30rpx;
+    box-sizing: border-box;
+  }
+  .view-list-text {
+    width: 540rpx;
+    padding: 27rpx 0 0 0;
+  }
+  .view-title {
+    width: 150rpx;
+    line-height: 90rpx;
+  }
+  .view-list-iconImage {
+    position: absolute;
+    right: 10rpx;
+    width: 30rpx;
+    height: 30rpx;
+    image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .link {
+    color: #4D88FF;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <!-- 头部 -->
+    <view class="header-log">
+      <view class="header-log-icon">
+        <image src="../images/hemeihui-logo-icon.png" />
+      </view>
+      <view class="header-log-text">合发集团股份有限公司</view>
+    </view>
+    <!-- 列表 -->
+    <view class="view-list">
+      <!-- 公司地址 -->
+      <view class="view-list-li">
+        <view class="view-title">公司地址：</view>
+        <view class="view-list-text">上海市浦东新区申港大道88号刚泰大厦2-3层</view>
+      </view>
+      <!-- 官方网站 -->
+      <view class="view-list-li" @tap="handleWeb">
+        <view class="view-title">官方网站：</view>
+        <view class="view-list-text link">http://www.fybanks.com</view>
+      </view>
+      <!-- 客服热线 -->
+      <view class="view-list-li" @tap="handlePhone">
+        <view class="view-title">客服热线：</view>
+        <view class="view-list-text link">4000610908</view>
+      </view>
+      <!-- 官方微信 -->
+      <view class="view-list-li">
+        <view class="view-title">官方微信：</view>
+        <view class="view-list-text">合发</view>
+      </view>
+      <!-- 官方微博 -->
+      <view class="view-list-li">
+        <view class="view-title">官方微博：</view>
+        <view class="view-list-text">合发</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  export default class AboutInfo extends wepy.page {
+    config = {
+      navigationBarTitleText: '关于我们'
+    }
+    data = {}
+    methods = {
+      handleWeb() {
+        wepy.setClipboardData({
+          data: 'http://www.fybanks.com',
+        }).then(res => [
+          wx.getClipboardData({
+            success(res) {}
+          })
+        ])
+      },
+      handlePhone() {
+        wepy.makePhoneCall({
+          phoneNumber: "4000610908",
+        })
+      }
+    }
+    onLoad() {}
+  }
+</script>

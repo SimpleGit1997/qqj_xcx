@@ -9,10 +9,10 @@ import wepy from 'wepy'
  * @param {*} type 请求格式 JSON FORM
  * @param {*} isReturn 是否直接提取数据（不过滤）
  */
-function request( method = 'POST',fullUrl, param, token = true, type = 'JSON', isReturn = false) {
+function request(method = 'POST', fullUrl, param, token = true, type = 'JSON', isReturn = false, responseType = 'text') {
   return new Promise(function (resolve, reject) {
     if (token) {
-      param = Object.assign({ sid: '02690799-5dbd-4e66-b8ea-4084f8614939' ,terminal:'P_TERMINAL_WECHAT_MINIPRO'}, param)
+      param = Object.assign({ sid: wepy.getStorageSync('sid') || '', terminal: 'P_TERMINAL_WECHAT_MINIPRO', openid: wepy.getStorageSync('openId') || '' }, param)
     }
     if (type == 'JSON') {
       type = 'application/json'
@@ -20,18 +20,25 @@ function request( method = 'POST',fullUrl, param, token = true, type = 'JSON', i
       type = 'application/x-www-form-urlencoded'
     }
     wx.request({
-      header: { 'Content-Type': type },
+      header: { 'Content-Type': type, packageName: 'MINI_PRO_HUIXIANGZHU' },
       url: fullUrl,
       data: param,
       method: method,
+      responseType: responseType,
       success: function (res) {
         if (res.statusCode === 200) {
           if (isReturn) {
             resolve(res.data)
           } else {
-            if (res.data.code === 0) {
+            if (res.data.state === 1) {
               resolve(res.data.data)
-            } else if ((res.data.code !== 0) && res.data.msg) {
+            } else if (res.data.state === 3) {
+              wepy.showToast({
+                title: '尚未登录账号，请登录！',
+                icon: 'none',
+                duration: 1500
+              })
+            } else if ((res.data.state !== 0) && res.data.msg) {
               wepy.showToast({
                 title: res.data.msg,
                 icon: 'none',

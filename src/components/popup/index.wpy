@@ -126,8 +126,8 @@
         twoWay: true
       },
       size: {
-        type: String,
-        default: '400'
+        type: Number,
+        default: 400
       },
       duration: {
         type: String,
@@ -145,7 +145,8 @@
         console.warn('preventTouchMove方法已阻止其他事件。')
       }
     }
-    onShow() {}
+    onLoad() {
+    }
     events = {
       // hideModal() {
       //   this.showModal = false

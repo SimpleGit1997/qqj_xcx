@@ -1,0 +1,691 @@
+<style lang="less">
+  .top-banner-img-view {
+    position: fixed;
+    width: 100%;
+    height: 240rpx;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+  .top-banner-text-view {
+    position: absolute;
+    top: 30rpx;
+    left: 20rpx;
+    height: 50rpx;
+    line-height: 50rpx;
+    width: 710rpx;
+    display: flex;
+    color: #ffffff;
+    font-size: 36rpx;
+  }
+  .order-info-full-view {
+    width: 710rpx;
+    margin: 100rpx auto 0px auto;
+    position: relative;
+    z-index: 20;
+  }
+  .order-info-label-view {
+    height: 200rpx;
+    background-color: #ffffff;
+    width: 100%;
+    border-radius: 10rpx;
+    margin-bottom: 20rpx;
+  }
+  .order-button-label-view {
+    height: 120rpx;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .default-button-label-view {
+    width: 200rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    border-radius: 40rpx;
+    color: #333333;
+    text-align: center;
+    font-size: 28rpx;
+    border: 2rpx solid #DDDDDD;
+    margin: 30rpx 20rpx 30rpx 0px;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .color-button-label-view {
+    width: 200rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    border-radius: 40rpx;
+    color: #ffffff;
+    text-align: center;
+    font-size: 28rpx;
+    background-color: #FA8C1D;
+    border: 2rpx solid #FA8C1D;
+    margin: 30rpx 20rpx 30rpx 0px;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .order-inner-title-view {
+    width: 100%;
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+    justify-content: space-between;
+  }
+  .order-inner-left-view {
+    margin-left: 30rpx;
+    font-size: 28rpx;
+    color: #333333;
+  }
+  .order-inner-right-view {
+    font-size: 24rpx;
+    color: #FF6600;
+    margin-right: 30rpx;
+  }
+  .order-info-map-view {
+    width: 100%;
+    height: 450rpx;
+    background-color: #ffffff;
+    border-radius: 10rpx;
+    overflow: hidden;
+  }
+  .order-info-map-title-view {
+    width: 670rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    margin: 20rpx auto 10rpx auto;
+    font-size: 32rpx;
+    color: #333333;
+    font-weight: 600;
+  }
+  .order-info-map-address-view {
+    width: 670rpx;
+    height: 30rpx;
+    line-height: 30rpx;
+    color: #333333;
+    margin: 0px auto 20rpx auto;
+    font-size: 28rpx;
+  }
+  .order-info-map {
+    width: 670rpx;
+    height: 240rpx;
+    margin: 0px auto;
+  }
+  .order-info-button-view {
+    height: 90rpx;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .order-item-left-button {
+    width: 334rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+  }
+  .orde-item-tag-view {
+    width: 2rpx;
+    height: 20rpx;
+    background-color: #DDDDDD;
+    margin: 20rpx 0px;
+  }
+  .order-item-right-button {
+    width: 334rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    font-size: 28rpx;
+    color: #333333;
+    display: flex;
+    justify-content: center;
+  }
+  .order-info-time-view {
+    width: 100%;
+    border-radius: 10rpx;
+    background-color: #ffffff;
+    overflow: hidden;
+    margin-top: 20rpx;
+  }
+  .order-info-time-title-view {
+    width: 670rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    font-size: 32rpx;
+    color: #333333;
+    font-weight: 600;
+    margin: 20rpx auto 10rpx auto;
+  }
+  .order-info-time-sub-title-view {
+    height: 30rpx;
+    line-height: 30rpx;
+    width: 670rpx;
+    font-size: 24rpx;
+    color: #999999;
+    margin: 0px auto;
+  }
+  .flex-date-info-view {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 140rpx;
+    margin: 0 auto;
+    border-bottom: 2rpx solid #eaeaea;
+  }
+  .flex-date-item-left-view {
+    height: 140rpx;
+    margin-left: 20rpx;
+    text-align: center;
+  }
+  .flex-date-item-right-view {
+    margin-right: 20rpx;
+    text-align: center;
+  }
+  .item-left-top-label-view {
+    height: 32rpx;
+    line-height: 32rpx;
+    color: #333333;
+    font-size: 22rpx;
+    margin-top: 30rpx;
+  }
+  .item-left-bottom-label-view {
+    height: 40rpx;
+    line-height: 40rpx;
+    color: #333333;
+    font-size: 32rpx;
+    margin-top: 10rpx;
+  }
+  .abs-mid-label-view {
+    position: absolute;
+    bottom: 32rpx;
+    right: 310rpx;
+    font-size: 28rpx;
+    color: #333333;
+    height: 40rpx;
+    line-height: 40rpx;
+    text-align: center;
+    border-bottom: 2rpx solid #fa8c1d;
+  }
+  .flex-address-left-view {
+    color: #333333;
+    font-size: 28rpx;
+    line-height: 86rpx;
+    width: 600rpx;
+  }
+  .order-info-text-view {
+    width: 670rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    display: flex;
+    margin: 0px auto;
+    font-size: 28rpx;
+    color: #333333;
+  }
+  .order-info-warnning-view {
+    width: 100%;
+    border-radius: 10rpx;
+    margin: 20rpx auto;
+    background-color: #ffffff;
+    overflow: hidden;
+  }
+  .order-info-warninning-title-view {
+    height: 40rpx;
+    line-height: 40rpx;
+    margin: 20rpx 0px 10rpx 30rpx;
+    font-size: 32rpx;
+    color: #333333;
+    font-weight: 600;
+  }
+  .order-info-warnning-text-view {
+    width: 650rpx;
+    margin: 0px auto 20rpx auto;
+    line-height: 30rpx;
+    color: #333333;
+    font-size: 26rpx;
+  }
+  .popup-title-label-view {
+    width: 100%;
+    height: 100rpx;
+    line-height: 100rpx;
+    font-size: 32rpx;
+    color: #333333;
+    text-align: center;
+  }
+  .popup-inner-label-info-view {
+    width: 690rpx;
+    margin: 0px auto;
+  }
+  .popup-item-view {
+    width: 100%;
+    height: 40rpx;
+    line-height: 40rpx;
+    display: flex;
+    justify-content: space-between;
+  }
+  .item-left-label-view {
+    font-size: 28rpx;
+    color: #333333;
+  }
+  .item-right-label-view {
+    font-size: 28rpx;
+    color: #FF6600;
+  }
+  .popup-bottom-item-view {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 690rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    bottom: 0px;
+    left: 30rpx;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-banner-img-view">
+      <image src="../images/order-state-banner-img.png" style="width:100%;height:100%;" />
+      <view class="top-banner-text-view">
+        <text>{{orderInfo.orderStateLabel}}</text> <text wx:if="{{orderInfo.orderState===0}}" style="margin-left:30rpx;font-size:24rpx;">请在{{timeLabel[1]}}分{{timeLabel[2]}}秒内完成支付</text>
+      </view>
+    </view>
+    <view class="order-info-full-view">
+      <view class="order-info-label-view">
+        <view class="order-inner-title-view">
+          <view class="order-inner-left-view">
+            <text>订单总额</text>
+            <text style="color:#FF6600;margin-left:20rpx;">¥{{orderInfo.orderPrice}}</text>
+          </view>
+          <view class="order-inner-right-view" @tap='handleModal'>
+            费用明细
+          </view>
+        </view>
+        <view class='order-button-label-view' wx:if="{{orderInfo.orderState==0}}">
+          <view class="default-button-label-view" @tap="hadnleCancel">取消订单</view>
+          <view class="color-button-label-view" @tap='handlePay'>付款</view>
+        </view>
+        <view class='order-button-label-view' wx:if="{{orderInfo.orderState==1}}">
+          <view class="default-button-label-view" @tap="handleHotel">再次预定</view>
+          <view class="default-button-label-view" @tap="handleQuite">退订</view>
+        </view>
+        <view class='order-button-label-view' wx:if="{{orderInfo.orderState==9}}">
+          <view class="default-button-label-view" @tap="handleHotel">再次预定</view>
+          <view class="default-button-label-view" @tap="handleQuite">退订</view>
+        </view>
+        <view class='order-button-label-view' wx:if="{{orderInfo.orderState==3 && !orderInfo.commentInfo}}">
+          <view class="default-button-label-view" @tap="handleHotel">再次预定</view>
+          <view class="default-button-label-view" @tap="handleComment">去评论</view>
+        </view>
+        <view class='order-button-label-view' wx:if="{{(orderInfo.orderState==3&&orderInfo.commentInfo) ||orderInfo.orderState==4 || orderInfo.orderState==5 ||orderInfo.orderState==6 || orderInfo.orderState==7 || orderInfo.orderState==8 || orderInfo.orderState==10}}">
+          <view class="default-button-label-view" @tap="handleHotel">再次预定</view>
+        </view>
+      </view>
+      <view class="order-info-map-view">
+        <view class="order-info-map-title-view">{{orderInfo.hotelName}}</view>
+        <view class="order-info-map-address-view">{{orderInfo.address}}</view>
+        <view class="order-info-map">
+          <map id="myMap" enable-scroll="{{false}}" markers="{{markers}}" longitude="{{pointLng}}" latitude="{{pointLat}}" show-location="{{true}}" style="width: 100%; height: 100%;"> </map>
+        </view>
+        <view class="order-info-button-view">
+          <view class="order-item-left-button" @tap="handleHotelDetail">
+            <text>酒店详情</text>
+          </view>
+          <view class="orde-item-tag-view"></view>
+          <view class="order-item-right-button" @tap="handleTel">
+            <text>联系酒店</text>
+          </view>
+        </view>
+      </view>
+      <view class="order-info-time-view">
+        <view class="order-info-time-title-view">{{orderInfo.houseName}}</view>
+        <view class="order-info-time-sub-title-view">{{orderInfo.checkPolicy}}</view>
+        <view class="flex-date-info-view">
+          <view class="flex-date-item-left-view">
+            <view class="item-left-top-label-view">入住日期</view>
+            <view class="item-left-bottom-label-view">
+              <text>{{formatDate[0]}}</text>
+              <text style="font-size:24rpx;margin-left:10rpx;">{{getDescribe[0]}}</text>
+            </view>
+          </view>
+          <view class="flex-date-item-right-view">
+            <view class="item-left-top-label-view">离店日期</view>
+            <view class="item-left-bottom-label-view">
+              <text>{{formatDate[1]}}</text>
+              <text style="font-size:24rpx;margin-left:10rpx;">{{getDescribe[1]}}</text>
+            </view>
+          </view>
+          <view class="abs-mid-label-view">共{{getDays}}晚</view>
+        </view>
+        <view class="order-info-text-view">
+          <view style="width:140rpx;">入住人：</view>
+          <view>{{orderInfo.customerName}}</view>
+        </view>
+        <view class="order-info-text-view">
+          <view style="width:140rpx;">联系电话：</view>
+          <view>{{orderInfo.customerMobile}}</view>
+        </view>
+        <view class="order-info-text-view">
+          <view style="width:140rpx;">预定日期：</view>
+          <view>{{orderInfo.createTimeLabel}}</view>
+        </view>
+        <view class="order-info-text-view">
+          <view style="width:140rpx;">早餐信息：</view>
+          <view>{{orderInfo.isBreakfast==0?'无早':'含早'}}</view>
+        </view>
+      </view>
+      <view class='order-info-warnning-view' wx:if="{{orderInfo.refundPromptMsg}}">
+        <view class='order-info-warninning-title-view'>
+          付费取消
+        </view>
+        <view class="order-info-warnning-text-view">
+          {{orderInfo.refundPromptMsg}}
+        </view>
+      </view>
+    </view>
+    <popup :size.sync="popupHeight" duration='360' type="bottom" :showModal.sync="showModal">
+      <view class="popup-title-label-view">费用明细</view>
+      <scroll-view style="height:{{340}}rpx;width:100%;" scroll-y>
+        <view class="popup-inner-label-info-view">
+          <view class="popup-item-view" style="margin-bottom:6rpx;">
+            <view class="item-left-label-view">房费合计</view>
+            <view class="item-right-label-view">￥{{orderInfo.payPrice}}</view>
+          </view>
+          <repeat for="{{orderInfo.subOrders}}" key="index" item="item" index="index">
+            <view class="popup-item-view">
+              <view class="item-left-label-view" style="color:#666666;color:24rpx;">{{item.checkInDate}} {{orderInfo.isBreakfast==0?'无早':'含早'}}</view>
+              <view class="item-right-label-view" style="color:#666666;color:24rpx;">￥<text>{{item.salePrice}}</text> <text>x{{item.houseNum}}</text> </view>
+            </view>
+          </repeat>
+        </view>
+      </scroll-view>
+      <view class="popup-bottom-item-view">
+        <view class="item-left-label-view">支付金额</view>
+        <view class="item-right-label-view">￥{{orderInfo.payPrice}}</view>
+      </view>
+    </popup>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import {
+    changePXToRPX
+  } from "@/lib/wx-system.js";
+  import {
+    findOrderInfoDetail,
+    orderCancel,
+    orderQuite
+  } from '../server/index.js'
+  import {
+    calculateDiffTime,
+  } from "../lib/utils.js";
+  import popup from '../components/popup/index';
+  export default class OrderDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: "订单详情",
+    };
+    components = {
+      popup: popup
+    };
+    data = {
+      popupHeight: 500,
+      dateValue: [],
+      mapCtx: null,
+      orderInfo: {},
+      endTimeValue: 0,
+      currentTime: 0,
+      timer: null,
+      timeLabel: [],
+      markers: [],
+      pointLng: '',
+      pointLat: '',
+      showModal: false
+    };
+    computed = {
+      formatDate() {
+        let value = [];
+        if (this.dateValue.length > 0) {
+          this.dateValue.forEach(item => {
+            value.push(new Date(item).toString("MM月dd日"));
+          });
+        }
+        return value;
+      },
+      getDays() {
+        let days = 0;
+        if (this.dateValue.length === 2) {
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          let time = calculateDiffTime(first, second);
+          days = time[0] / 24;
+          return days;
+        }
+      },
+      getDescribe() {
+        let describe = ["", ""];
+        if (this.dateValue.length === 2) {
+          let currentDate = new Date();
+          let currentStamp = new Date(
+            currentDate.getFullYear(),
+            currentDate.getMonth(),
+            currentDate.getDate()
+          ).valueOf();
+          let first = new Date(this.dateValue[0].replace(/-/gi, "/")).valueOf();
+          let second = new Date(this.dateValue[1].replace(/-/gi, "/")).valueOf();
+          if (currentStamp == first) {
+            describe[0] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == first) {
+            describe[0] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == first) {
+            describe[0] = "后天";
+          } else {
+            var str = '星期' + '日一二三四五六'.charAt(new Date(first).getDay());
+            describe[0] = str;
+          }
+          if (currentStamp == second) {
+            describe[1] = "今天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 == second) {
+            describe[1] = "明天";
+          } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == second) {
+            describe[1] = "后天";
+          } else {
+            var str = '星期' + '日一二三四五六'.charAt(new Date(second).getDay());
+            describe[1] = str;
+          }
+        }
+        return describe;
+      }
+    };
+    watch = {
+      currentTime(o, n) {
+        this.timeLabel = calculateDiffTime(this.currentTime, this.endTimeValue);
+        if (Number(this.timeLabel[1]) === 0 && Number(this.timeLabel[2]) === 0) {
+          this.orderInfo.orderState = 4
+          clearInterval(this.timer);
+          this.$apply();
+        }
+        this.$apply();
+      }
+    };
+    onLoad(option) {
+      this.mapCtx = wx.createMapContext('myMap')
+      if (option.orderNo) {
+        this.orderNo = option.orderNo
+        this.getOrderDetail()
+        this.$apply()
+      }
+    }
+    onShow() {
+      if (this.orderNo) {
+        this.getOrderDetail()
+        this.$apply()
+      }
+    }
+    methods = {
+      handleHotelDetail() {
+        wepy.navigateTo({
+          url: './hotelInfo?hotelId=' + this.orderInfo.hotelId
+        })
+      },
+      handleModal() {
+        this.showModal = true
+        this.$apply()
+      },
+      handleTel() {
+        if (this.orderInfo.contactTel) {
+          wx.makePhoneCall({
+            phoneNumber: this.orderInfo.contactTel,
+          })
+        } else {
+          wepy.showToast({
+            title: '当前酒店没有预留电话哦!',
+            icon: 'none',
+            duration: 1500
+          })
+        }
+      },
+      handleHotel() {
+        wepy.navigateTo({
+          url: './hotelDetail?hotelId=' + this.orderInfo.hotelId
+        })
+      },
+      /**
+       * 支付
+       */
+      handlePay() {
+        wepy.navigateTo({
+          url: './pay?orderNo=' + this.orderInfo.orderNo
+        })
+      },
+      /**
+       * 取消订单
+       */
+      hadnleCancel() {
+        wepy.showModal({
+          title: '提示',
+          content: '确定取消该订单？',
+        }).then(res => {
+          if (res.confirm) {
+            wepy.showLoading()
+            orderCancel({
+              orderNo: this.orderInfo.orderNo
+            }).then(res => {
+              wepy.hideLoading()
+              wx.showToast({
+                title: '取消成功！',
+                icon: 'none',
+                duration: 1200
+              })
+              this.getOrderDetail()
+            })
+          }
+        })
+      },
+      handleQuite() {
+        wepy.showModal({
+          title: '提示',
+          content: '订单退订后房费将会退还到您的账户余额',
+        }).then(res => {
+          if (res.confirm) {
+            wepy.showLoading({
+              title: '加载中...'
+            })
+            orderQuite({
+              orderNo: this.orderInfo.orderNo
+            }).then(res => {
+              wepy.hideLoading()
+              wx.showToast({
+                title: '退订成功',
+                icon: 'none',
+                duration: 1200
+              })
+              this.getOrderDetail()
+            })
+          }
+        })
+      },
+      handleComment() {
+        wepy.navigateTo({
+          url: './addComment?orderNo=' + this.orderInfo.orderNo
+        })
+      }
+    };
+    onHide() {}
+    onUnload() {}
+    getOrderDetail() {
+      findOrderInfoDetail({
+        orderNo: this.orderNo
+      }).then(res => {
+        this.orderInfo = res.orderInfo || {}
+        this.dateValue = [new Date(this.orderInfo.bookCheckinTime).toString('yyyy-MM-dd'), new Date(this.orderInfo.checkoutTime).toString('yyyy-MM-dd')]
+        let createTimeValue = new Date(this.orderInfo.orderTime).valueOf();
+        this.endTimeValue = createTimeValue + 1000 * 60 * 15;
+        this.currentTime = new Date().valueOf();
+        this.$apply()
+        if (this.orderInfo.orderState === 0 && this.currentTime > this.endTimeValue) {
+          this.orderInfo.orderState = 4
+          this.$apply()
+        }
+        if (this.orderInfo.orderState === 0 && this.currentTime < this.endTimeValue) {
+          this.timer = setInterval(() => {
+            this.currentTime += 1000;
+            this.$apply();
+          }, 1000);
+          this.$apply()
+        }
+        this.orderInfo.createTimeLabel = new Date(this.orderInfo.orderTime).toString('yyyy-MM-dd hh:mm:ss')
+        this.pointLng = this.orderInfo.pointLng
+        this.pointLat = this.orderInfo.pointLat
+        this.markers.push({
+          id: 0,
+          latitude: this.orderInfo.pointLat,
+          longitude: this.orderInfo.pointLng,
+          width: 25,
+          height: 30,
+          iconPath: '../images/map-position-icon.png',
+          callout: {
+            content: this.orderInfo.hotelName,
+            color: "#666666",
+            fontSize: "14",
+            borderRadius: "10",
+            bgColor: "#ffffff",
+            padding: "10",
+            display: "ALWAYS",
+          }
+        })
+        if (this.orderInfo.orderState == 0) {
+          this.orderInfo.orderStateLabel = '待支付'
+        } else if (this.orderInfo.orderState == 1) {
+          this.orderInfo.orderStateLabel = '待入住'
+        } else if (this.orderInfo.orderState == 2) {
+          this.orderInfo.orderStateLabel = '待评价'
+        } else if (this.orderInfo.orderState == 3) {
+          this.orderInfo.orderStateLabel = '已完成'
+        } else if (this.orderInfo.orderState == 4) {
+          this.orderInfo.orderStateLabel = '已取消'
+        } else if (this.orderInfo.orderState == 5) {
+          this.orderInfo.orderStateLabel = '退订中'
+        } else if (this.orderInfo.orderState == 6) {
+          this.orderInfo.orderStateLabel = '已退订'
+        } else if (this.orderInfo.orderState == 7) {
+          this.orderInfo.orderStateLabel = '已失效'
+        } else if (this.orderInfo.orderState == 8) {
+          this.orderInfo.orderStateLabel = '已完成'
+        } else if (this.orderInfo.orderState == 9) {
+          this.orderInfo.orderStateLabel = '待确认'
+        }
+        this.$apply()
+      })
+    }
+    // 下拉刷新事件
+    onPullDownRefresh() {
+      wepy.showNavigationBarLoading();
+      wepy.stopPullDownRefresh();
+      wepy.hideNavigationBarLoading();
+    }
+  }
+</script>

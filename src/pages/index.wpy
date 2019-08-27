@@ -160,18 +160,14 @@
     <!-- 轮播图 -->
     <view class="top-swiper-view">
       <swiper class="top-swiper" circular="{{true}}" indicator-dots="{{true}}" autoplay="{{true}}" interval="{{5000}}" duration="{{500}}">
-        <swiper-item>
-          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;" />
+        <swiper-item wx:if="{{adList.length ==0 }}">
+          <image src="../images/default-index-background-img.png" style="width:100%;height:100%;" />
         </swiper-item>
-        <swiper-item>
-          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;" />
-        </swiper-item>
-        <swiper-item>
-          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;" />
-        </swiper-item>
-        <swiper-item>
-          <image src="https://ss3.bdstatic.com/lPoZeXSm1A5BphGlnYG/skin/610.jpg?2" style="width:100%;height:100%;" />
-        </swiper-item>
+        <repeat wx:if="{{adList.length>0}}" for="{{adList}}" key="index" index="index" item="item">
+          <swiper-item>
+            <image src="{{imgUrl+item.imagePath}}" style="width:100%;height:100%;" />
+          </swiper-item>
+        </repeat>
       </swiper>
     </view>
     <!-- 我的位置 -->
@@ -225,13 +221,13 @@
     </view>
     <view class="submit-button-view" @tap="handleToSearch">查找全球家</view>
     <!-- 日期探出框 -->
-    <datepopup size="750" duration='400' type="bottom" :showModal.sync="dateModalDialog" v-on:hideModal="hideDateDialog">
+    <datepopup :size.sync="popupHeight" duration='400' type="bottom" :showModal.sync="dateModalDialog" v-on:hideModal="hideDateDialog">
       <scroll-view style="height:750rpx;width:100%;overflow:hidden;" scroll-y>
         <datepicker v-on:closeDialog="closeDateDialog" months="4" :value.sync="_dateValue"></datepicker>
       </scroll-view>
     </datepopup>
     <!-- 价格星级 -->
-    <priceandstarpopup size="750" duration='400' type="bottom" :showModal.sync="priceAndStarModalDialog">
+    <priceandstarpopup :size.sync="popupHeight" duration='400' type="bottom" :showModal.sync="priceAndStarModalDialog">
       <view class="pop-label-view">
         <view class="pop-label-view-peice">
           <text class="pop-label-view-title">价格</text>
@@ -266,7 +262,8 @@
     changePXToRPX
   } from "@/lib/wx-system.js";
   import {
-    findRegions
+    findRegions,
+    advertisingAllocationDetailListH5OrApp
   } from "../server/index.js";
   import {
     calculateDiffTime,
@@ -287,6 +284,8 @@
       datepicker: datepicker
     };
     data = {
+      imgUrl: '',
+      popupHeight: 750,
       cityInfo: {
         id: 164132,
         name: '上海市',
@@ -297,6 +296,7 @@
         lat: '31.230416',
         lng: '121.473701'
       },
+      adList: [],
       dateValue: [],
       _dateValue: [],
       keyword: '',
@@ -400,7 +400,7 @@
           } else if (currentStamp + 24 * 60 * 60 * 1000 * 2 == first) {
             describe[0] = "后天";
           } else {
-           var str = '星期' + '日一二三四五六'.charAt(new Date(first).getDay());
+            var str = '星期' + '日一二三四五六'.charAt(new Date(first).getDay());
             describe[0] = str;
           }
           if (currentStamp == second) {
@@ -419,6 +419,16 @@
     };
     watch = {};
     onLoad() {
+      this.imgUrl = this.$parent.$config.imgur
+      advertisingAllocationDetailListH5OrApp({
+        seat: 'Banner_global_home',
+        mark: 'H5'
+      }).then(res => {
+        if (res.data.list && res.data.list.length > 0) {
+          this.adList = res.data.list
+          this.$apply()
+        }
+      })
       let that = this
       // 实例化API核心类
       qqmapsdk = new QQMapWX({

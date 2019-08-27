@@ -2,17 +2,16 @@
 
 /**
  * 获取，字样金额
- * @param {*} n 数字
+ * @param {*} data 
  */
-function formatNumber(n) {
-  var b = parseInt(n).toString()
-  var len = b.length
-  if (len <= 3) {
-    return b
+function formatNumber(data) {
+  if (data != null) {
+    return data.toFixed(2).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,');
+  } else {
+    return;
   }
-  var r = len % 3
-  return r > 0 ? b.slice(0, r) + ',' + b.slice(r, len).match(/\d{3}/g).join(',') : b.slice(r, len).match(/\d{3}/g).join(',')
 }
+
 
 /**
  * 根据当前时间查询月份日期
@@ -35,7 +34,7 @@ function getMonth(months = 1) {
     dateObj.month = month
     let count = new Date(year, month, 0).getDate()
     for (let i = 1; i <= count; i++) {
-      let obj = {value:i}
+      let obj = { value: i }
       dateArray.push(obj)
     }
     month += 1
