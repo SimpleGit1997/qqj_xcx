@@ -371,7 +371,7 @@
       loginCheck().then(res => {
         if (res.state == 3) {
           wepy.navigateTo({
-            url: './onload?page=me'
+            url: '../pages/packageB/pages/onload?page=me'
           })
         } else if (res.state == 1) {
           this.checkLogin = true
@@ -396,7 +396,7 @@
         this.warnModal = false
         this.$apply()
         wepy.navigateTo({
-          url: './changePassword?mobilephone=' + this.userInfo.mobilephone
+          url: '../pages/packageD/pages/changePassword?mobilephone=' + this.userInfo.mobilephone
         });
       },
       submitCode() {
@@ -409,7 +409,7 @@
             wepy.setStorageSync('secPwd', this.secPwd)
             console.log(this.secPwd)
             wepy.navigateTo({
-              url: './property'
+              url: '../pages/packageD/pages/property'
             })
             this.$apply()
           } else {
@@ -449,7 +449,7 @@
       },
       handleAboutUs() {
         wepy.navigateTo({
-          url: './aboutUs'
+          url: '../pages/packageD/pages/aboutUs'
         });
       },
       handleCloseDialog() {
@@ -463,7 +463,7 @@
       },
       handlePassword() {
         wepy.navigateTo({
-          url: './changePassword?mobilephone=' + this.userInfo.mobilephone
+          url: '../pages/packageD/pages/changePassword?mobilephone=' + this.userInfo.mobilephone
         });
       },
       handleExit() {

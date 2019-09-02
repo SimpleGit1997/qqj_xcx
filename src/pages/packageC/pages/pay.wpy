@@ -208,20 +208,20 @@
     <repeat for="{{payMethodList}}" item="item" index="index" key="index">
       <view class="pay-methods-item-label-view" wx:if="{{item.payModeCode=='P_MODE_WECHAT'}}">
         <view class="pay-methods-left-label-view">
-          <image class="methods-left-img" src="../images/wx-icon-logo.png" />
+          <image class="methods-left-img" src="../../../images/wx-icon-logo.png" />
           <view class="methods-left-text-view">微信</view>
           <view class="methods-left-price-text-view"></view>
         </view>
         <view class="pay-methods-right-label-view">
           <view class="methods-img-view" @tap="handleMethods({{index}})">
-            <image wx:if="{{!item.checked}}" class="methods-right-img" src="../images/round-icon.png" />
-            <image wx:elif class="methods-right-img" src="../images/round-color-checked-icon.png" />
+            <image wx:if="{{!item.checked}}" class="methods-right-img" src="../../../images/round-icon.png" />
+            <image wx:elif class="methods-right-img" src="../../../images/round-color-checked-icon.png" />
           </view>
         </view>
       </view>
       <view class="pay-methods-item-label-view" wx:if="{{item.payModeCode=='P_MODE_BALANCE'}}">
         <view class="pay-methods-left-label-view">
-          <image class="methods-left-img" src="../images/red-balance-icon.png" />
+          <image class="methods-left-img" src="../../../images/red-balance-icon.png" />
           <view class="methods-left-text-view">余额</view>
           <view class="methods-left-price-text-view">
             <text style="line-height:130rpx;font-size:20rpx;">¥</text>
@@ -232,8 +232,8 @@
           <text wx:if="{{orderInfo.payPrice>available}}">余额不足</text>
           <view wx:else>
             <view class="methods-img-view" @tap="handleMethods({{index}})">
-              <image wx:if="{{!item.checked}}" class="methods-right-img" src="../images/round-icon.png" />
-              <image wx:elif class="methods-right-img" src="../images/round-color-checked-icon.png" />
+              <image wx:if="{{!item.checked}}" class="methods-right-img" src="../../../images/round-icon.png" />
+              <image wx:elif class="methods-right-img" src="../../../images/round-color-checked-icon.png" />
             </view>
           </view>
         </view>
@@ -260,7 +260,7 @@
   import {
     calculateDiffTime,
     formatNumber
-  } from '../lib/utils.js'
+  } from '../../../lib/utils.js'
   import {
     payOrderInfo,
     payMode,
@@ -268,7 +268,7 @@
     payApply,
     submitValidate,
     balancePay
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   export default class Pay extends wepy.page {
     config = {
       navigationBarTitleText: '支付订单'

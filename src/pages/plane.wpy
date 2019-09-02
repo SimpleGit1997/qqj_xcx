@@ -1,0 +1,130 @@
+<style lang="less">
+  page {
+    background-color: #ffffff;
+  }
+  .top-default-row-view {
+    width: 670rpx;
+    margin: 0px auto;
+    display: flex;
+  }
+  .defualt-left-text-view {
+    width: 300rpx;
+    height: 120rpx;
+    border-bottom: 2rpx solid #EAEAEA;
+    text-align: left;
+  }
+  .defualt-right-text-view {
+    width: 300rpx;
+    height: 120rpx;
+    border-bottom: 2rpx solid #EAEAEA;
+    text-align: right;
+  }
+  .defualt-mid-pic-view {
+    width: 70rpx;
+    height: 120rpx;
+  }
+  .mid-pic-image {
+    width: 50rpx;
+    height: 50rpx;
+    margin: 40rpx auto 0px auto;
+  }
+  .default-left-label-text {
+    font-size: 32rpx;
+    color: #999999;
+    line-height: 140rpx;
+  }
+  .default-right-label-text {
+    font-size: 32rpx;
+    color: #999999;
+    line-height: 140rpx;
+  }
+  .default-row-view {
+    height: 100rpx;
+    width: 670rpx;
+    margin: 0px auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2rpx solid #EAEAEA;
+    &:active {
+      opacity: .7;
+    }
+  }
+  .default-row-left-text-view {
+    display: flex;
+    height: 100rpx;
+    line-height: 100rpx;
+    color: #333333;
+    font-size: 32rpx;
+  }
+  .default-row-right-icon-view {
+    width: 30rpx;
+    height: 30rpx;
+    margin-top: 36rpx;
+  }
+</style>
+
+<template>
+  <view class="body">
+    <view class="top-default-row-view">
+      <view class="defualt-left-text-view">
+        <text class="default-left-label-text">出发地</text>
+      </view>
+      <view class="defualt-mid-pic-view">
+        <image class="mid-pic-image" src="../images/round-change-icon.png" />
+      </view>
+      <view class="defualt-right-text-view">
+        <text class="default-right-label-text">目的地</text>
+      </view>
+    </view>
+    <view class="default-row-view">
+      <view class="default-row-left-text-view">
+        <text>8月23日</text><text style="font-size:24rpx;margin-left:10rpx;">今天</text>
+      </view>
+     <view class="default-row-right-icon-view">
+        <image style="width:100%;height:100%;" src="../images/arrow-right-icon.png" />
+     </view>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from "wepy";
+  import {
+    changePXToRPX
+  } from "@/lib/wx-system.js";
+  import {
+    findRegions
+  } from "../server/index.js";
+  import {
+    calculateDiffTime,
+  } from "../lib/utils.js";
+  import popup from '../components/popup/index'
+  import datepicker from '../components/datepicker/index'
+  export default class Plane extends wepy.page {
+    config = {
+      navigationBarTitleText: "国内机票",
+      backgroundColor: '#ffffff'
+      // enablePullDownRefresh: true,
+      // navigationStyle: "custom"
+    };
+    components = {
+      priceandstarpopup: popup,
+      datepopup: popup,
+      datepicker: datepicker
+    };
+    data = {};
+    computed = {};
+    watch = {};
+    onLoad() {}
+    onShow() {}
+    methods = {};
+    onHide() {}
+    onUnload() {}
+    // 下拉刷新事件
+    onPullDownRefresh() {
+      wepy.showNavigationBarLoading();
+      wepy.stopPullDownRefresh();
+      wepy.hideNavigationBarLoading();
+    }
+  }
+</script>

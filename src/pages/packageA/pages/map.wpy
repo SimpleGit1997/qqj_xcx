@@ -34,13 +34,13 @@
                     <cover-view class="cover-view-conter">
                       <cover-view class="cover-down-img" @tap="handleMyposition">
                         <cover-view class="cover-map-image">
-                          <cover-image src="../images/map-nav-icon.png"></cover-image>
+                          <cover-image src="../../../images/map-nav-icon.png"></cover-image>
                         </cover-view>
                         <cover-view>我的位置</cover-view>
                     </cover-view>
                       <cover-view class="cover-down-img" @tap="hotellocation">
                         <cover-view class="cover-map-image">
-                          <cover-image src="../images/map-hotel-icon.png"></cover-image>
+                          <cover-image src="../../../images/map-hotel-icon.png"></cover-image>
                         </cover-view>
                         <cover-view>酒店位置</cover-view>
                       </cover-view>
@@ -119,7 +119,7 @@
         longitude: hotelInfo.pointLng,
         width: 25,
         height: 30,
-        iconPath: '../images/map-position-icon.png',
+        iconPath: '../../../images/map-position-icon.png',
         callout: {
           content: hotelInfo.title,
           color: "#666666",

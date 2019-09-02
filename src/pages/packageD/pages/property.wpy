@@ -158,10 +158,10 @@
   import {
     myAsset,
     checkShops
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   import {
     formatNumber
-  } from '../lib/utils.js'
+  } from '../../../lib/utils.js'
   export default class Propeety extends wepy.page {
     config = {
       navigationBarTitleText: '资产'

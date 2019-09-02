@@ -304,7 +304,7 @@
     <view class="top-hotel-info-label-view">
       <view class="top-inner-info-label-view">
         <view class="info-item-left-img-view">
-          <image lazy-load src="../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
+          <image lazy-load src="../../../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
         </view>
         <view class="info-item-right-label-view">
           <view class="right-label-title-view">{{orderInfo.title}}</view>
@@ -337,7 +337,7 @@
       <view class="abs-selected-label-view">共{{getDays}}晚</view>
     </view>
     <view class="bottom-background-iamge-label-view">
-      <image src="../images/bottom-background-image.png" style="width:100%;height:100%;"></image>
+      <image src="../../../images/bottom-background-image.png" style="width:100%;height:100%;"></image>
     </view>
     <view class="default-label-text-view" style="margin-top:20rpx;">
       <view class="default-inner-label-text-view border-bottom">
@@ -356,7 +356,7 @@
           </picker>
         </view>
         <view class="item-arrow-right-img-view">
-          <image src="../images/arrow-right-icon.png" style="width:100%;height:100%;" />
+          <image src="../../../images/arrow-right-icon.png" style="width:100%;height:100%;" />
         </view>
       </view>
     </view>
@@ -394,7 +394,7 @@
         </view>
         <view class="button-inner-price-right-view" @tap="handleModal">
           <view style="color:#cccccc;font-size:24rpx;line-hegiht:100rpx;">明细</view>
-          <image src="../images/arrow-right-icon.png" style="width:30rpx;height:30rpx;transform:rotate(-90deg);margin-top:34rpx;" />
+          <image src="../../../images/arrow-right-icon.png" style="width:30rpx;height:30rpx;transform:rotate(-90deg);margin-top:34rpx;" />
         </view>
       </view>
       <view class="button-right-view" @tap="handleSubmit">提交订单</view>
@@ -425,21 +425,21 @@
 
 <script>
   import wepy from 'wepy'
-  import popup from '../components/popup/index';
+  import popup from '../../../components/popup/index';
   import {
     getSysWidth,
     getSysHeight,
     changePXToRPX,
     changeRPXToPX
-  } from '../lib/wx-system.js'
+  } from '../../../lib/wx-system.js'
   import {
     calculateDiffTime
-  } from "../lib/utils.js";
+  } from "../../../lib/utils.js";
   import {
     orderWrite,
     selectPrices,
     addOrder
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   export default class WriteOrder extends wepy.page {
     config = {
       navigationBarTitleText: '填写订单',

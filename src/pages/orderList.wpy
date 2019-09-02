@@ -333,7 +333,7 @@
       loginCheck().then(res => {
         if (res.state == 3) {
           wepy.navigateTo({
-            url: './onload?page=orderList'
+            url: '../pages/packageB/pages/onload?page=orderList'
           })
         } else if (res.state == 1) {
           this.getOrderList(true)
@@ -476,19 +476,19 @@
       handleOrderInfo(index) {
         let row = this.orderList[index]
         wepy.navigateTo({
-          url: './orderDetail?orderNo=' + row.orderNo
+          url: '../pages/packageC/pages/orderDetail?orderNo=' + row.orderNo
         })
       },
       handleHotel(index) {
         let row = this.orderList[index]
         wepy.navigateTo({
-          url: './hotelDetail?hotelId=' + row.hotelId
+          url: '../pages/packageC/pages/hotelDetail?hotelId=' + row.hotelId
         })
       },
       handleComment(index) {
         let row = this.orderList[index]
         wepy.navigateTo({
-          url: './addComment?orderNo=' + row.orderNo
+          url: '../pages/packageD/pages/addComment?orderNo=' + row.orderNo
         })
       }
     };

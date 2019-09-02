@@ -437,7 +437,7 @@
           </swiper-item>
         </repeat>
       </swiper>
-      <image wx:elif="{{hotelImageList.length==0}}" lazy-load src="../images/banner-default-hotel-img.png" style="width:100%;height:100%;" />
+      <image wx:elif="{{hotelImageList.length==0}}" lazy-load src="../../../images/banner-default-hotel-img.png" style="width:100%;height:100%;" />
       <view class="abs-banner-label-view">
         <view class="banner-label-left-view">
           <view class="banner-label-text-name-view">{{hotelInfo.addressCn}}</view>
@@ -446,7 +446,7 @@
         <view class="banner-label-right-view">{{hotelImageList.length}}张</view>
       </view>
       <view class="abs-banner-like-img-view" @tap.stop="handleLike">
-        <image src="{{!!attention?'../images/like-selected-icon.png':'../images/like-icon.png'}}" style="width:100%;height:100%;"></image>
+        <image src="{{!!attention?'../../../images/like-selected-icon.png':'../../../images/like-icon.png'}}" style="width:100%;height:100%;"></image>
       </view>
     </view>
     <view class="default-options-view">
@@ -470,7 +470,7 @@
         <view class="default-row-right-view">
           <view wx:if="{{commentNum>0}}">{{commentNum}}条评论</view>
           <view class="row-right-item-img-view" wx:if="{{commentNum>0}}" @tap="handleComment">
-            <image lazy-load src="../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
+            <image lazy-load src="../../../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
           </view>
         </view>
       </view>
@@ -481,7 +481,7 @@
         <view class="default-row-right-view">
           <view class="">地图</view>
           <view class="row-right-item-img-view">
-            <image lazy-load src="../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
+            <image lazy-load src="../../../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
           </view>
         </view>
       </view>
@@ -499,7 +499,7 @@
         <view class="default-row-right-view" @tap="handleInfo">
           <view class="">详情</view>
           <view class="row-right-item-img-view">
-            <image lazy-load src="../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
+            <image lazy-load src="../../../images/arrow-right-icon.png" style="width:100%;height:100%;"></image>
           </view>
         </view>
       </view>
@@ -533,7 +533,7 @@
         <view class="default-row-inner-info-label-view bottom-border">
           <view class="default-info-left-item-view">
             <view class="default-info-left-img-view">
-              <image lazy-load src="../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
+              <image lazy-load src="../../../images/default-hotel-img.png" style="width:100%;height:100%;"></image>
             </view>
             <view class="default-info-left-label-view">
               <view class="default-info-title-label-view"><text>{{item.title}}</text><text style="color:#999999;margin-left:10rpx;font-size:26rpx;"></text></view>
@@ -549,7 +549,7 @@
             <view style="font-size:40rpx;">{{item.minPrice}}</view>
             <view style="font-size:24rpx;color:#999999;line-height:64rpx;">起</view>
             <view class="default-info-right-item-img-view">
-              <image lazy-load src="{{item.selected?'../images/round-arrow-bottom-icon.png':'../images/round-arrow-top-icon.png'}}" style="width:100%;height:100%;"></image>
+              <image lazy-load src="{{item.selected?'../../../images/round-arrow-bottom-icon.png':'../../../images/round-arrow-top-icon.png'}}" style="width:100%;height:100%;"></image>
             </view>
           </view>
         </view>
@@ -601,7 +601,7 @@
       <view class="view-reserve-title">
         <view>{{tempObj.chirdren.title}}</view>
         <view class="view-reserve-title-icon" @tap="closeModal">
-          <image src="../images/delete-icon.png" style="width:100%;height:100%;" />
+          <image src="../../../images/delete-icon.png" style="width:100%;height:100%;" />
         </view>
       </view>
       <view class="reserve-conter-label-view">
@@ -650,8 +650,8 @@
   import wepy from 'wepy';
   import {
     calculateDiffTime,
-  } from "../lib/utils.js";
-  import datepicker from '../components/datepicker/index'
+  } from "../../../lib/utils.js";
+  import datepicker from '../../../components/datepicker/index'
   import {
     roomRatePlanDetailInfo,
     hotelDetailInfo,
@@ -660,8 +660,8 @@
     disAttentionHotel,
     attentionHotel,
     loginCheck
-  } from '../server/index.js'
-  import popups from '../components/popup/index'
+  } from '../../../server/index.js'
+  import popups from '../../../components/popup/index'
   export default class HotelDetail extends wepy.page {
     config = {
       navigationBarTitleText: '酒店详情',
@@ -686,24 +686,24 @@
       bedType: "",
       dateModalDialog: false,
       starLength: [{
-          icon: '../images/star-icon.png',
-          selectedIcon: '../images/star-selected-icon.png'
+          icon: '../../../images/star-icon.png',
+          selectedIcon: '../../../images/star-selected-icon.png'
         },
         {
-          icon: '../images/star-icon.png',
-          selectedIcon: '../images/star-selected-icon.png'
+          icon: '../../../images/star-icon.png',
+          selectedIcon: '../../../images/star-selected-icon.png'
         },
         {
-          icon: '../images/star-icon.png',
-          selectedIcon: '../images/star-selected-icon.png'
+          icon: '../../../images/star-icon.png',
+          selectedIcon: '../../../images/star-selected-icon.png'
         },
         {
-          icon: '../images/star-icon.png',
-          selectedIcon: '../images/star-selected-icon.png'
+          icon: '../../../images/star-icon.png',
+          selectedIcon: '../../../images/star-selected-icon.png'
         },
         {
-          icon: '../images/star-icon.png',
-          selectedIcon: '../images/star-selected-icon.png'
+          icon: '../../../images/star-icon.png',
+          selectedIcon: '../../../images/star-selected-icon.png'
         }
       ],
       tempObj: {},
@@ -861,7 +861,7 @@
         let hotelInfo = this.hotelInfo
         let hotelJson = JSON.stringify(hotelInfo)
         wepy.navigateTo({
-          url: './map?hotelInfo=' + hotelJson
+          url: '../../packageA/pages/map?hotelInfo=' + hotelJson
         })
       },
       // 评论
@@ -907,7 +907,7 @@
         loginCheck().then(res => {
           if (res.state == 3) {
             wepy.navigateTo({
-              url: './onload?page=hotelDetail?hotelId=' + this.hotelId
+              url: '../pages/packageB/pages/onload?page=hotelDetail?hotelId=' + this.hotelId
             })
           } else if (res.state == 1) {
             wepy.navigateTo({
@@ -947,7 +947,7 @@
       },
       handleComment() {
         wepy.navigateTo({
-          url: './commentList?hotelId=' + this.hotelId
+          url: '../../packageD/pages/commentList?hotelId=' + this.hotelId
         })
       }
     };

@@ -256,13 +256,13 @@
       handleFollowHotel(index) {
         let hotelId = this.followList[index].hotelId
         wepy.navigateTo({
-          url: './hotelDetail?hotelId=' + hotelId
+          url: '../pages/packageC/pages/hotelDetail?hotelId=' + hotelId
         })
       },
       handleBrowseHotel(index) {
         let hotelId = this.browseList[index].hotelId
         wepy.navigateTo({
-          url: './hotelDetail?hotelId=' + hotelId
+          url: '../pages/packageC/pages/hotelDetail?hotelId=' + hotelId
         })
       },
       handleState(value) {
@@ -338,22 +338,30 @@
       loginCheck().then(res => {
         if (res.state == 3) {
           wepy.navigateTo({
-            url: './onload?page=collect'
+            url: '../pages/packageB/pages/onload?page=collect'
           })
         } else if (res.state == 1) {
           this.browseQuery.pageNo = 1
           this.followQuery.pageNo = 1
           selectFollowAndBrowseTotal({}).then(res => {
-            this.followTotal = res.followTotal || 0
-            this.browseTotal = res.browseTotal || 0
+            if (res.followTotal) {
+              this.followTotal = res.followTotal
+            }
+            if (res.browseTotal) {
+              this.browseTotal = res.browseTotal
+            }
             this.$apply()
           })
           selectAllFollow(this.followQuery).then(res => {
-            this.followList = res.AllFollows
+            if (res.AllFollows) {
+              this.followList = res.AllFollows
+            }
             this.$apply()
           })
           selectUserBrowse(this.browseQuery).then(res => {
-            this.browseList = res.AllFollows
+            if (res.AllFollows) {
+              this.browseList = res.AllFollows
+            }
             this.$apply()
           })
         }

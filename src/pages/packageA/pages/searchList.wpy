@@ -288,7 +288,7 @@
   <view class="body">
     <view class="search-input-view">
       <view class="search-inner-input-view">
-        <view class="inner-city-label-view">{{cityInfo.name}}</view>
+        <view class="inner-city-label-view" @tap="handleCity">{{cityInfo.name}}</view>
         <view class="inner-tag-view"></view>
         <view class="inner-date-label-view">
           <view style="height:30rpx;line-height:35rpx;">
@@ -301,37 +301,37 @@
           </view>
         </view>
         <view class="inner-tag-view"></view>
-        <image class="search-icon-image" src="../images/search-icon.png" />
+        <image class="search-icon-image" src="../../../images/search-icon.png" />
         <input class="search-input" placeholder-class="placeholder-search-input" placeholder="搜索酒店关键字" @confirm="searchSubmit" confirm-type="search" @input="searchInput" value="{{keyword}}" />
       </view>
     </view>
     <view class="search-query-label-view">
       <view class="item-label-view {{tempObj.index==0?'checked-type':''}}" @tap="handleType(0)">
         <text>价格星级</text>
-        <image wx:if="{{tempObj.index==0&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==0&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==1?'checked-type':''}}" @tap="handleType(1)">
         <text>位置</text>
-        <image wx:if="{{tempObj.index==1&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==1&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==2?'checked-type':''}}" @tap="handleType(2)">
         <text>筛选</text>
-        <image wx:if="{{tempObj.index==2&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==2&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==3?'checked-type':''}}" @tap="handleType(3)">
         <text>排序</text>
-        <image wx:if="{{tempObj.index==3&&tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==3&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../../../../../../../images/arrow-top-icon.png" />
       </view>
     </view>
     <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolower">
       <repeat for="{{hotelList}}" key="index" index="index" item="item">
         <view class="default-label-row-view">
           <view class="default-inner-label-row-view {{index+1===hotelList.length?'':'border-bottom'}}" @tap="handleHotel({{index}})">
-            <image lazy-load @error="imgError" data-errorIndex="{{index}}" class="hotel-img" src="{{item.imageUrl?item.imageUrl:'../images/default-hotel-img.png'}}" />
+            <image lazy-load @error="imgError" data-errorIndex="{{index}}" class="hotel-img" src="{{item.imageUrl?item.imageUrl:'../../../images/default-hotel-img.png'}}" />
             <view class="hotel-info-label-view">
               <view class="hotel-name-label-view">{{item.hotelName}}</view>
               <view class="hotel-comment-label-view">
@@ -396,14 +396,14 @@
             <repeat wx:if="{{optionIndex==0}}" for="{{distanceList}}" key="index" index="index" item="item">
               <view class="scroll-right-row-view {{distance==item.value?'checked-region-label':''}}" @tap="handleDistance({{index}})">
                 <view>{{item.label}}</view>
-                <image wx:if="{{distance==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+                <image wx:if="{{distance==item.value}}" class="hook-icon-img" src="../../../images/hook-selected-icon.png" />
               </view>
             </repeat>
             <!-- 行政区域 -->
             <repeat wx:if="{{optionIndex==1}}" for="{{regionList}}" key="index" index="index" item="item">
               <view class="scroll-right-row-view {{regionId==item.id?'checked-region-label':''}}" @tap="handleRegion({{index}})">
                 <view>{{item.name}}</view>
-                <image wx:if="{{regionId==item.id}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+                <image wx:if="{{regionId==item.id}}" class="hook-icon-img" src="../../../images/hook-selected-icon.png" />
               </view>
             </repeat>
           </scroll-view>
@@ -425,14 +425,14 @@
             <repeat wx:if="{{typeIndex==0}}" for="{{bedTypeList}}" key="index" index="index" item="item">
               <view class="scroll-right-row-view {{bedType==item.value?'checked-region-label':''}}" @tap="handleBedType({{index}})">
                 <view>{{item.label}}</view>
-                <image wx:if="{{bedType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+                <image wx:if="{{bedType==item.value}}" class="hook-icon-img" src="../../../images/hook-selected-icon.png" />
               </view>
             </repeat>
             <!-- 早餐 -->
             <repeat wx:if="{{typeIndex==1}}" for="{{breakfastTypeList}}" key="index" index="index" item="item">
               <view class="scroll-right-row-view {{breakfastType==item.value?'checked-region-label':''}}" @tap="handleBreakfast({{index}})">
                 <view>{{item.label}}</view>
-                <image wx:if="{{breakfastType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+                <image wx:if="{{breakfastType==item.value}}" class="hook-icon-img" src="../../../images/hook-selected-icon.png" />
               </view>
             </repeat>
           </scroll-view>
@@ -448,7 +448,7 @@
             <repeat for="{{orderByTypeList}}" key="index" index="index" item="item">
               <view class="scroll-right-row-view {{orderByType==item.value?'checked-region-label':''}}" @tap="handleOrder({{index}})">
                 <view>{{item.label}}</view>
-                <image wx:if="{{orderByType==item.value}}" class="hook-icon-img" src="../images/hook-selected-icon.png" />
+                <image wx:if="{{orderByType==item.value}}" class="hook-icon-img" src="../../../images/hook-selected-icon.png" />
               </view>
             </repeat>
           </scroll-view>
@@ -465,11 +465,11 @@
     getSysHeight,
     changePXToRPX,
     changeRPXToPX
-  } from '../lib/wx-system.js'
+  } from '@/lib/wx-system.js'
   import {
     queryRegionsByParentId,
     getHotelList
-  } from "../server/index.js"; //接口
+  } from "@/server/index.js"; //接口
   export default class SearchList extends wepy.page {
     config = {
       navigationBarTitleText: "搜索酒店",
@@ -704,7 +704,7 @@
       handleHotel(index) {
         let hotelId = this.hotelList[index].id
         wepy.navigateTo({
-          url: './hotelDetail?hotelId=' + hotelId + '&dateValue=' + this.dateValue
+          url: '../../packageC/pages/hotelDetail?hotelId=' + hotelId + '&dateValue=' + this.dateValue
         })
       },
       /**
@@ -759,6 +759,11 @@
         this.showModal = false;
         this.getHotelInfo()
         this.$apply();
+      },
+      handleCity() {
+        wepy.navigateTo({
+          url: './city'
+        })
       },
       /**
        * 选择类型
@@ -924,7 +929,7 @@
       },
       imgError(e) {
         let errorImgIndex = e.target.dataset.errorindex
-        this.hotelList[errorImgIndex].imageUrl = '../images/default-hotel-img.png'
+        this.hotelList[errorImgIndex].imageUrl = '../../../images/default-hotel-img.png'
         this.$apply()
       }
     };
@@ -962,7 +967,24 @@
       this.setPriceAndStar();
       this.$apply();
     }
-    onShow() {}
+    onShow() {
+      let cityInfo = wepy.getStorageSync('cityInfo') || null
+      if (cityInfo) {
+        this.cityInfo = cityInfo
+        this.getHotelInfo()
+        queryRegionsByParentId({
+          parentId: this.cityInfo.id
+        }).then(data => {
+          this.regionList = data;
+          this.regionList.unshift({
+            name: "不限",
+            id: 0
+          });
+          this.$apply();
+        });
+        this.$apply()
+      }
+    }
     // 设置星级和价格初始化
     setPriceAndStar() {
       this.priceList.forEach(item => {

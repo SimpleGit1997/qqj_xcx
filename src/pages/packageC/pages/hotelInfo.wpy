@@ -61,7 +61,7 @@
         <view class="default-tag-color-view"></view>
         <view class="default-title-text-view">酒店介绍</view>
         <view class="abs-tel-img-view" @tap="handleTel">
-          <image src="../images/tel-color-icon.png" style="width:100%;height:100%;" />
+          <image src="../../../images/tel-color-icon.png" style="width:100%;height:100%;" />
         </view>
       </view>
       <view class="default-inner-info-label-view">
@@ -109,7 +109,7 @@
   import wepy from 'wepy'
   import {
     hotelDetailInfo
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   export default class HotelInfo extends wepy.page {
     config = {
       navigationBarTitleText: '酒店信息'
@@ -152,7 +152,7 @@
           longitude: this.hotelInfo.pointLng,
           width: 25,
           height: 30,
-          iconPath: '../images/map-position-icon.png',
+          iconPath: '../../../images/map-position-icon.png',
           callout: {
             content: this.hotelInfo.title,
             color: "#666666",

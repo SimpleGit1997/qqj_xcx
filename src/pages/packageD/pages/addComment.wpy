@@ -144,7 +144,7 @@
   <view class="body">
     <view class="top-hotel-info-label-view">
       <view class="top-hotel-img-text-label-view">
-        <image class="hotel-img-view" src="../images/default-hotel-img.png" />
+        <image class="hotel-img-view" src="../../../images/default-hotel-img.png" />
         <view class="hotel-text-view">
           <view class="hotel-title-view">{{orderInfo.hotelTitle}}</view>
           <view class="hotel-date-view">{{orderInfo.firstDate}} - {{orderInfo.secondDate}} 共{{orderInfo.days}}晚</view>
@@ -167,13 +167,13 @@
       <repeat for="{{picList}}" key="index" index="index" item="item">
         <view class="picture-item-view">
           <view class="delete-pic-icon-view" @tap="deletePicture({{index}})">
-            <image src="../images/pic-delete-icon.png" style="width:100%;height:100%;" />
+            <image src="../../../images/pic-delete-icon.png" style="width:100%;height:100%;" />
           </view>
           <image src="{{item.fullUrl}}" style="width:100%;height:100%;" />
         </view>
       </repeat>
       <view class="picture-item-view" wx:if="{{picList.length<20}}" @tap="handleAddPicture">
-        <image src="../images/camara-icon.png" style="width:100%;height:100%;" />
+        <image src="../../../images/camara-icon.png" style="width:100%;height:100%;" />
       </view>
     </view>
     <view class="bottom-hotel-comment-view">
@@ -217,11 +217,11 @@
   import {
     findOrderInfoDetail,
     addComment
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   import {
     calculateDiffTime,
     formatNumber
-  } from '../lib/utils.js'
+  } from '../../../lib/utils.js'
   export default class AddComment extends wepy.page {
     config = {
       navigationBarTitleText: '发表评论'
@@ -239,20 +239,20 @@
       commentContent: '',
       picList: [],
       starTemp: [{
-        star: '../images/star-icon.png',
-        selectedStar: '../images/star-selected-icon.png'
+        star: '../../../images/star-icon.png',
+        selectedStar: '../../../images/star-selected-icon.png'
       }, {
-        star: '../images/star-icon.png',
-        selectedStar: '../images/star-selected-icon.png'
+        star: '../../../images/star-icon.png',
+        selectedStar: '../../../images/star-selected-icon.png'
       }, {
-        star: '../images/star-icon.png',
-        selectedStar: '../images/star-selected-icon.png'
+        star: '../../../images/star-icon.png',
+        selectedStar: '../../../images/star-selected-icon.png'
       }, {
-        star: '../images/star-icon.png',
-        selectedStar: '../images/star-selected-icon.png'
+        star: '../../../images/star-icon.png',
+        selectedStar: '../../../images/star-selected-icon.png'
       }, {
-        star: '../images/star-icon.png',
-        selectedStar: '../images/star-selected-icon.png'
+        star: '../../../images/star-icon.png',
+        selectedStar: '../../../images/star-selected-icon.png'
       }]
     };
     computed = {
@@ -291,7 +291,7 @@
             title: '加载中...'
           })
           wepy.uploadFile({
-            url: this.host + '/sns-server/wechat/minipro/upload/pic', //仅为示例，非真实的接口地址
+            url: this.host + '/sns-server/wechat/minipro/upload/pic',
             filePath: tempFilePaths[0],
             name: 'file',
             header: {

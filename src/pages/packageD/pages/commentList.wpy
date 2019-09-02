@@ -144,7 +144,7 @@
             <view class="evaluate-star-title">描述</view>
             <repeat for="{{5}}" key="index" index="index" item="item">
               <view class="evaluate-star-image">
-                <image src="{{msxfScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                <image src="{{msxfScore>index?'../../../images/star-selected-icon.png':'../../../images/star-icon.png'}}"></image>
               </view>
             </repeat>
             <view class="evaluate-text">{{msxfScore}}</view>
@@ -153,7 +153,7 @@
             <view class="evaluate-star-title">卫生</view>
             <repeat for="{{5}}" key="index" index="index" item="item">
               <view class="evaluate-star-image">
-                <image src="{{zjwsScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                <image src="{{zjwsScore>index?'../../../images/star-selected-icon.png':'../../../images/star-icon.png'}}"></image>
               </view>
             </repeat>
             <view class="evaluate-text">{{zjwsScore}}</view>
@@ -164,7 +164,7 @@
             <view class="evaluate-star-title">服务</view>
             <repeat for="{{5}}" key="index" index="index" item="item">
               <view class="evaluate-star-image">
-                <image src="{{aqcdScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                <image src="{{aqcdScore>index?'../../../images/star-selected-icon.png':'../../../images/star-icon.png'}}"></image>
               </view>
             </repeat>
             <view class="evaluate-text">{{aqcdScore}}</view>
@@ -173,7 +173,7 @@
             <view class="evaluate-star-title">位置</view>
             <repeat for="{{5}}" key="index" index="index" item="item">
               <view class="evaluate-star-image">
-                <image src="{{jtwzScore>index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                <image src="{{jtwzScore>index?'../../../images/star-selected-icon.png':'../../../images/star-icon.png'}}"></image>
               </view>
             </repeat>
             <view class="evaluate-text">{{jtwzScore}}</view>
@@ -194,7 +194,7 @@
               <view class="user-star-image">
                 <repeat for="{{5}}" key="_index" index="_index" item="_item">
                   <view class="view-User-Comments-right-icon">
-                    <image src="{{item.totalScore>_index?'../images/star-selected-icon.png':'../images/star-icon.png'}}"></image>
+                    <image src="{{item.totalScore>_index?'../../../images/star-selected-icon.png':'../../../images/star-icon.png'}}"></image>
                   </view>
                 </repeat>
               </view>
@@ -223,7 +223,7 @@
   import wepy from 'wepy'
   import {
     getAllComment
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   export default class CommentList extends wepy.page {
     config = {
       navigationBarTitleText: '酒店评论'

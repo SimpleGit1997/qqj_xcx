@@ -104,7 +104,7 @@
 <template>
   <view class="body">
     <view class="top-logo-icon-view">
-      <image src="../images/huixiangzhu-logo-icon.png" style="width:160rpx;height:100%;" />
+      <image src="../../../images/huixiangzhu-logo-icon.png" style="width:160rpx;height:100%;" />
     </view>
     <view class="top-title-view">
       <view class="{{isPassword?'':'checked'}}" @tap="handleCheckCode">验证码登录</view>
@@ -116,7 +116,7 @@
         <view class="defualt-row-left-text-view">
           {{cityInfo.zh}} (+{{cityInfo.code}}）
         </view>
-        <image class="default-row-right-img" src="../images/login-page-arrow-bottom-icon.png" />
+        <image class="default-row-right-img" src="../../../images/login-page-arrow-bottom-icon.png" />
       </view>
       <view class="default-row-input-view">
         <input value="{{phone}}" type="number" @input="phoneInput" class="default-input" placeholder="请输入手机号" placeholder-style="color:#CCCCCC;" />
@@ -143,17 +143,17 @@
 
 <script>
   import wepy from "wepy";
-  import popup from '../components/popup/index'
+  import popup from '../../../components/popup/index'
   import {
     getSysHeight,
     changePXToRPX
-  } from "../lib/wx-system.js";
+  } from "../../../lib/wx-system.js";
   import {
     smsLogin,
     accountLogin,
     sendQuickLoginMsg
-  } from '../server/index.js'
-  import countryList from '../components/countryList/index'
+  } from '../../../server/index.js'
+  import countryList from '../../../components/countryList/index'
   export default class Login extends wepy.page {
     config = {
       navigationBarTitleText: "登录",

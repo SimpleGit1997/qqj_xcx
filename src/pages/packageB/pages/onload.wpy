@@ -163,17 +163,17 @@
     <view class="navbar" style="height:{{navbarHeight}}px;">
       <view class="nav-menu-view" style="height:{{navMenuHeight}}px;margin:{{navMenuTop}}px 0px 0px {{navMenuLeft}}px;">
         <view class="navbar-action_left" @tap="handleBack">
-          <image style="width:100%;height:100%;" src="../images/arrow-left-icon.png" />
+          <image style="width:100%;height:100%;" src="../../../images/arrow-left-icon.png" />
         </view>
         <view class="nav-tag"></view>
         <view class="navbar-action_right" @tap="handleIndex">
-          <image style="width:100%;height:100%;" src="../images/default-index-icon.png" />
+          <image style="width:100%;height:100%;" src="../../../images/default-index-icon.png" />
         </view>
       </view>
       <view class="navbar-title-view" style="height:{{navTitleHeight}}px;margin-top:{{navTitleTop}}px;line-height:{{navTitleHeight}}px;">惠享住</view>
     </view>
     <view class="onload-img-view" style="margin-top:{{navbarHeight}}px;">
-      <image style="width: 100%;height:100%;" src="../images/onload-img.png" />
+      <image style="width: 100%;height:100%;" src="../../../images/onload-img.png" />
     </view>
     <!-- <view class="button-view" @tap="handleToLogin">登录/注册</view> -->
     <button class="button-view" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfoToLogin">
@@ -181,7 +181,7 @@
             </button>
     <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="getUserInfo" hover-class="hover-button">
               <view class="button-img-view">
-                <image style="width: 100%;height:100%;margin-top:20rpx;" src="../images/wxlogo-img.png" />
+                <image style="width: 100%;height:100%;margin-top:20rpx;" src="../../../images/wxlogo-img.png" />
               </view>
               <view>微信授权登录</view>
             </button>
@@ -199,11 +199,11 @@
   import {
     getOpenId,
     bindPhone
-  } from '../server/index.js';
+  } from '../../../server/index.js';
   import {
     changePXToRPX,
     changeRPXToPX
-  } from '../lib/wx-system.js'
+  } from '../../../lib/wx-system.js'
   export default class Onload extends wepy.page {
     config = {
       navigationBarTitleText: '惠享住',
@@ -236,15 +236,13 @@
     onShow() {}
     methods = {
       handleBack() {
-        console.log(11)
         wx.navigateBack({
           delta: 1
         })
       },
       handleIndex() {
-        console.log(11)
         wx.reLaunch({
-          url: './index'
+          url: '../../index'
         })
       },
       getUserInfo(e) {
@@ -270,7 +268,7 @@
             }
             if (res.loginId) {
               wepy.reLaunch({
-                url: './index'
+                url: '../../index'
               });
             } else {
               this.showModal = true;
@@ -317,7 +315,7 @@
             if (res.sid) {
               wepy.setStorageSync('sid', res.sid);
               wepy.reLaunch({
-                url: './index'
+                url: '../../index'
               });
             } else {
               console.log('发生未知异常。')

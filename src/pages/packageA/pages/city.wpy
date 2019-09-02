@@ -150,9 +150,9 @@
   <view class="body">
     <view class="top-search-view">
       <view class="top-inner-search-view">
-        <image class="search-icon-image" src="../images/search-icon.png" />
+        <image class="search-icon-image" src="../../../images/search-icon.png" />
         <input class="search-input" placeholder-class="placeholder-search-input" placeholder="输入城市名或拼音查询" @focus="searchFocus" @input="searchInput" value="{{keyword}}" />
-        <image wx:if="{{keyword.length>0}}" @tap="handleDeleteKeyword" class="delete-icon-image" src="../images/round-delete-icon.png" />
+        <image wx:if="{{keyword.length>0}}" @tap="handleDeleteKeyword" class="delete-icon-image" src="../../../images/round-delete-icon.png" />
       </view>
       <view wx:if="{{searchFocus}}" @tap="handleCancel" class="top-cancel-view">取消</view>
     </view>
@@ -202,13 +202,13 @@
   import wepy from "wepy";
   import {
     findRegions
-  } from "../server/index.js";
+  } from "../../../server/index.js";
   import {
     getSysWidth,
     getSysHeight,
     changePXToRPX,
     changeRPXToPX
-  } from '../lib/wx-system.js'
+  } from '../../../lib/wx-system.js'
   var qqmapsdk;
   export default class City extends wepy.page {
     config = {

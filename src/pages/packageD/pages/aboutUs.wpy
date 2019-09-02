@@ -54,7 +54,7 @@
     <!-- 头部 -->
     <view class="header-log">
       <view class="header-log-icon">
-        <image src="../images/hemeihui-logo-icon.png" />
+        <image src="../../../images/hemeihui-logo-icon.png" />
       </view>
       <view class="header-log-text">版本 v2.1.0</view>
     </view>
@@ -64,14 +64,14 @@
       <view class="view-list-li" @tap="handleAboutHefa">
         <view>关于合发</view>
         <view class="view-list-icon view-list-iconImage">
-          <image src="../images/arrow-right-icon.png" />
+          <image src="../../../images/arrow-right-icon.png" />
         </view>
       </view>
       <!-- 联系我们 -->
       <view class="view-list-li" @tap="handleUs">
         <view>联系我们</view>
         <view class="view-list-icon view-list-iconImage">
-          <image src="../images/arrow-right-icon.png" />
+          <image src="../../../images/arrow-right-icon.png" />
         </view>
       </view>
     </view>
@@ -89,11 +89,6 @@
       handleAboutHefa() {
         wepy.navigateTo({
           url: './aboutHefa'
-        })
-      },
-      handleAdvice() {
-        wepy.navigateTo({
-          url: './advice'
         })
       },
       // 联系我们

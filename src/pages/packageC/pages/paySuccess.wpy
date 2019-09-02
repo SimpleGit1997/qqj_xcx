@@ -85,7 +85,7 @@
   <view class="body">
     <view class="view-header">
       <view class="view-log">
-        <image class="image" src="../images/round-color-checked-icon.png" style="width:100%;height:100%;"></image>
+        <image class="image" src="../../../images/round-color-checked-icon.png" style="width:100%;height:100%;"></image>
       </view>
       <view class="view-log-text">支付成功</view>
     </view>
@@ -125,10 +125,10 @@
   import {
     calculateDiffTime,
     formatNumber
-  } from '../lib/utils.js'
+  } from '../../../lib/utils.js'
   import {
     findOrderInfoDetail
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   export default class PaySuccess extends wepy.page {
     config = {
       navigationBarTitleText: '收银台',
@@ -161,13 +161,13 @@
       // 返回首页
       backIndex() {
         wepy.switchTab({
-          url: '../pages/index'
+          url: '../../../pages/index'
         })
       },
       // 查看订单
       seeOrderList() {
         wepy.switchTab({
-          url: '../pages/orderList'
+          url: '../../../pages/orderList'
         })
       }
     }

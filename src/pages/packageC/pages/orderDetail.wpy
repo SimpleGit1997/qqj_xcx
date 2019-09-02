@@ -288,7 +288,7 @@
 <template>
   <view class="body">
     <view class="top-banner-img-view">
-      <image src="../images/order-state-banner-img.png" style="width:100%;height:100%;" />
+      <image src="../../../images/order-state-banner-img.png" style="width:100%;height:100%;" />
       <view class="top-banner-text-view">
         <text>{{orderInfo.orderStateLabel}}</text> <text wx:if="{{orderInfo.orderState===0}}" style="margin-left:30rpx;font-size:24rpx;">请在{{timeLabel[1]}}分{{timeLabel[2]}}秒内完成支付</text>
       </view>
@@ -419,11 +419,11 @@
     findOrderInfoDetail,
     orderCancel,
     orderQuite
-  } from '../server/index.js'
+  } from '../../../server/index.js'
   import {
     calculateDiffTime,
-  } from "../lib/utils.js";
-  import popup from '../components/popup/index';
+  } from "../../../lib/utils.js";
+  import popup from '../../../components/popup/index';
   export default class OrderDetail extends wepy.page {
     config = {
       navigationBarTitleText: "订单详情",
@@ -610,7 +610,7 @@
       },
       handleComment() {
         wepy.navigateTo({
-          url: './addComment?orderNo=' + this.orderInfo.orderNo
+          url: '../../packageD/pages/addComment?orderNo=' + this.orderInfo.orderNo
         })
       }
     };
@@ -646,7 +646,7 @@
           longitude: this.orderInfo.pointLng,
           width: 25,
           height: 30,
-          iconPath: '../images/map-position-icon.png',
+          iconPath: '../../../images/map-position-icon.png',
           callout: {
             content: this.orderInfo.hotelName,
             color: "#666666",

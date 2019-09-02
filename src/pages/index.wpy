@@ -469,7 +469,7 @@
     methods = {
       handleCity() {
         wepy.navigateTo({
-          url: './city'
+          url: '../pages/packageA/pages/city'
         })
       },
       changeDate() {
@@ -613,7 +613,7 @@
         let price = this.price
         let priceLabel = this.priceLabel
         wepy.navigateTo({
-          url: './searchList?cityInfo=' + cityObj + '&dateValue=' + dateValue + '&keyword=' + keyword + '&star=' + star + '&starLabel=' + starLabel + '&price=' + price + '&priceLabel=' + priceLabel
+          url: '../pages/packageA/pages/searchList?cityInfo=' + cityObj + '&dateValue=' + dateValue + '&keyword=' + keyword + '&star=' + star + '&starLabel=' + starLabel + '&price=' + price + '&priceLabel=' + priceLabel
         })
       }
     };

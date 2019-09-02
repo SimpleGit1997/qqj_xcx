@@ -23,27 +23,49 @@
     config = {
       pages: [
         "pages/index", //首页
-        "pages/onload",
-        "pages/login", //
-        "pages/me",
-        "pages/city", //选择城市
-        "pages/searchList", //选择城市
-        "pages/hotelDetail", //酒店详情
-        "pages/map", //酒店地图
-        "pages/hotelInfo", //酒店信息
-        "pages/writeOrder", //填写订单
-        "pages/pay", //支付
+        "pages/me", //我的
         "pages/orderList", //订单中心
-        "pages/paySuccess", //支付成功
         "pages/collect", //收藏
-        "pages/orderDetail", //订单详情
-        "pages/addComment", //发表评论
-        "pages/commentList", //
-        "pages/aboutUs", //
-        "pages/aboutHefa", //
-        "pages/aboutInfo", //
-        "pages/changePassword", //
-        "pages/property", //
+        "pages/plane"
+      ],
+      "subPackages": [{
+          "root": "pages/packageA/",
+          "pages": [
+            "pages/searchList", //搜索列表
+            "pages/city", // 选择城市
+            "pages/map", //酒店地图
+          ]
+        },
+        {
+          "root": "pages/packageB/",
+          "pages": [
+            "pages/onload", // 加载
+            "pages/login", //登录
+          ]
+        },
+        {
+          "root": "pages/packageC/",
+          "pages": [
+            "pages/orderDetail", //订单详情
+            "pages/hotelDetail", //酒店详情
+            "pages/hotelInfo", //酒店信息
+            "pages/writeOrder", //填写订单
+            "pages/pay", //支付
+            "pages/paySuccess", //支付成功
+          ]
+        },
+        {
+          "root": "pages/packageD/",
+          "pages": [
+            "pages/addComment", // 添加评论
+            "pages/commentList", //评论列表
+            "pages/aboutUs", // 关于我们
+            "pages/aboutHefa", // 关于合发
+            "pages/aboutInfo", // 关于我们
+            "pages/changePassword", //更改二级密码
+            "pages/property", //资产
+          ]
+        }
       ],
       window: {
         backgroundTextStyle: "light",
@@ -62,6 +84,12 @@
             iconPath: "images/index-icon.png",
             selectedIconPath: "images/index-selected-icon.png",
             text: "酒店"
+          },
+           {
+            pagePath: "pages/plane",
+            iconPath: "images/plane-icon.png",
+            selectedIconPath: "images/plane-selected-icon.png",
+            text: "机票"
           },
           {
             pagePath: "pages/collect",
