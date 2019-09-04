@@ -1,6 +1,6 @@
 <style lang="less">
   /** less **/
-  .modal-mask {
+  .c-modal-mask {
     width: 100%;
     height: 100%;
     position: fixed;
@@ -12,7 +12,7 @@
     z-index: 900;
     color: #fff;
   }
-  .modal-dialog {
+  .c-modal-dialog {
     overflow: hidden;
     position: fixed;
     z-index: 998;
@@ -22,9 +22,9 @@
 </style>
 
 <template lang="wxml">
-  <view wx:if="{{showModal}}" class="modal-mask" @tap="hideModal" catchtouchmove="preventTouchMove">
+  <view wx:if="{{showModal}}" class="c-modal-mask" @tap="hideModal" catchtouchmove="preventTouchMove">
   </view>
-  <view animation="{{animationData}}"  class="modal-dialog" catchtouchmove="preventTouchMove" style="{{popupStyle}}">
+  <view animation="{{animationData}}"  class="c-modal-dialog" catchtouchmove="preventTouchMove" style="{{popupStyle}}">
     <slot>
     </slot>
   </view>

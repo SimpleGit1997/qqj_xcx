@@ -85,12 +85,12 @@
             selectedIconPath: "images/index-selected-icon.png",
             text: "酒店"
           },
-           {
-            pagePath: "pages/plane",
-            iconPath: "images/plane-icon.png",
-            selectedIconPath: "images/plane-selected-icon.png",
-            text: "机票"
-          },
+          //  {
+          //   pagePath: "pages/plane",
+          //   iconPath: "images/plane-icon.png",
+          //   selectedIconPath: "images/plane-selected-icon.png",
+          //   text: "机票"
+          // },
           {
             pagePath: "pages/collect",
             iconPath: "images/like-icon.png",

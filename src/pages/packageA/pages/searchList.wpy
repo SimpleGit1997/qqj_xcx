@@ -290,7 +290,7 @@
       <view class="search-inner-input-view">
         <view class="inner-city-label-view" @tap="handleCity">{{cityInfo.name}}</view>
         <view class="inner-tag-view"></view>
-        <view class="inner-date-label-view">
+        <view class="inner-date-label-view" @tap="changeDate">
           <view style="height:30rpx;line-height:35rpx;">
             <text>住</text>
             <text>{{formatDate[0]}}</text>
@@ -308,23 +308,23 @@
     <view class="search-query-label-view">
       <view class="item-label-view {{tempObj.index==0?'checked-type':''}}" @tap="handleType(0)">
         <text>价格星级</text>
-        <image wx:if="{{tempObj.index==0&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==0&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==1?'checked-type':''}}" @tap="handleType(1)">
-        <text>位置</text>
-        <image wx:if="{{tempObj.index==1&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
+        <text>{{getDistance}}</text>
+        <image wx:if="{{tempObj.index==1&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==2?'checked-type':''}}" @tap="handleType(2)">
-        <text>筛选</text>
-        <image wx:if="{{tempObj.index==2&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-icon.png" />
+        <text>{{getbreakfastOrBed}}</text>
+        <image wx:if="{{tempObj.index==2&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-icon.png" />
       </view>
       <view class="item-label-view {{tempObj.index==3?'checked-type':''}}" @tap="handleType(3)">
         <text>排序</text>
-        <image wx:if="{{tempObj.index==3&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-bottom-selected-icon.png" />
-        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../../../../../../../images/arrow-top-icon.png" />
+        <image wx:if="{{tempObj.index==3&&tempObj.checked}}" class="item-arrow-icon-img" src="../../../images/arrow-top-selected-icon.png" />
+        <image wx:else="{{!tempObj.checked}}" class="item-arrow-icon-img" src="../../../../../../../../../images/arrow-bottom-icon.png" />
       </view>
     </view>
     <scroll-view style="height:{{scrollHeight}}rpx;width:100%;" scroll-y lower-threshold="0" @scrolltolower="scrolltolower">
@@ -455,6 +455,12 @@
         </view>
       </view>
     </view>
+    <!-- 日期探出框 -->
+    <datepopup :size.sync="popupHeight" duration='400' type="bottom" :showModal.sync="dateModalDialog" v-on:hideModal="hideDateDialog">
+      <scroll-view style="height:750rpx;width:100%;overflow:hidden;" scroll-y>
+        <datepicker v-on:closeDialog="closeDateDialog" months="4" :value.sync="_dateValue"></datepicker>
+      </scroll-view>
+    </datepopup>
   </view>
 </template>
 
@@ -470,14 +476,21 @@
     queryRegionsByParentId,
     getHotelList
   } from "@/server/index.js"; //接口
+  import popup from '../../../components/popup/index'
+  import datepicker from '../../../components/datepicker/index'
   export default class SearchList extends wepy.page {
     config = {
       navigationBarTitleText: "搜索酒店",
       disableScroll: true
     };
-    components = {};
+    components = {
+      datepicker: datepicker,
+      datepopup: popup
+    };
     data = {
       scrollHeight: 0,
+      popupHeight: 750,
+      dateModalDialog: false,
       pageNo: 1,
       tempObj: {
         index: null,
@@ -486,6 +499,7 @@
       cityInfo: {},
       keyword: '',
       dateValue: [],
+      _dateValue: [],
       price: [],
       priceLabel: "",
       star: "",
@@ -642,9 +656,76 @@
           });
         }
         return value;
+      },
+      getDistance() {
+        let _des = ''
+        if (this.regionId != 0) {
+          this.regionList.forEach(item => {
+            if (item.id == this.regionId) {
+              _des = item.name
+            }
+          });
+        } else if (this.distance != 0) {
+          this.distanceList.forEach(item => {
+            if (item.value == this.distance) {
+              _des = item.label
+            }
+          });
+        }
+        if (this.regionId == 0 && this.distance == 0) {
+          _des = '位置'
+        }
+        return _des
+      },
+      getbreakfastOrBed() {
+        let _des = ''
+        if (this.bedType != 0) {
+          this.bedTypeList.forEach(item => {
+            if (item.value == this.bedType) {
+              _des = item.label
+            }
+          });
+        }
+        if (this.breakfastType != 0) {
+          this.breakfastTypeList.forEach(item => {
+            if (item.value == this.breakfastType) {
+              if (_des !== '') {
+                _des += '/' + item.label
+              } else {
+                _des += item.label
+              }
+            }
+          });
+        }
+        if (this.bedType == 0 && this.breakfastType == 0) {
+          _des = '筛选'
+        }
+        return _des
       }
     };
     methods = {
+      changeDate() {
+        this._dateValue = this.dateValue
+        this.dateModalDialog = true
+        if (this.showModal) {
+          this.showModal = false
+          this.tempObj = {};
+        }
+        this.$apply()
+      },
+      closeDateDialog(value) {
+        if (value.length == 2) {
+          this.dateValue = value
+          this.dateModalDialog = false
+          this.$apply()
+        }
+      },
+      hideDateDialog() {
+        if (this._dateValue.length == 2) {
+          this.dateValue = this._dateValue
+          this.$apply()
+        }
+      },
       /**
        * 搜索
        */
@@ -784,9 +865,9 @@
        * 关闭探出框
        */
       hideModal() {
-        this.tempObj = {};
-        this.showModal = false;
-        this.$apply();
+        // this.tempObj = {};
+        // this.showModal = false;
+        // this.$apply();
       },
       preventTouchMove() {
         console.warn("preventTouchMove方法已阻止其他事件。");
@@ -937,6 +1018,7 @@
       this.scrollHeight = changePXToRPX(getSysHeight()) - 178;
       if (option.dateValue) {
         this.dateValue = option.dateValue.split(",");
+        this._dateValue = this.dateValue
       }
       if (option.price && option.priceLabel) {
         this.price = option.price.split(",") || [];

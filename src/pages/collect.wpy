@@ -313,12 +313,14 @@
           })
           this.browseQuery.pageNo++
             selectUserBrowse(this.browseQuery).then(res => {
-              let list = res.AllFollows
-              list.forEach(item => {
-                this.browseList.push(item)
-              });
-              wepy.hideLoading()
-              this.$apply()
+              if (res&&res.AllFollows) {
+                let list = res.AllFollows
+                list.forEach(item => {
+                  this.browseList.push(item)
+                });
+                wepy.hideLoading()
+                this.$apply()
+              }
             })
         } else {
           wx.showToast({
@@ -344,22 +346,22 @@
           this.browseQuery.pageNo = 1
           this.followQuery.pageNo = 1
           selectFollowAndBrowseTotal({}).then(res => {
-            if (res.followTotal) {
+            if (res && res.followTotal) {
               this.followTotal = res.followTotal
             }
-            if (res.browseTotal) {
+            if (res && res.browseTotal) {
               this.browseTotal = res.browseTotal
             }
             this.$apply()
           })
           selectAllFollow(this.followQuery).then(res => {
-            if (res.AllFollows) {
+            if (res && res.AllFollows) {
               this.followList = res.AllFollows
             }
             this.$apply()
           })
           selectUserBrowse(this.browseQuery).then(res => {
-            if (res.AllFollows) {
+            if (res && res.AllFollows) {
               this.browseList = res.AllFollows
             }
             this.$apply()

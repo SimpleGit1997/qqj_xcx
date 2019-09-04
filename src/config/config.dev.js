@@ -1,6 +1,6 @@
 const config = {
-  host: 'https://mall-api.fybanks.cn/',
-  url:'https://m.fybanks.cn/',
+  host: 'https://mall-api.hfjyuan.com/',
+  url:'https://m.hfjyuan.com/',
   imgUrl:'https://img0.heyoucloud.com',
 }
 export default config

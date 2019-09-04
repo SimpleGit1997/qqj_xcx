@@ -356,7 +356,7 @@
           label: '900以上'
         }
       ],
-      priceAndStarlabel: '不限 不限',
+      priceAndStarlabel: '',
       price: ['', ''],
       priceLabel: '不限',
       star: '0,',
